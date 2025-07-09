@@ -18,7 +18,7 @@ public class MockHashTable {
     public boolean contains(Object value) { return false; }
     public boolean containsKey(Object key) { return false; }
     public Enumeration<Object> elements() { return null; }
-    Object get(Object key) { return null; }
+    public Object get(Object key) { return null; }
     public boolean isEmpty() { return true; }
     public Enumeration<Object> keys() { return null; }
     public Object put(Object key, Object value) { return null; }

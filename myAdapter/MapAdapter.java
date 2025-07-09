@@ -30,48 +30,57 @@ public class MapAdapter implements HMap {
     }
 
     public HSet entrySet() {
+
         return null;
     }
 
     public boolean equals(Object o) {
-        return hashTable.equals(o);
+        //! Must check if it's a proper set
+        if (!(o instanceof MapAdapter)) {
+            return false;
+        }
+        return this.entrySet().equals(((MapAdapter)o).entrySet());
     }
 
     public Object get(Object key) {
-        return null;
+        return hashTable.get(key);
     }
 
     public int hashCode() {
+        // TODO: implementation
         return 0;
     }
 
     public boolean isEmpty() {
-        return false;
+        return hashTable.isEmpty();
     }
 
     public HSet keySet() {
+        // TODO: implementation
         return null;
     }
 
     public Object put(Object key, Object value) {
-        return null;
+        return hashTable.put(key, value);
     }
 
     public void putAll(HMap m) {
-        
+        // TODO: implementation
     }
 
     public Object remove(Object key) {
-        return null;
+        return hashTable.remove(key);
     }
 
     public int size() {
-        return 0;
+        return hashTable.size();
     }
 
     public HCollection values() {
+        // TODO: implementation
         return null;
     }
+
 
     /**
      * {@code MapAdapter}'s entry implementation.
@@ -106,16 +115,20 @@ public class MapAdapter implements HMap {
             return this.value;
         }
 
+        /**
+         * Replaces the value corresponding to this entry with the specified value.
+         * @throws NullPointerException if the value is null, due to hash table incompatibility
+         * for null values.
+         */
         @Override
         public Object setValue(Object value) {
-            this.value = value;
-            return this.value;
+            return hashTable.put(this.key, value);
         }
 
         @Override
         public int hashCode() {
             return (this.getKey() == null ? 0 : this.getKey().hashCode()) ^
-            (this.getValue()== null ? 0 : this.getValue().hashCode());
+            (this.getValue() == null ? 0 : this.getValue().hashCode());
         }
 
         @Override
@@ -123,8 +136,7 @@ public class MapAdapter implements HMap {
             if (!(o instanceof HMap.HEntry)) { return false; }
 
             HMap.HEntry e = (HMap.HEntry) o;
-            return  (this.getKey()==null ? e.getKey()==null : this.getKey().equals(e.getKey())) &&
-                    (this.getValue()==null ? e.getValue()==null : this.getValue().equals(e.getValue()));
+            return this.getKey().equals(e.getKey()) && this.getValue().equals(e.getValue());
         }
     }
 }
