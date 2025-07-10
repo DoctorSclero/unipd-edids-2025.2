@@ -59,6 +59,7 @@ public class MapAdapter implements HMap {
      * not supported from the underlying hash table.
      */
     public boolean containsKey(Object key) {
+        if (key == null) throw new NullPointerException();
         return hashTable.containsKey(key);
     }
 
@@ -93,11 +94,19 @@ public class MapAdapter implements HMap {
     }
 
     public Object put(Object key, Object value) {
+        if (key == this) throw new IllegalArgumentException();
         return hashTable.put(key, value);
     }
 
     public void putAll(HMap m) {
-        // TODO: implementation
+        if (m == null) throw new NullPointerException();
+
+        HSet entrySet = m.entrySet();
+        HIterator iter = entrySet.iterator();
+        while(iter.hasNext()) {
+            Entry current = (Entry)iter.next();
+            put(current.getKey(), current.getValue());
+        }
     }
 
     public Object remove(Object key) {
@@ -111,6 +120,96 @@ public class MapAdapter implements HMap {
     public HCollection values() {
         // TODO: implementation
         return null;
+    }
+
+    /**
+     * Provides a set like view for map entries, values and keys.
+     * for all view methods (listed in the 'see also' section
+     * of the documentation for this class).
+     * @see MapAdapter#entrySet()
+     * @see MapAdapter#keySet()
+     * @see MapAdapter#values()
+     */
+    public class SetView implements HSet {
+
+        @Override
+        public boolean add(Object o) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'add'");
+        }
+
+        @Override
+        public boolean addAll(HCollection c) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'addAll'");
+        }
+
+        @Override
+        public void clear() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'clear'");
+        }
+
+        @Override
+        public boolean contains(Object o) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'contains'");
+        }
+
+        @Override
+        public boolean containsAll(HCollection c) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'containsAll'");
+        }
+
+        @Override
+        public boolean isEmpty() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        }
+
+        @Override
+        public HIterator iterator() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+        }
+
+        @Override
+        public boolean remove(Object o) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        }
+
+        @Override
+        public boolean removeAll(HCollection c) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'removeAll'");
+        }
+
+        @Override
+        public boolean retainAll(HCollection c) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'retainAll'");
+        }
+
+        @Override
+        public int size() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'size'");
+        }
+
+        @Override
+        public Object[] toArray() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        }
+
+        @Override
+        public Object[] toArray(Object[] a) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'toArray'");
+        }
+
     }
 
 
