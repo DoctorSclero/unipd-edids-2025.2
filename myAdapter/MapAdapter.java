@@ -1,18 +1,32 @@
 package myAdapter;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-
 import myCompatibilityLayer.MockHashTable;
 
+/**
+ * Note: this implementation does not support null values and keys
+ * since the underlying hash table does not support them.
+ */
 public class MapAdapter implements HMap {
 
+    // Methods //
+
     private MockHashTable hashTable;
-    
+
+    // Constructors //
+
+    /**
+     * MapAdapter default constructor.
+     * Creates a new instance of the hash table for storing.
+     */
     public MapAdapter() {
         this.hashTable = new MockHashTable();
     }
 
+    /**
+     * MapAdapter constructor.
+     * Creates a new instance of the hash table given an initial capacity.
+     * @param initialCapacity The initial capacity of the hash table
+     */
     public MapAdapter(int initialCapacity) {
         this.hashTable = new MockHashTable(initialCapacity);
     }
@@ -25,17 +39,20 @@ public class MapAdapter implements HMap {
         return hashTable.contains(value);
     }
 
+    /**
+     * @throws NullPointerException if key is null since null values are
+     * not supported from the underlying hash table.
+     */
     public boolean containsKey(Object key) {
         return hashTable.containsKey(key);
     }
 
     public HSet entrySet() {
-
+        // TODO: implementation
         return null;
     }
 
     public boolean equals(Object o) {
-        //! Must check if it's a proper set
         if (!(o instanceof MapAdapter)) {
             return false;
         }
