@@ -1,4 +1,6 @@
 {
     "java.project.sourcePaths": ["."],
-    "editor.wordWrapColumn": 79,
+    "editor.wordWrapColumn": 80,
+    "prettier.proseWrap": "preserve",
+    "editor.rulers": [80]
 }
