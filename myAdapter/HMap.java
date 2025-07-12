@@ -291,7 +291,7 @@ public interface HMap {
      * {@code true} if the given object is also a map and the two Maps represent
      * the same mappings.  More formally, two maps {@code t1} and {@code t2}
      * represent the same mappings if
-     * {@code t1.entrySet().equals(t2.entrySet())}.  This ensures that the
+     * {@code t1.entrySet().equals(t2.entrySet())}. This ensures that the
      * {@code equals} method works properly across different implementations of
      * the {@code Map} interface.
      *
@@ -303,7 +303,7 @@ public interface HMap {
     // Comparison and hashing
 
     /**
-     * Returns the hash code value for this map.  The hash code of a map is
+     * Returns the hash code value for this map. The hash code of a map is
      * defined to be the sum of the hashCodes of each entry in the map's
      * entrySet view. This ensures that {@code t1.equals(t2)} implies that
      * {@code t1.hashCode()==t2.hashCode()} for any two maps {@code t1} and

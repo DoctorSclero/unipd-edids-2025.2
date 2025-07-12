@@ -195,6 +195,7 @@ public interface HSet extends HCollection {
      *                              {@code null}.
      * @see #contains(Object)
      */
+    @Override
     boolean containsAll(HCollection c);
 
     /**
