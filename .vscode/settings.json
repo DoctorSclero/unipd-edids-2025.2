@@ -1,6 +1,14 @@
 {
-    "java.project.sourcePaths": ["."],
+    "java.project.sourcePaths": [
+        "."
+    ],
     "editor.wordWrapColumn": 80,
     "prettier.proseWrap": "preserve",
-    "editor.rulers": [80]
+    "editor.rulers": [
+        80
+    ],
+    "java.project.referencedLibraries": [
+        "JUnit/junit-4.13.jar",
+        "JUnit/hamcrest-core-1.3.jar"
+    ]
 }
