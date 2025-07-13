@@ -1,6 +1,10 @@
 # test  suite for MapAdapter project
 Each test should test different environments. Namely:
-empty, few items (5-10), many items (100.000), performance (>MAX_INT), dynamic.
+ - empty
+ - few items (5-10)
+ - many items (100.000)
+ - performance (>MAX_INT)
+ - dynamic
 
 ## HMap (MapAdapter)
 
@@ -208,8 +212,8 @@ empty, few items (5-10), many items (100.000), performance (>MAX_INT), dynamic.
     - test middle
     - test end
 2. `Object next()`
-    - test with next
-    - test without next
+    - test with next element presence
+    - test without next element presence
 3. `void remove()`
     - test with next call
     - test without next call
