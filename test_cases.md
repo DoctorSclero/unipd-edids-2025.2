@@ -1,6 +1,6 @@
 # test  suite for MapAdapter project
 Each test should test different environments. Namely:
-empty, few items (5-10), many items/performance (100.000), dynamic.
+empty, few items (5-10), many items (100.000), performance (>MAX_INT), dynamic.
 
 ## HMap (MapAdapter)
 
@@ -37,6 +37,8 @@ empty, few items (5-10), many items/performance (100.000), dynamic.
     - test retrival key present middle
     - test retrival key present end
 7. `int hashCode()`
+    - test same map
+    - test different map
     - test equals implies same hash code
 8. `boolean isEmpty()`
     - test 
@@ -72,73 +74,142 @@ empty, few items (5-10), many items/performance (100.000), dynamic.
     - test present key end
 13. `int size()`
     - test
-    - verificare che se the map contains more than Integer.MAX_VALUE elements, size() returns Integer.MAX_VALUE
 14. `HCollection values()`
     - test return not null
     - [value collection test]
 
 ## HSet (EntrySet & KeySet)
-1. `int size();` 
+1. `int size()` 
     - test
-2. `boolean isEmpty();`
+2. `boolean isEmpty()`
     - test
-3. `boolean contains(Object o);`
+3. `boolean contains(Object o)`
     - test null element
     - test not contained element
     - test contained element start
     - test contained element middle
     - test contained element end
-4. `HIterator iterator();`
+4. `HIterator iterator()`
     - test return not null
     - [iterator tests]
-5. `Object[] toArray();`
+5. `Object[] toArray()`
     - test
-6. `Object[] toArray(Object a[]);`
+6. `Object[] toArray(Object a[])`
     - test null array
     - test array smaller 
     - test array bigger
-7. `boolean add(Object o);`
+7. `boolean add(Object o)`
     - test unsupported operation
-8. `boolean remove(Object o);`
+8. `boolean remove(Object o)`
     - test null element
     - test not contained element
     - test contained element start
     - test contained element middle
     - test contained element end
-9. `boolean containsAll(HCollection c);`
+9. `boolean containsAll(HCollection c)`
     - test null collection
     - test collection with null elements
     - test collection with same elements
     - test collection with some elements
     - test collection with more elements
     - test collection without common elements
-10. `boolean addAll(HCollection c);`
+10. `boolean addAll(HCollection c)`
     - test unsupported operation
-11. `boolean retainAll(HCollection c);`
+11. `boolean retainAll(HCollection c)`
     - test null collection
     - test collection with null elements
     - test collection with same elements
     - test collection with some elements
     - test collection with more elements
     - test collection without common elements
-12. `boolean removeAll(HCollection c);`
+12. `boolean removeAll(HCollection c)`
     - test null collection
     - test collection with null elements
     - test collection with same elements
     - test collection with some elements
     - test collection with more elements
     - test collection without common elements
-13. `void clear();`
+13. `void clear()`
     - test
-14. `boolean equals(Object o);`
-    - test
-15. `int hashCode();`
-    - test equals implies same hashcode
+14. `boolean equals(Object o)`
+    - test same set
+    - test different set
+15. `int hashCode()`
+    - test different set
+    - test same set
+    - test equals implies same hash code
 
 ## HCollection 
 
-## Iterator EntrySet
+1. `int size()` 
+    - test
+2. `boolean isEmpty()`
+    - test
+3. `boolean contains(Object o)`
+    - test null element
+    - test not contained element
+    - test contained element start
+    - test contained element middle
+    - test contained element end
+4. `HIterator iterator()`
+    - test return not null
+    - [iterator tests]
+5. `Object[] toArray()`
+    - test
+6. `Object[] toArray(Object a[])`
+    - test null array
+    - test array smaller 
+    - test array bigger
+7. `boolean add(Object o)`
+    - test unsupported operation
+8. `boolean remove(Object o)`
+    - test null element
+    - test not contained element
+    - test contained element start
+    - test contained element middle
+    - test contained element end
+9. `boolean containsAll(HCollection c)`
+    - test null collection
+    - test collection with null elements
+    - test collection with same elements
+    - test collection with some elements
+    - test collection with more elements
+    - test collection without common elements
+10. `boolean addAll(HCollection c)`
+    - test unsupported operation
+11. `boolean retainAll(HCollection c)`
+    - test null collection
+    - test collection with null elements
+    - test collection with same elements
+    - test collection with some elements
+    - test collection with more elements
+    - test collection without common elements
+12. `boolean removeAll(HCollection c)`
+    - test null collection
+    - test collection with null elements
+    - test collection with same elements
+    - test collection with some elements
+    - test collection with more elements
+    - test collection without common elements
+13. `void clear()`
+    - test
+14. `boolean equals(Object o)`
+    - test same collection
+    - test different collection
+15. `int hashCode()`
+    - test different collection
+    - test same collection
+    - test equals implies same hash code
 
-## Iterator KeySet
+## HIterator
 
-## Iterator ValuesCollection
+1. `boolean hasNext()`
+    - test start
+    - test middle
+    - test end
+2. `Object next()`
+    - test with next
+    - test without next
+3. `void remove()`
+    - test with next call
+    - test without next call
