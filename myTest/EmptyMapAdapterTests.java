@@ -4,7 +4,6 @@ import myAdapter.MapAdapter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.JUnitCore;
 
 import static org.junit.Assert.*;
 
@@ -92,6 +91,18 @@ public class EmptyMapAdapterTests {
     /**
      * Tests that the {@link MapAdapter#clear()} method call on an empty map
      * leaves the map empty.
+     *
+     * @test.design The test aims to verify that the {@link MapAdapter#clear()}
+     * method call on an empty map leaves the map empty when called on an empty
+     * map.
+     * @test.description The {@link MapAdapter#clear()} method is called on the
+     * empty map created in the {@link #setUp()} method. After the call the map
+     * is tested to be empty by asserting that {@link MapAdapter#isEmpty()}
+     * returns true and the size is 0.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The map is empty after the
+     * {@link MapAdapter#clear()} method call.
      */
     @Test
     public void testClear() {
@@ -99,4 +110,58 @@ public class EmptyMapAdapterTests {
         assertTrue(map.isEmpty());
         assertEquals(0, map.size());
     }
+
+    /**
+     * Tests that the {@link MapAdapter#containsValue(Object)} throws
+     * {@link NullPointerException} when called with null argument.
+     *
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#containsValue(Object)} method throws
+     * {@code NullPointerException} when called with null argument.
+     * @test.description The {@link MapAdapter#containsValue(Object)} method is
+     * called with null argument on the empty map created by the
+     * {@link #setUp()} method. Since the map does not accept null values, the
+     * method should throw {@code NullPointerException}.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#containsValue(Object)} method
+     * throws {@code NullPointerException} when called with null argument.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testContainsValueNull() {
+        map.containsValue(null);
+    }
+
+    /**
+     * Tests that the {@link MapAdapter#containsValue(Object)} method
+     * returns false when called with a value not present in the map.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#containsValue(Object)} method returns false when called
+     * on an empty map with a value not present.
+     * @test.description The {@link MapAdapter#containsValue(Object)} method is
+     * called with a value not present on the empty map created by the
+     * {@link #setUp()} method. Since the map is empty, the result of the method
+     * is asserted to be false.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#containsValue(Object)} method
+     * returns false when called with a value not present in the map.
+     */
+    @Test
+    public void testContainsValueNotPresent() {
+        assertFalse("Map should not contain value 'test' when empty: ", map.containsValue("test"));
+    }
+
+    /**
+     * Tests that the {@link MapAdapter#containsKey(Object)} method
+     * throws {@link NullPointerException} when called with null argument.
+     */
+    @Test
+    public void testContainsKeyNull() {
+        assertFalse("Map should not contain key null when empty: ", map.containsKey(null));
+    }
+
+
+
 }
