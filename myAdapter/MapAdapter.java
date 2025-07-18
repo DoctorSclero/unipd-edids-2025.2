@@ -1,8 +1,7 @@
 package myAdapter;
 
-import myCompatibilityLayer.MockHashTable;
-
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.NoSuchElementException;
 
 /**
@@ -24,7 +23,7 @@ public class MapAdapter implements HMap {
 
     // Methods //
 
-    private MockHashTable hashTable;
+    private Hashtable<Object,Object> hashTable;
 
     // Constructors //
 
