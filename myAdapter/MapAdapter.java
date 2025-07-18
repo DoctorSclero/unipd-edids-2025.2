@@ -1,8 +1,7 @@
 package myAdapter;
 
-import myCompatibilityLayer.MockHashTable;
-
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.NoSuchElementException;
 
 /**
@@ -24,7 +23,7 @@ public class MapAdapter implements HMap {
 
     // Methods //
 
-    private MockHashTable hashTable;
+    private Hashtable<Object,Object> hashTable;
 
     // Constructors //
 
@@ -33,7 +32,7 @@ public class MapAdapter implements HMap {
      * for data storing.
      */
     public MapAdapter() {
-        this.hashTable = new MockHashTable();
+        this.hashTable = new Hashtable<>();
     }
 
     /**
@@ -42,7 +41,7 @@ public class MapAdapter implements HMap {
      * @param initialCapacity The initial capacity of the underlying hash table
      */
     public MapAdapter(int initialCapacity) {
-        this.hashTable = new MockHashTable(initialCapacity);
+        this.hashTable = new Hashtable<>(initialCapacity);
     }
 
     /**
@@ -54,7 +53,7 @@ public class MapAdapter implements HMap {
      * @param map The map to copy the data from.
      */
     public MapAdapter(HMap map) {
-        this.hashTable = new MockHashTable();
+        this.hashTable = new Hashtable<>();
         putAll(map);
     }
 
