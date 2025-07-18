@@ -26,8 +26,7 @@ public class EmptyMapAdapterTests {
     public MapAdapter map;
 
     /**
-     * Test case setup procedure.
-     * Creates an empty MapAdapter instance.
+     * Test case setup procedure. Creates an empty MapAdapter instance.
      */
     @Before
     public void setUp() {
@@ -43,13 +42,51 @@ public class EmptyMapAdapterTests {
     }
 
     /**
-     * Tests that MapAdapter's default constructor creates a new empty adapter.
+     * Tests that MapAdapter's default constructor creates a new empty map
+     * without exceptions.
+     *
+     * @test.design The test aims to verify that the default constructor creates
+     * an empty map by creating a new instance and checking if the map is
+     * empty.
+     * @test.description The instance created in the {@link #setUp()} method is
+     * overwritten by a new one created by the default constructor of the
+     * MapAdapter. After creation the new instance is tested to be non-null and
+     * empty by asserting that {@link MapAdapter#isEmpty()} returns true on that
+     * instance and the same for the size.
+     * @test.precondition None
+     * @test.postcondition The map is created and is empty
+     * @test.expectedresults Map is created without exceptions, it's empty and
+     * has size 0.
      */
+    @Test
     public void testDefaultConstructor() {
         map = new MapAdapter();
         assertNotNull(map);
         assertTrue("Map should be empty with default construction: ", map.isEmpty());
         assertEquals("Map should have size 0 with default construction: ", 0, map.size());
+    }
+
+    /**
+     * Tests that MapAdapter's initial capacity constructor creates a new empty
+     * map without exceptions.
+     *
+     * @test.design The test aims to verify that the initial capacity
+     * constructor creates an empty map with the specified initial capacity by
+     * creating a new instance and checking that the newly created map is
+     * empty.
+     * @test.description The instance created in the {@link #setUp()} method is
+     * overwritten by a new one created by the initial capacity constructor of
+     * the MapAdapter. After creation the new instance is tested to be non-null
+     * and empty by asserting that {@link MapAdapter#isEmpty()} returns true on
+     * that instance and the same for the size.
+     * @test.precondition None
+     * @test.postcondition The map is created and is empty
+     * @test.expectedresults Map is created without exceptions, it's empty and
+     * has size 0.
+     */
+    @Test
+    public void testInitialCapacityConstructor() {
+        map = new MapAdapter(5);
     }
 
     /**
