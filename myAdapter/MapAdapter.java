@@ -365,10 +365,6 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this collection contains all of the elements
          * in the specified collection
          *
-         * @throws ClassCastException   if the types of one or more elements in
-         *                              the specified collection are
-         *                              incompatible with this collection
-         *                              (optional).
          * @throws NullPointerException if the specified collection contains one
          *                              or more null elements and this
          *                              collection does not support null
@@ -388,7 +384,7 @@ public class MapAdapter implements HMap {
 
         /**
          * Removes all this collection's elements that are also contained in the
-         * specified collection (optional operation).  After this call returns,
+         * specified collection (optional operation). After this call returns,
          * this collection will contain no elements in common with the specified
          * collection.
          *
@@ -396,13 +392,6 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this collection changed as a result of the
          * call
          *
-         * @throws UnsupportedOperationException if the {@code removeAll} method
-         *                                       is not supported by this
-         *                                       collection.
-         * @throws ClassCastException            if the types of one or more
-         *                                       elements in this collection are
-         *                                       incompatible with the specified
-         *                                       collection (optional).
          * @throws NullPointerException          if this collection contains one
          *                                       or more null elements and the
          *                                       specified collection does not
@@ -448,7 +437,7 @@ public class MapAdapter implements HMap {
             HIterator iter = iterator();
             while (iter.hasNext()) {
                 Object current = iter.next();
-                res |= remove(current);
+                if (!c.contains(current)) res |= remove(current);
             }
             return res;
         }
@@ -514,9 +503,6 @@ public class MapAdapter implements HMap {
          *          the same runtime type is allocated for this purpose.
          * @return an array containing the elements of this collection
          *
-         * @throws ArrayStoreException  the runtime type of the specified array
-         *                              is not a supertype of the runtime type
-         *                              of every element in this collection.
          * @throws NullPointerException if the specified array is {@code null}.
          */
         @Override
@@ -532,6 +518,31 @@ public class MapAdapter implements HMap {
             if (i < res.length) res[i] = null;
 
             return res;
+        }
+
+        /**
+         * Returns the hash code value for this set.  The hash code of a set is
+         * defined to be the sum of the hash codes of the elements in the set,
+         * where the hashcode of a {@code null} element is defined to be zero.
+         * This ensures that <code>s1.equals(s2)</code> implies that
+         * <code>s1.hashCode()==s2.hashCode()</code> for any two sets
+         * <code>s1</code> and <code>s2</code>, as required by the general
+         * contract of the {@code Object.hashCode} method.
+         *
+         * @return the hash code value for this set.
+         *
+         * @see Object#hashCode()
+         * @see Object#equals(Object)
+         * @see HSet#equals(Object)
+         */
+        @Override
+        public int hashCode() {
+            int hash = 0;
+            HIterator i = iterator();
+            while (i.hasNext()) {
+                hash += i.next().hashCode();
+            }
+            return hash;
         }
 
     }
@@ -590,31 +601,6 @@ public class MapAdapter implements HMap {
             HEntry entry = (HEntry) o;
             if (contains(entry)) return hashTable.remove(entry) != null;
             return false;
-        }
-
-        /**
-         * Returns the hash code value for this set.  The hash code of a set is
-         * defined to be the sum of the hash codes of the elements in the set,
-         * where the hashcode of a {@code null} element is defined to be zero.
-         * This ensures that <code>s1.equals(s2)</code> implies that
-         * <code>s1.hashCode()==s2.hashCode()</code> for any two sets
-         * <code>s1</code> and <code>s2</code>, as required by the general
-         * contract of the {@code Object.hashCode} method.
-         *
-         * @return the hash code value for this set.
-         *
-         * @see Object#hashCode()
-         * @see Object#equals(Object)
-         * @see HSet#equals(Object)
-         */
-        @Override
-        public int hashCode() {
-            int hash = 0;
-            HIterator i = iterator();
-            while (i.hasNext()) {
-                hash += i.next().hashCode();
-            }
-            return hash;
         }
 
         /**

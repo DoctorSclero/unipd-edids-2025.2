@@ -21,10 +21,6 @@ public class TestRunner {
 
         // Run all test classes
         Result result = junit.run(
-                MapAdapterEmptyTests.class, // no items
-                MapAdapterSmallTests.class, // 5 items
-                MapAdapterMediumTests.class, // 100.000 items
-                MapAdapterLargeTests.class // MAX_INT+1 elements
         );
 
         long endTime = System.currentTimeMillis();

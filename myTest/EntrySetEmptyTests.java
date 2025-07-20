@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import java.util.Map;
-
 import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.Entry;
 import myAdapter.MapAdapter.EntrySet;
@@ -273,7 +271,7 @@ public class EntrySetEmptyTests {
      * @test.description The {@link EntrySet#add(Object)} method is called with
      * a string as an argument on the entry set created by the {@link #setUp()}
      * method. Since the entry set is a view of an empty map, the method should
-     * throw an UnsupportedOperationException as adding elements to an empty
+     * throw an UnsupportedOperationException as adding elements to an 
      * entry set is not allowed.
      * @test.precondition The map and the entry set are correctly instantiated
      * @test.postcondition The map is still empty

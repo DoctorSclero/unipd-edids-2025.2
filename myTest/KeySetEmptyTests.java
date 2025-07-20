@@ -6,10 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import java.util.Map;
-
 import myAdapter.MapAdapter;
-import myAdapter.MapAdapter.Entry;
 import myAdapter.MapAdapter.KeySet;
 
 /**
@@ -34,7 +31,7 @@ public class KeySetEmptyTests {
     /**
      * Sets up the test environment by initializing an empty MapAdapter
      * through the MapAdapter's default constructor and creating an KeySet
-     * instance obtaining its entry set view.
+     * instance obtaining its key set view.
      */
     @Before
     public void setUp() {
@@ -103,9 +100,9 @@ public class KeySetEmptyTests {
      * when null is passed as an argument as not supported by the underlying
      * map implementation.
      * @test.description The {@link KeySet#contains(Object)} method is called
-     * with null as an argument on the entry set. Since the underlying map does
+     * with null as an argument on the key set. Since the underlying map does
      * not support null keys, it should throw a NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#contains(Object)} method throws
      * NullPointerException when null is passed as an argument.
@@ -123,14 +120,14 @@ public class KeySetEmptyTests {
      * {@link KeySet#contains(Object)} method returns false when a non-contained
      * element is passed as an argument.
      * @test.description To create a non-contained element, a new
-     * MapAdapter instance is created, and an entry is added to it. The entry is
-     * then extracted using the entry set view of the new map. The
-     * {@link KeySet#contains(Object)} method is called with this entry on the
-     * original entry set. Since the original map is empty, the method should
+     * MapAdapter instance is created, and an key is added to it. The key is
+     * then extracted using the key set view of the new map. The
+     * {@link KeySet#contains(Object)} method is called with this key on the
+     * original key set. Since the original map is empty, the method should
      * return false.
-     * @test.precondition The map and the entry set are correctly instantiated.
-     * Another MapAdapter instance is created with an entry and the entry is then
-     * extracted from its entry set.
+     * @test.precondition The map and the key set are correctly instantiated.
+     * Another MapAdapter instance is created with an key and the key is then
+     * extracted from its key set.
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#contains(Object)} method returns false
      * when a non-contained element is passed as an argument.
@@ -141,33 +138,33 @@ public class KeySetEmptyTests {
         anotherMap.put("key", "value");
 
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
-        Entry entry = (Entry)anotherKeySet.iterator().next();
+        Object key = anotherKeySet.iterator().next();
 
         assertFalse("Key set should not contain non-contained element",
-                keySet.contains(entry));
+                keySet.contains(key));
     }
 
     // KeySet.iterator()
 
     /**
      * Tests that the {@link KeySet#iterator()} method returns a non-null
-     * iterator for an empty entry set.
+     * iterator for an empty key set.
      * 
      * @test.design The test aims to verify that the
      * {@link KeySet#iterator()} method returns a non-null iterator for an
-     * empty entry set.
+     * empty key set.
      * @test.description The {@link KeySet#iterator()} method is called on the
-     * entry set created by the {@link #setUp()} method. Since the entry set
+     * key set created by the {@link #setUp()} method. Since the key set
      * is empty, the method should return a non-null iterator that
      * iterates over no elements.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#iterator()} method returns a
-     * non-null iterator for an empty entry set.
+     * non-null iterator for an empty key set.
      */
     @Test
     public void testIteratorNotNull() {
-        assertNotNull("Iterator of an empty entry set should not be null",
+        assertNotNull("Iterator of an empty key set should not be null",
                 keySet.iterator());
     }
 
@@ -175,24 +172,24 @@ public class KeySetEmptyTests {
 
     /**
      * Tests that the {@link KeySet#toArray()} method returns a non-null
-     * array for an empty entry set.
+     * array for an empty key set.
      * 
      * @test.design The test aims to verify that the
      * {@link KeySet#toArray()} method returns a non-null array for an empty
-     * entry set.
+     * key set.
      * @test.description The {@link KeySet#toArray()} method is called on the
-     * entry set created by the {@link #setUp()} method. Since the entry set
+     * key set created by the {@link #setUp()} method. Since the key set
      * is empty, the method should return a non-null array with a length of 0.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#toArray()} method returns a
-     * non-null array for an empty entry set.
+     * non-null array for an empty key set.
      */
     @Test
     public void testToArray() {
         Object[] array = keySet.toArray();
         assertNotNull("toArray() should return a non-null array", array);
-        assertEquals("toArray() should return an empty array for an empty entry set",
+        assertEquals("toArray() should return an empty array for an empty key set",
                 0, array.length);
     }
 
@@ -206,10 +203,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#toArray(Object[])} method throws a NullPointerException
      * when null is passed as an argument.
      * @test.description The {@link KeySet#toArray(Object[])} method is called
-     * with null as an argument on the entry set created by the {@link #setUp()}
+     * with null as an argument on the key set created by the {@link #setUp()}
      * method. Since the method does not support null arrays, it should throw
      * a NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#toArray(Object[])} method throws
      * {@link NullPointerException} when null is passed as an argument.
@@ -231,9 +228,9 @@ public class KeySetEmptyTests {
      * method does not overwrite the elements of the array. The format for the
      * flags is {@code "flag-i"} where {@code i} is the index of the element.
      * The {@link KeySet#toArray(Object[])} method is then called with this array
-     * as an argument. Since the entry set is empty, the method should return
+     * as an argument. Since the key set is empty, the method should return
      * the bigger passed array without overwriting its elements.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#toArray(Object[])} method 
      * returns an array of 
@@ -246,7 +243,7 @@ public class KeySetEmptyTests {
         }
         Object[] result = keySet.toArray(array);
         assertNotNull("toArray(T[]) should return a non-null array", result);
-        assertEquals("toArray(T[]) should return an empty array for an empty entry set",
+        assertEquals("toArray(T[]) should return an empty array for an empty key set",
                 5, result.length);
         assertSame("toArray(T[]) should return the same array passed as argument",
                 array, result);
@@ -265,20 +262,20 @@ public class KeySetEmptyTests {
     
     /**
      * Tests that the {@link KeySet#add(Object)} method throws an
-     * UnsupportedOperationException when called on an empty entry set.
+     * UnsupportedOperationException when called on an empty key set.
      * 
      * @test.design The test aims to verify that the
      * {@link KeySet#add(Object)} method throws an UnsupportedOperationException
-     * when called on an empty entry set.
+     * when called on an empty key set.
      * @test.description The {@link KeySet#add(Object)} method is called with
-     * a string as an argument on the entry set created by the {@link #setUp()}
-     * method. Since the entry set is a view of an empty map, the method should
-     * throw an UnsupportedOperationException as adding elements to an empty
-     * entry set is not allowed.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * a string as an argument on the key set created by the {@link #setUp()}
+     * method. Since the key set is a view of an empty map, the method should
+     * throw an UnsupportedOperationException as adding elements to a
+     * key set is not allowed.
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#add(Object)} method throws an
-     * UnsupportedOperationException when called on an empty entry set.
+     * UnsupportedOperationException when called on an empty key set.
      */
     @Test (expected = UnsupportedOperationException.class)
     public void testAdd() {
@@ -295,10 +292,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#remove(Object)} method throws a NullPointerException
      * when null is passed as an argument.
      * @test.description The {@link KeySet#remove(Object)} method is called
-     * with null as an argument on the entry set created by the {@link #setUp()}
+     * with null as an argument on the key set created by the {@link #setUp()}
      * method. Since the method does not support null keys, it should throw a
      * NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#remove(Object)} method throws
      * NullPointerException when null is passed as an argument.
@@ -315,14 +312,14 @@ public class KeySetEmptyTests {
      * @test.design The test aims to verify that the
      * {@link KeySet#remove(Object)} method returns false
      * when a non-contained element is passed as an argument since it has
-     * no effect on the entry set.
+     * no effect on the key set.
      * @test.description The {@link KeySet#remove(Object)} method is called
-     * with a string that is not contained in the entry set on the entry set
-     * created by the {@link #setUp()} method. Since the entry set is empty,
+     * with a string that is not contained in the key set on the key set
+     * created by the {@link #setUp()} method. Since the key set is empty,
      * the method should return false, indicating that the element was not
-     * contained in the entry set. Since the entry set is backed by the map,
+     * contained in the key set. Since the key set is backed by the map,
      * the map should remain empty after the operation.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#remove(Object)} method returns
      * false when a non-contained element is passed as an argument.
@@ -332,7 +329,7 @@ public class KeySetEmptyTests {
         assertFalse("remove(Object) should return false for non-contained elements",
                 keySet.remove("nonContainedElement"));
         assertEquals("Map should have size 0 after removing non-contained element", 0, map.size());
-        assertTrue("Entry set should be empty after removing non-contained element",
+        assertTrue("Key set should be empty after removing non-contained element",
                 keySet.isEmpty());
     }
 
@@ -346,10 +343,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#containsAll(HCollection)} method throws a NullPointerException
      * when null is passed as an argument.
      * @test.description The {@link KeySet#containsAll(HCollection)} method is called
-     * with null as an argument on the entry set created by the {@link #setUp()}
+     * with null as an argument on the key set created by the {@link #setUp()}
      * method. Since the method does not accept null collections, it should
      * throw a NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#containsAll(HCollection)} method throws
      * NullPointerException when null is passed as an argument.
@@ -367,10 +364,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#containsAll(HCollection)} method returns true when an
      * empty collection is passed as an argument.
      * @test.description The {@link KeySet#containsAll(HCollection)} method is
-     * called with an empty collection on the entry set created by the
-     * {@link #setUp()} method. Since the entry set is empty, it should contain
+     * called with an empty collection on the key set created by the
+     * {@link #setUp()} method. Since the key set is empty, it should contain
      * all elements of the empty collection, and the method should return true.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#containsAll(HCollection)} method
      * returns true when an empty collection is passed as an argument.
@@ -379,8 +376,8 @@ public class KeySetEmptyTests {
     public void testContainsAllSameElements() {
         MapAdapter anotherMap = new MapAdapter();
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
-        
-        assertTrue("Entry set should contain all elements of the same entry set",
+
+        assertTrue("Key set should contain all elements of the same key set",
                 keySet.containsAll(anotherKeySet));
     }
 
@@ -395,11 +392,11 @@ public class KeySetEmptyTests {
      * @test.description The {@link KeySet#containsAll(HCollection)} method is
      * called with a collection (for this test another MapAdapter's KeySet
      * containing two entries: "key1"->"value1" and "key2"->"value2") 
-     * that contains more elements than the entry set
-     * created by the {@link #setUp()} method. Since the entry set is empty,
+     * that contains more elements than the key set
+     * created by the {@link #setUp()} method. Since the key set is empty,
      * it should not contain all elements of the collection, and the method
      * should return false.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#containsAll(HCollection)} method
      * returns false when a collection with more elements is passed as an argument.
@@ -410,7 +407,7 @@ public class KeySetEmptyTests {
         anotherMap.put("key1", "value1");
         anotherMap.put("key2", "value2");
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
-        assertFalse("Entry set should not contain all elements of another entry set with more elements",
+        assertFalse("Key set should not contain all elements of another key set with more elements",
                 keySet.containsAll(anotherKeySet));
     }
 
@@ -425,13 +422,13 @@ public class KeySetEmptyTests {
      * UnsupportedOperationException when called on an
      * HCollection.
      * @test.description The {@link KeySet#addAll(HCollection)} method is
-     * called with another MapAdapter's entry set on the entry set created by
+     * called with another MapAdapter's key set on the key set created by
      * the {@link #setUp()} method. Since the method is not supported by the
-     * entry set view it should throw an UnsupportedOperationException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * key set view it should throw an UnsupportedOperationException.
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#addAll(HCollection)} method
-     * throws an UnsupportedOperationException when called on an empty entry set.
+     * throws an UnsupportedOperationException when called on an empty key set.
      */
     @Test (expected = UnsupportedOperationException.class)
     public void testAddAll() {
@@ -449,10 +446,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#retainAll(HCollection)} method throws a NullPointerException
      * when null is passed as an argument.
      * @test.description The {@link KeySet#retainAll(HCollection)} method is
-     * called with null as an argument on the entry set created by the
+     * called with null as an argument on the key set created by the
      * {@link #setUp()} method. Since the method does not accept null arguments,
      * it should throw a NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#retainAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
@@ -472,10 +469,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#removeAll(HCollection)} method throws a NullPointerException
      * when null is passed as an argument.
      * @test.description The {@link KeySet#removeAll(HCollection)} method is
-     * called with null as an argument on the entry set created by the
+     * called with null as an argument on the key set created by the
      * {@link #setUp()} method. Since the method does not accept null arguments,
      * it should throw a NullPointerException.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#removeAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
@@ -488,79 +485,79 @@ public class KeySetEmptyTests {
     // KeySet.clear()
 
     /**
-     * Tests that the {@link KeySet#clear()} method clears the entry set
+     * Tests that the {@link KeySet#clear()} method clears the key set
      * and leaves the underlying map empty.
      * 
      * @test.design The test aims to verify that the
-     * {@link KeySet#clear()} method clears the entry set and leaves the
+     * {@link KeySet#clear()} method clears the key set and leaves the
      * underlying map empty.
      * @test.description The {@link KeySet#clear()} method is called on the
-     * entry set created by the {@link #setUp()} method. Since the entry set
-     * is backed by the underlying map, clearing the entry set should also
+     * key set created by the {@link #setUp()} method. Since the key set
+     * is backed by the underlying map, clearing the key set should also
      * clear the map.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#clear()} method clears the
-     * entry set and leaves the underlying map empty.
+     * key set and leaves the underlying map empty.
      */
     @Test
     public void testClear() {
-        // Clear the entry set
+        // Clear the key set
         keySet.clear();
         
         // Verify that the size is still 0
-        assertEquals("Size of entry set should be 0 after clear", 0, keySet.size());
-        assertTrue("Entry set should be empty after clear", keySet.isEmpty());
-        
+        assertEquals("Size of key set should be 0 after clear", 0, keySet.size());
+        assertTrue("Key set should be empty after clear", keySet.isEmpty());
+
         // Verify that the map is still empty
-        assertEquals("Map should have size 0 after clearing entry set", 0, map.size());
-        assertTrue("Map should be empty after clearing entry set", map.isEmpty());
+        assertEquals("Map should have size 0 after clearing key set", 0, map.size());
+        assertTrue("Map should be empty after clearing key set", map.isEmpty());
     }
 
     // KeySet.equals(Object)
 
     /**
      * Tests that the {@link KeySet#equals(Object)} method returns true
-     * when an entry set with the same entries is passed as an argument.
+     * when an key set with the same entries is passed as an argument.
      * 
      * @test.design The test aims to verify that the
-     * {@link KeySet#equals(Object)} method returns true when an entry set
+     * {@link KeySet#equals(Object)} method returns true when an key set
      * with the same entries is passed as an argument.
      * @test.description A new empty MapAdapter instance is created, and its
-     * entry set is obtained. The {@link KeySet#equals(Object)} method is
-     * called on the entry set created by the {@link #setUp()} method the new
+     * key set is obtained. The {@link KeySet#equals(Object)} method is
+     * called on the key set created by the {@link #setUp()} method the new
      * one. Since it contains the same entries (none), the method should return
      * true.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#equals(Object)} method returns
-     * true when an entry set with the same entries is passed as an argument.
+     * true when an key set with the same entries is passed as an argument.
      */
     @Test
     public void testEqualsSameSet() {
         MapAdapter anotherMap = new MapAdapter();
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
-        
-        assertTrue("Entry set should be equal to another entry set with the same entries",
+
+        assertTrue("Key set should be equal to another key set with the same entries",
                 keySet.equals(anotherKeySet));
     }
 
     /**
      * Tests that the {@link KeySet#equals(Object)} method returns false
-     * when an entry set with different entries is passed as an argument.
+     * when an key set with different entries is passed as an argument.
      * 
      * @test.design The test aims to verify that the
-     * {@link KeySet#equals(Object)} method returns false when an entry set
+     * {@link KeySet#equals(Object)} method returns false when an key set
      * with different entries is passed as an argument.
-     * @test.description A new MapAdapter instance is created with an entry
-     * ("key", "value"). Its entry set is obtained, and the
-     * {@link KeySet#equals(Object)} method is called on the entry set
+     * @test.description A new MapAdapter instance is created with an key
+     * ("key", "value"). Its key set is obtained, and the
+     * {@link KeySet#equals(Object)} method is called on the key set
      * created by the {@link #setUp()} method and the new one. Since it
      * contains different entries, the method should return false.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#equals(Object)} method returns
-     * false when an entry set with different entries is passed as an argument.
+     * false when an key set with different entries is passed as an argument.
      */
     @Test
     public void testEqualsDifferentSet() {
@@ -568,7 +565,7 @@ public class KeySetEmptyTests {
         anotherMap.put("key", "value");
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
 
-        assertFalse("Entry set should not be equal to another entry set with different entries",
+        assertFalse("Key set should not be equal to another key set with different entries",
                 keySet.equals(anotherKeySet));
     }
 
@@ -580,10 +577,10 @@ public class KeySetEmptyTests {
      * {@link KeySet#equals(Object)} method returns false when the argument
      * is not an KeySet.
      * @test.description The {@link KeySet#equals(Object)} method is called
-     * with a String as an argument on the entry set created by the
+     * with a String as an argument on the key set created by the
      * {@link #setUp()} method. Since the argument is not an KeySet,
      * the method should return false.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#equals(Object)} method returns
      * false when the argument is not an KeySet.
@@ -592,7 +589,7 @@ public class KeySetEmptyTests {
     public void testEqualsNotASet() {
         // Test that the equals method returns false when the argument is not an KeySet
         String notASet = "This is not a set";
-        assertFalse("Entry set should not be equal to a non-KeySet object",
+        assertFalse("Key set should not be equal to a non-KeySet object",
                 keySet.equals(notASet));
     }
 
@@ -600,43 +597,43 @@ public class KeySetEmptyTests {
 
     /**
      * Tests that the {@link KeySet#hashCode()} method returns 0
-     * for an empty entry set.
+     * for an empty key set.
      * 
      * @test.design The test aims to verify that the
-     * {@link KeySet#hashCode()} method returns 0 for an empty entry set
+     * {@link KeySet#hashCode()} method returns 0 for an empty key set
      * since it has no entries.
      * @test.description The {@link KeySet#hashCode()} method is called
-     * on the entry set created by the {@link #setUp()} method. Since the
-     * entry set is empty, the method should return 0.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * on the key set created by the {@link #setUp()} method. Since the
+     * key set is empty, the method should return 0.
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#hashCode()} method returns 0
-     * for an empty entry set.
+     * for an empty key set.
      */
     @Test
     public void testHashCode() {
-        int expectedHashCode = 0; // Since the entry set is empty
-        assertEquals("Entry set hash code should be " + expectedHashCode,
+        int expectedHashCode = 0; // Since the key set is empty
+        assertEquals("Key set hash code should be " + expectedHashCode,
                 expectedHashCode, keySet.hashCode());
     }
 
     /**
      * Tests that the {@link KeySet#hashCode()} method returns
-     * different hash codes for different entry sets.
+     * different hash codes for different key sets.
      * 
      * @test.design The test aims to verify that the
      * {@link KeySet#hashCode()} method returns different hash codes
-     * for different entry sets, even if they are both empty.
-     * @test.description A new MapAdapter instance is created with an entry
-     * ("key", "value"). Its entry set is obtained, and the
+     * for different key sets, even if they are both empty.
+     * @test.description A new MapAdapter instance is created with an key
+     * ("key", "value"). Its key set is obtained, and the
      * {@link KeySet#hashCode()} method is called on the
-     * entry set created by the {@link #setUp()} method and the new one.
-     * Since the entry sets are different, the method should return
+     * key set created by the {@link #setUp()} method and the new one.
+     * Since the key sets are different, the method should return
      * different hash codes.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#hashCode()} method returns
-     * different hash codes for different entry sets.
+     * different hash codes for different key sets.
      */
     @Test
     public void testHashCodeDifferentSets() {
@@ -644,57 +641,57 @@ public class KeySetEmptyTests {
         anotherMap.put("key", "value");
         KeySet anotherKeySet = (KeySet) anotherMap.keySet();
 
-        // The hash codes of the two entry sets should be different
-        assertNotEquals("Hash codes of different entry sets should not be equal",
+        // The hash codes of the two key sets should be different
+        assertNotEquals("Hash codes of different key sets should not be equal",
                 keySet.hashCode(), anotherKeySet.hashCode());
     }
 
     /**
      * Tests that the {@link KeySet#hashCode()} method returns
-     * the same hash code for the same entry set.
+     * the same hash code for the same key set.
      * 
      * @test.design The test aims to verify that the
      * {@link KeySet#hashCode()} method returns the same hash code
-     * for the same entry set.
+     * for the same key set.
      * @test.description The {@link KeySet#hashCode()} method is called
-     * on the entry set created by the {@link #setUp()} method and another
-     * instance of the same entry set.
+     * on the key set created by the {@link #setUp()} method and another
+     * instance of the same key set.
      * Since both instances are views of the same empty map,
      * the method should return the same hash code.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#hashCode()} method returns
-     * the same hash code for the same entry set.
+     * the same hash code for the same key set.
      */
     @Test
     public void testHashCodeSameSet() {
-        // Create another instance of the same entry set
+        // Create another instance of the same key set
         KeySet anotherKeySet = (KeySet) map.keySet();
-        assertEquals("Hash codes of the same entry set should be equal",
+        assertEquals("Hash codes of the same key set should be equal",
                 keySet.hashCode(), anotherKeySet.hashCode());
     }
 
     /**
      * Tests that the {@link KeySet#equals(Object)} method
-     * implies that the hash codes of the entry sets are equal.
+     * implies that the hash codes of the key sets are equal.
      * 
-     * @test.design The test aims to verify that if two entry sets
+     * @test.design The test aims to verify that if two key sets
      * are equal, their hash codes should also be equal.
      * @test.description The {@link KeySet#equals(Object)} method is
-     * called on the entry set created by the {@link #setUp()} method with itself
-     * as an argument. Since it is the same entry set, the method should
+     * called on the key set created by the {@link #setUp()} method with itself
+     * as an argument. Since it is the same key set, the method should
      * return true. The {@link KeySet#hashCode()} method is then called on
-     * both entry sets, and their hash codes should be equal.
-     * @test.precondition The map and the entry set are correctly instantiated
+     * both key sets, and their hash codes should be equal.
+     * @test.precondition The map and the key set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link KeySet#equals(Object)} method
-     * implies that the hash codes of the entry sets are equal.
+     * implies that the hash codes of the key sets are equal.
      */
     @Test
     public void testEqualsImpliesHashCode() {
-        assertEquals("Entry sets with same elements should be equal",
+        assertEquals("Key sets with same elements should be equal",
                 keySet, keySet);
-        assertEquals("Hash codes of equal entry sets should be equal",
+        assertEquals("Hash codes of equal key sets should be equal",
                 keySet.hashCode(), keySet.hashCode());
     }
 }
