@@ -565,11 +565,7 @@ public class MapAdapter implements HMap {
          * @param o element whose presence in this set is to be tested.
          * @return {@code true} if this set contains the specified element.
          *
-         * @throws ClassCastException   if the type of the specified element is
-         *                              incompatible with this set (optional).
-         * @throws NullPointerException if the specified element is null and
-         *                              this set does not support null elements
-         *                              (optional).
+         * @throws NullPointerException if the specified element is null
          */
         @Override
         public boolean contains(Object o) {
@@ -593,15 +589,8 @@ public class MapAdapter implements HMap {
          * @param o object to be removed from this set, if present.
          * @return true if the set contained the specified element.
          *
-         * @throws ClassCastException            if the type of the specified
-         *                                       element is incompatible with
-         *                                       this set (optional).
          * @throws NullPointerException          if the specified element is
-         *                                       null and this set does not
-         *                                       support null elements
-         *                                       (optional).
-         * @throws UnsupportedOperationException if the {@code remove} method is
-         *                                       not supported by this set.
+         *                                       null
          */
         @Override
         public boolean remove(Object o) {

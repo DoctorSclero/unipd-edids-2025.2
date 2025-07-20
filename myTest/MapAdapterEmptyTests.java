@@ -1,5 +1,6 @@
 package myTest;
 
+import myAdapter.HMap;
 import myAdapter.MapAdapter;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import static org.junit.Assert.*;
  * @test.libraries JUnit 4.13, Hamcrest 1.3
  * @see myAdapter.MapAdapter
  */
-public class EmptyMapAdapterTests {
+public class MapAdapterEmptyTests {
 
     public MapAdapter map;
 
@@ -686,11 +687,155 @@ public class EmptyMapAdapterTests {
         assertEquals("Map size should be 1 after put: ", 1, map.size());
     }
 
+    // MapAdapter.putAll()
+
     /**
-     * TODO: decide if it is necessary to block Map instances as keys or values.
+     * Tests that the {@link MapAdapter#putAll(Map)} method throws
+     * {@link NullPointerException} when called with null argument.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#putAll(Map)} method throws
+     * {@link NullPointerException} when called with null argument.
+     * @test.description The {@link MapAdapter#putAll(Map)} method is called
+     * with null argument on the empty map created by the {@link #setUp()} method.
+     * The result is asserted to throw a {@link NullPointerException}, as null
+     * maps are not supported.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#putAll(Map)} method
+     * throws {@link NullPointerException} when called with null argument.
      */
-    @Test (expected = IllegalArgumentException.class)
-    public void testPutMapInstanceAsKey() {
-        map.put(map, "value");
+    @Test (expected = NullPointerException.class)
+    public void testPutAllNullArgument() {
+        map.putAll(null);
     }
+
+    /**
+     * Tests that the {@link MapAdapter#putAll(Map)} method
+     * adds new mappings from another map to the empty map.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#putAll(Map)} method adds new mappings from another map
+     * to the empty map.
+     * @test.description A new map is created with the
+     * {@link MapAdapter} default constructor then three mappings (for
+     * this test: "key1" -> "value1", "key2" -> "value2", "key3" -> "value3") are
+     * added to it. The {@link MapAdapter#putAll(Map)} method is then called with
+     * this new map as an argument. The map with the new mappings is then
+     * checked to contain the new mappings by asserting that all the values
+     * are correctly mapped to their respective keys, the map is not empty
+     * after the putAll operation and the size is asserted to be 3.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map contains the new mappings: "key1" -> "value1",
+     * "key2" -> "value2", "key3" -> "value3".
+     * @test.expectedresults The {@link MapAdapter#putAll(Map)} method
+     * adds new mappings from another map to the empty map, and the map is not
+     * empty after the putAll operation.
+     * The size of the map should be 3 after the putAll operation.
+     */
+    @Test
+    public void testPutAllNewMappings() {
+        HMap newMappings = new MapAdapter();
+        newMappings.put("key1", "value1");
+        newMappings.put("key2", "value2");
+        newMappings.put("key3", "value3");
+
+        map.putAll(newMappings);
+
+        assertEquals("Map should contain value for key 'key1': ", "value1", map.get("key1"));
+        assertEquals("Map should contain value for key 'key2': ", "value2", map.get("key2"));
+        assertEquals("Map should contain value for key 'key3': ", "value3", map.get("key3"));
+        assertFalse("Map should not be empty after putAll: ", map.isEmpty());
+        assertEquals("Map size should be 3 after putAll: ", 3, map.size());
+    }
+
+    // MapAdapter.remove()
+
+    /**
+     * Tests that the {@link MapAdapter#remove(Object)} method
+     * throws {@link NullPointerException} when called with null key.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#remove(Object)} method throws
+     * {@link NullPointerException} when called with null key.
+     * @test.description The {@link MapAdapter#remove(Object)} method is called
+     * with null key on the empty map created by the {@link #setUp()} method.
+     * Since the map does not accept null keys, the method should throw
+     * {@link NullPointerException}.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#remove(Object)} method
+     * throws {@link NullPointerException} when called with null key.
+     */
+    @Test(expected = NullPointerException.class)
+    public void testRemoveNullKey() {
+        map.remove(null);
+    }
+
+    /**
+     * Tests that the {@link MapAdapter#remove(Object)} method
+     * returns null when called with a key not present in the map.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#remove(Object)} method returns null when called with a
+     * key not present in the map.
+     * @test.description The {@link MapAdapter#remove(Object)} method is called
+     * on the empty map created by the {@link #setUp()} method with a key not
+     * present in the map. Since the map does not contain the key,
+     * the method should return null.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#remove(Object)} method
+     * returns null when called with a key not present in the map.
+     */
+    @Test
+    public void testRemoveKeyNotPresent() {
+        // Tests that removing a key not present in the map returns null
+        assertNull("Removing a key not present should return null: ", map.remove("nonexistentKey"));
+        // The map should still be empty after the remove operation
+        assertTrue("Map should still be empty after removing a key not present: ", map.isEmpty());
+    }
+
+    // MapAdapter.size()
+
+    /**
+     * Tests that the {@link MapAdapter#size()} method returns 0 for an empty map.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#size()} method returns 0 for an empty map.
+     * @test.description The {@link MapAdapter#size()} method is called on the
+     * empty map created by the {@link #setUp()} method. Since the map is empty,
+     * the method should return 0.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#size()} method returns 0
+     * for an empty map.
+     */
+    @Test
+    public void testSize() {
+        assertEquals("Size of empty map should be 0: ", 0, map.size());
+    }
+
+    // MapAdapter.values()
+
+    /**
+     * Tests that the {@link MapAdapter#values()} method returns a non-null collection.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#values()} method returns a non-null collection.
+     * @test.description The {@link MapAdapter#values()} method is called on the
+     * empty map created by the {@link #setUp()} method. A non-null collection
+     * should be always returned, even for an empty map so the return value is
+     * asserted to be not null.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#values()} method returns a
+     * non-null collection.
+     */
+    @Test
+    public void testValuesNotNull() {
+        // Tests that the values collection is not null for an empty map
+        assertNotNull("Values collection should not be null for an empty map: ", map.values());
+    }
+
 }

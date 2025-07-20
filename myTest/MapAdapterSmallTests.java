@@ -15,6 +15,6 @@ import myAdapter.HMap;
  * @test.libraries JUnit 4.13, Hamcrest 2.3
  * @see myAdapter.MapAdapter
  */
-public class SmallSizeMapAdapterTests {
+public class MapAdapterSmallTests {
 
 }

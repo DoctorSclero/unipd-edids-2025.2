@@ -14,6 +14,6 @@ package myTest;
  * @test.libraries JUnit 4.13, Hamcrest 1.3
  * @see myAdapter.MapAdapter
  */
-public class MediumSizeMapAdapterTests {
+public class MapAdapterMediumTests {
 
 }
