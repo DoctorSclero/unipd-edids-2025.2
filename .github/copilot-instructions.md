@@ -1,10 +1,52 @@
-# test suite for MapAdapter project
+
+# .copilot-instructions.md
+
+## Project Overview
+This project implements adapters for the Java 2 Collections Framework (J2SE 1.4.2) interfaces (Map, Collection, Set, Iterator) to work in a Java Micro Edition (CLDC 1.1) environment. The adapters allow code written for J2SE 1.4.2 collections to run on CLDC 1.1, using only the features available in CLDC 1.1.
+
+## Adapter Implementation Requirements
+- All adapters and interfaces must be in the package `myAdapter` (no subpackages).
+- Do not use Java's built-in Map, Collection, Set, or Iterator interfaces or classes directly. Instead, define local interfaces named `HMap`, `HCollection`, `HSet`, and `HIterator`, each matching the methods and behavior of their J2SE 1.4.2 counterparts.
+- The main adapter class must be `MapAdapter`, which adapts the CLDC 1.1 `Hashtable` to the `HMap` interface.
+- Implement all required and optional operations as specified in the J2SE 1.4.2 documentation, including correct view backing and iterator behavior.
+- All iterators must be in `myAdapter` and implement `HIterator`, including all optional operations.
+- Use only features and APIs available in CLDC 1.1 for all adapter code.
+
+## Coding Conventions
+- Use standard Java naming conventions (CamelCase for classes, camelCase for methods and variables).
+- Write clear JavaDoc comments for all public classes and methods, including @param, @return, and @throws where appropriate.
+- Keep code modular and avoid large monolithic methods.
+- Prefer interfaces and abstractions where possible.
+- Ensure all code is readable and well-documented.
+
+## Testing
+- Use Test Driven Development (TDD): define and implement JUnit test cases for all classes and features.
+- All tests must be in the `myTest` package (no subpackages).
+- Test classes should be named according to the class or feature they test (e.g., `MapAdapterEmptyTests.java`).
+- Use JUnit 4.13 (provided in the `JUnit/` folder).
+- Provide a `TestRunner` class in `myTest` that can be run from the command line, executes all tests, and reports the total number of tests, failures, and execution time.
+- All documentation must be included in the final submission as Javadoc and must be clear and easy to read.
+
+## Packaging & Submission
+- The project must be organized so it can be compiled and run from the command line.
+- The final submission must be a zip file containing the required folder structure, all source code, tests, and documentation.
+- The JUnit framework jars must be included in a `JUnit/` folder at the root of the project.
+
+## Additional Notes
+- The adapter and its methods must behave exactly as described in the J2SE 1.4.2 documentation.
+- All optional operations must be implemented.
+- Iterator behavior and view backing must be compliant with J2SE 1.4.2.
+- If unsure, prefer clarity and correctness over cleverness.
+- Being in CLDC 1.1, we cannot use features like generics, reflection, or advanced collections. Focus on simplicity and correctness.
+
+## Test Cases
+
 Each test should test different environments. Namely:
- [-] empty
- [ ] few items (5-10)
- [ ] many items (100.000)
- [ ] performance (>MAX_INT)
- [ ] dynamic
+[-] empty
+[ ] few items (5-10)
+[ ] many items (100.000)
+[ ] performance (>MAX_INT)
+[ ] dynamic
 
 ## HMap (MapAdapter)
 
@@ -144,7 +186,7 @@ Each test should test different environments. Namely:
     [x] test predictable [empty, few items, many items, dynamic]
     [x] test different set [few items, many items, dynamic]
     [x] test same set [few items, many items, dynamic]
-    [ ] test equals implies same hash code [few items, many items, dynamic]
+    [x] test equals implies same hash code [few items, many items, dynamic]
 
 ## HCollection
 
