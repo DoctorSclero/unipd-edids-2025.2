@@ -4,6 +4,8 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
+import myAdapter.MapAdapter.KeySet;
+
 /**
  * TestRunner is a utility class that executes JUnit tests for the ListAdapter,
  * Iterator, and ListIterator classes.
@@ -21,6 +23,18 @@ public class TestRunner {
 
         // Run all test classes
         Result result = junit.run(
+            EntryIteratorEmptyTests.class,
+            EntryIteratorPopulatedTests.class,
+            KeyIteratorEmptyTests.class,
+            KeyIteratorPopulatedTests.class,
+            ValueIteratorEmptyTests.class,
+            ValueIteratorPopulatedTests.class,
+            KeySetEmptyTests.class,
+            KeySetPopulatedTests.class,
+            ValueCollectionEmptyTests.class,
+            ValueCollectionPopulatedTests.class,
+            MapAdapterEmptyTests.class,
+            MapAdapterPopulatedTests.class
         );
 
         long endTime = System.currentTimeMillis();
