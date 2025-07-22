@@ -585,6 +585,7 @@ public class ValueCollectionEmptyTests {
      * @test.expectedresults The {@link ValueCollection#equals(Object)} method returns
      * false when the argument is not an ValueCollection.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsNotASet() {
         // Test that the equals method returns false when the argument is not an ValueCollection

@@ -26,26 +26,17 @@ public class MapAdapterPopulatedTests {
     public MapAdapter map;
 
     /**
-     * Test case setup procedure. Creates an empty MapAdapter instance.
-     * Then populates it with 100 items, each with a unique key and value.
-     * The format for the inserted key-value pairs is {@code "key" + k} for
-     * {@code 0 <= k < 100} as key and {@code "value" + v} for
-     * {@code 0 <= v < 100} as value.
+     * Sets up the test environment by creating a MapAdapter instance
+     * and populating it with 100 entries, where keys are "key0" to "key99"
+     * and values are "value0" to "value49" (values repeat every 50 keys)
+     * to ensure correct behavior with duplicate values.
      */
     @Before
     public void setUp() {
         map = new MapAdapter();
         for (int i = 0; i < 100; i++) {
-            map.put("key" + i, "value" + i);
+            map.put("key" + i, "value" + (i % 50)); // Values repeat every 50 keys
         }
-    }
-
-    /**
-     * Test case tear-down procedure.
-     */
-    @After
-    public void tearDown() {
-        map = null;
     }
 
     // MapAdapter.clear()
@@ -162,7 +153,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testContainsValuePresentMiddle() {
-        assertTrue("Map should contain value 'value50': ", map.containsValue("value50"));
+        assertTrue("Map should contain value 'value49': ", map.containsValue("value49"));
     }
 
     /**
@@ -185,7 +176,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testContainsValuePresentEnd() {
-        assertTrue("Map should contain value 'value99': ", map.containsValue("value99"));
+        assertTrue("Map should contain value 'value49': ", map.containsValue("value49"));
     }
 
     // MapAdapter.containsKey()
@@ -360,6 +351,7 @@ public class MapAdapterPopulatedTests {
      * @test.expectedresults The {@link MapAdapter#equals(Object)} method
      * returns false when compared to a non-map object.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsWithNonMapObject() {
         assertFalse("Map should not be equal to non-map object: ", map.equals("test"));
@@ -415,7 +407,7 @@ public class MapAdapterPopulatedTests {
     public void testEqualsWithSameMappingsDifferentOrder() {
         MapAdapter anotherMap = new MapAdapter();
         for (int i = 99; i >= 0; i--) {
-            anotherMap.put("key" + i, "value" + i);
+            anotherMap.put("key" + i, "value" + (i % 50));
         }
         assertTrue("Two maps with the same mappings should be equal: ", map.equals(anotherMap));
     }
@@ -588,7 +580,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testGetWithKeyPresentMiddle() {
-        assertEquals("Get should return 'value50' for key 'key50': ", "value50", map.get("key50"));
+        assertEquals("Get should return 'value49' for key 'key49': ", "value49", map.get("key49"));
     }
 
     /**
@@ -611,7 +603,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testGetWithKeyPresentEnd() {
-        assertEquals("Get should return 'value99' for key 'key99': ", "value99", map.get("key99"));
+        assertEquals("Get should return 'value49' for key 'key99': ", "value49", map.get("key99"));
     }
 
     // MapAdapter.hashCode()
@@ -631,7 +623,7 @@ public class MapAdapterPopulatedTests {
      * @test.precondition The map is correctly instantiated and populated
      * with mappings with key "key" + i and value "value" + i for
      * {@code 0 <= i < 100}.
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#hashCode()} method
      * returns the same value for two empty maps.
      */
@@ -639,7 +631,7 @@ public class MapAdapterPopulatedTests {
     public void testHashCodeWithSameMappings() {
         MapAdapter anotherEmptyMap = new MapAdapter();
         for (int i = 0; i < 100; i++) {
-            anotherEmptyMap.put("key" + i, "value" + i);
+            anotherEmptyMap.put("key" + i, "value" + (i % 50));
         }
         assertEquals("Hash code of two empty maps should be the same: ", map.hashCode(), anotherEmptyMap.hashCode());
     }
@@ -659,7 +651,7 @@ public class MapAdapterPopulatedTests {
      * @test.precondition The map is correctly instantiated and populated
      * with mappings with key "key" + i and value "value" + i for
      * {@code 0 <= i < 100}.
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#hashCode()} method
      * returns different values for two maps with different mappings.
      */
@@ -683,7 +675,7 @@ public class MapAdapterPopulatedTests {
      * the empty map created by the {@link #setUp()} method. The result is
      * asserted to be true, as an empty map should be considered empty.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#isEmpty()} method
      * returns true for an empty map.
      */
@@ -706,7 +698,7 @@ public class MapAdapterPopulatedTests {
      * asserted to be non-null, as the key set should always be available,
      * even for an empty map.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#keySet()} method
      * returns a non-null set when called on an empty map.
      */
@@ -751,7 +743,7 @@ public class MapAdapterPopulatedTests {
      * @test.description The {@link MapAdapter#put(Object, Object)} method is
      * called with a null key and a valid value on the empty map created by the
      * {@link #setUp()} method. The exception is caught and the map is
-     * asserted to have not changed by checking that it's still empty, ensuring
+     * asserted to have not changed by checking that it's unchanged, ensuring
      * strong guarantees.
      * @test.precondition The map is correctly instantiated
      * @test.postcondition The map is unchanged
@@ -783,7 +775,7 @@ public class MapAdapterPopulatedTests {
      * {@link #setUp()} method. The result is asserted to throw a
      * {@link NullPointerException}, as null values are not supported.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#put(Object, Object)} method
      * throws {@link NullPointerException} when called with a valid key and a null
      * value.
@@ -805,10 +797,10 @@ public class MapAdapterPopulatedTests {
      * @test.description The {@link MapAdapter#put(Object, Object)} method is
      * called with a valid key and a null value on the empty map created by the
      * {@link #setUp()} method. Exception is caught and the map is asserted to
-     * have not changed by checking that it's still empty, ensuring strong
+     * have not changed by checking that it's unchanged, ensuring strong
      * guarantees.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#put(Object, Object)} method
      * does not change the map when called with a valid key and a null value,
      * ensuring strong guarantees that the map remains empty.
@@ -836,7 +828,7 @@ public class MapAdapterPopulatedTests {
      * {@link #setUp()} method. The result is asserted to throw a
      * {@link NullPointerException}, as null keys and values are not supported.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#put(Object, Object)} method
      * throws {@link NullPointerException} when called with both key and value
      * as null.
@@ -857,10 +849,10 @@ public class MapAdapterPopulatedTests {
      * @test.description The {@link MapAdapter#put(Object, Object)} method is
      * called with both key and value as null on the empty map created by the
      * {@link #setUp()} method. The exception is caught and the map is asserted
-     * to have not changed by checking that it's still empty, ensuring strong
+     * to have not changed by checking that it's unchanged, ensuring strong
      * guarantees.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#put(Object, Object)} method
      * does not change the map when called with both key and value as null,
      * ensuring strong guarantees.
@@ -875,7 +867,7 @@ public class MapAdapterPopulatedTests {
 
         assertEquals("Map should be unchanged after put with null key and value: ", 100, map.size());
         for (int i = 0; i < 100; i++) {
-            assertEquals("Map should still contain value for key 'key" + i + "': ", "value" + i, map.get("key" + i));
+            assertEquals("Map should still contain value for key 'key" + i + "': ", "value" + (i % 50), map.get("key" + i));
         }
     }
 
@@ -958,7 +950,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testPutPresentKeyMiddle() {
-        assertEquals("Map should return 'value50' when putting a present key in the middle: ", "value50", map.put("key50", "newValue"));
+        assertEquals("Map should return 'value0' when putting a present key in the middle: ", "value0", map.put("key50", "newValue"));
         assertEquals("Map should contain the new value for the key 'key50': ", "newValue", map.get("key50"));
         assertFalse("Map should not be empty after put: ", map.isEmpty());
         assertEquals("Map size should remain 100 after put: ", 100, map.size());
@@ -987,7 +979,7 @@ public class MapAdapterPopulatedTests {
      */
     @Test
     public void testPutPresentKeyEnd() {
-        assertEquals("Map should return 'value99' when putting a present key at end: ", "value99", map.put("key99", "newValue"));
+        assertEquals("Map should return 'value49' when putting a present key at end: ", "value49", map.put("key99", "newValue"));
         assertEquals("Map should contain the new value for the key 'key99': ", "newValue", map.get("key99"));
         assertFalse("Map should not be empty after put: ", map.isEmpty());
         assertEquals("Map size should remain 100 after put: ", 100, map.size());
@@ -1007,7 +999,7 @@ public class MapAdapterPopulatedTests {
      * The result is asserted to throw a {@link NullPointerException}, as null
      * maps are not supported.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#putAll(Map)} method
      * throws {@link NullPointerException} when called with null argument.
      */
@@ -1186,7 +1178,7 @@ public class MapAdapterPopulatedTests {
      * The result is asserted to throw a {@link NullPointerException}, as null
      * keys are not supported.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#remove(Object)} method
      * throws {@link NullPointerException} when called with a null key.
      */
@@ -1207,7 +1199,7 @@ public class MapAdapterPopulatedTests {
      * present in the map. Since the map does not contain the key,
      * the method should return null.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#remove(Object)} method
      * returns null when called with a key not present in the map.
      */
@@ -1230,7 +1222,8 @@ public class MapAdapterPopulatedTests {
      * called with a key that is present at the start of the map
      * (created by the {@link #setUp()} method). The result is asserted to be
      * the value associated with the key.
-     * @test.postcondition The map should still contain 100 elements.
+     * @test.postcondition The mapping "key0" -> "value0" should be removed
+     * from the map.
      * @test.expectedresults The {@link MapAdapter#remove(Object)} method
      * removes the key and returns the associated value.
      */
@@ -1254,14 +1247,15 @@ public class MapAdapterPopulatedTests {
      * called with a key that is present in the middle of the map
      * (created by the {@link #setUp()} method). The result is asserted to be
      * the value associated with the key.
-     * @test.postcondition The map should still contain 100 elements.
+     * @test.postcondition The mapping "key50" -> "value50" should be removed
+     * from the map.
      * @test.expectedresults The {@link MapAdapter#remove(Object)} method
      * removes the key and returns the associated value.
      */
     @Test
     public void testRemoveKeyPresentMiddle() {
         // Tests that removing a key present in the middle of the map works correctly
-        assertEquals("Removing key 'key50' should return 'value50': ", "value50", map.remove("key50"));
+        assertEquals("Removing key 'key50' should return 'value0': ", "value0", map.remove("key50"));
         assertNull("Key 'key50' should no longer be present in the map: ", map.get("key50"));
         assertFalse("Map should not be empty after removing a key: ", map.isEmpty());
         assertEquals("Map size should be 99 after removing a key: ", 99, map.size());
@@ -1278,14 +1272,15 @@ public class MapAdapterPopulatedTests {
      * called with a key that is present at the end of the map
      * (created by the {@link #setUp()} method). The result is asserted to be
      * the value associated with the key.
-     * @test.postcondition The map should still contain 100 elements.
+     * @test.postcondition The mapping "key99" -> "value99" should be removed 
+     * from the map.
      * @test.expectedresults The {@link MapAdapter#remove(Object)} method
      * removes the key and returns the associated value.
      */
     @Test
     public void testRemoveKeyPresentEnd() {
         // Tests that removing a key present at the end of the map works correctly
-        assertEquals("Removing key 'key99' should return 'value99': ", "value99", map.remove("key99"));
+        assertEquals("Removing key 'key99' should return 'value49': ", "value49", map.remove("key99"));
         assertNull("Key 'key99' should no longer be present in the map: ", map.get("key99"));
         assertFalse("Map should not be empty after removing a key: ", map.isEmpty());
         assertEquals("Map size should be 99 after removing a key: ", 99, map.size());
@@ -1302,7 +1297,7 @@ public class MapAdapterPopulatedTests {
      * map created by the {@link #setUp()} method. The result is asserted to be
      * equal to 100, as the map was populated with 100 items.
      * @test.precondition The map is correctly instantiated and populated with 100 items
-     * @test.postcondition The map size is still 100
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link MapAdapter#size()} method returns the
      * correct size of the map.
      */

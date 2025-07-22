@@ -586,6 +586,7 @@ public class EntrySetEmptyTests {
      * @test.expectedresults The {@link EntrySet#equals(Object)} method returns
      * false when the argument is not an EntrySet.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsNotASet() {
         // Test that the equals method returns false when the argument is not an EntrySet

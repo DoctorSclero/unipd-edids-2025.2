@@ -289,6 +289,7 @@ public class MapAdapterEmptyTests {
      * @test.expectedresults The {@link MapAdapter#equals(Object)} method
      * returns false when compared to a non-map object.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsWithNonMapObject() {
         assertFalse("Map should not be equal to non-map object: ", map.equals("test"));

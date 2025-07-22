@@ -1,0 +1,571 @@
+package myTest;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+import myAdapter.MapAdapter;
+import myAdapter.MapAdapter.Entry;
+import myAdapter.MapAdapter.EntrySet;
+
+
+/**
+ * This test case tests the EntrySet class instances linked to a populated map.
+ * Every method of the EntrySet class is tested to ensure the class
+ * implementation serves correctly as a view for maps with multiple entries.
+ * For each method, tests are created to ensure correct behavior in normal and
+ * edge cases, including correct handling of contained and non-contained elements,
+ * correct throwing of exceptions, and correct return values and side effects
+ * on the underlying map.
+ *
+ * @test.design This test case aims to verify the correct behavior of populated
+ * entry set instances to ensure it correctly serves as a set view for maps with
+ * entries and implements correctly the {@link myAdapter.HSet} interface.
+ * @test.libraries JUnit 4.13, Hamcrest 1.3
+ */
+public class EntrySetPopulatedTests {
+
+    public MapAdapter map;
+    public EntrySet entrySet;
+
+    
+    /**
+     * Sets up the test environment by creating a MapAdapter instance
+     * and populating it with 100 entries, where keys are "key0" to "key99"
+     * and values are "value0" to "value49" (values repeat every 50 keys)
+     * to ensure correct behavior with duplicate values.
+     */
+    @Before
+    public void setUp() {
+        map = new MapAdapter();
+        for (int i = 0; i < 100; i++) {
+            map.put("key" + i, "value" + (i%50)); // Values repeat every 50 keys
+        }
+        entrySet = (EntrySet) map.entrySet();
+    }
+
+    // EntrySet.size()
+
+    /**
+     * Tests the size method of the EntrySet class.
+     *
+     * @test.design Verifies that the size method correctly returns the number of entries in the set.
+     * @test.description This test ensures that the size method accurately reflects the number of entries in the EntrySet. The test initializes a populated map with 100 entries and checks that the size method returns 100.
+     * @test.preconditions The EntrySet instance must be initialized and populated with 100 entries.
+     * @test.postconditions The size method should return the correct number of entries in the set.
+     * @test.expectedResults The size method should return 100.
+     */
+    @Test
+    public void testSize() {
+        assertEquals("Size of the key set should be 100", 100, entrySet.size());
+    }
+    
+    // EntrySet.isEmpty()
+
+    /**
+     * Tests the isEmpty method of the EntrySet class.
+     *
+     * @test.design Verifies that the isEmpty method correctly identifies whether the set is empty.
+     * @test.description This test ensures that the isEmpty method returns false for a populated EntrySet. The test initializes a populated map and checks that the isEmpty method returns false.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The isEmpty method should return false.
+     * @test.expectedResults The isEmpty method should return false for a populated EntrySet.
+     */
+    @Test
+    public void testIsEmpty() {
+        assertFalse("Entry set should not be empty", entrySet.isEmpty());
+    }
+
+    // EntrySet.contains(Object)
+
+    /**
+     * Tests the contains method of the EntrySet class with a null argument.
+     *
+     * @test.design Verifies that the contains method throws a NullPointerException when passed a null argument.
+     * @test.description This test ensures that the contains method handles null arguments correctly by throwing a NullPointerException. The test calls the contains method with a null argument and expects an exception.
+     * @test.preconditions The EntrySet instance must be initialized.
+     * @test.postconditions A NullPointerException should be thrown when the contains method is called with a null argument.
+     * @test.expectedResults The contains method should throw a NullPointerException when passed a null argument.
+     */
+    @Test (expected = NullPointerException.class)
+    public void testContainsNull() {
+        entrySet.contains(null);
+    }
+
+    /**
+     * Tests the contains method of the EntrySet class with a non-contained element.
+     *
+     * @test.design Verifies that the contains method correctly identifies elements not present in the EntrySet.
+     * @test.description This test ensures that the contains method returns false for an element not present in the EntrySet. A new map is created with a single entry, and the contains method is called with this entry on the original EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return false for non-contained elements.
+     * @test.expectedResults The contains method should return false for an element not present in the EntrySet.
+     */
+    @Test
+    public void testContainsNotContainedElement() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key", "value");
+
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Entry entry = (Entry) anotherEntrySet.iterator().next();
+
+        assertFalse("Entry set should not contain non-contained element",
+                entrySet.contains(entry));
+    }
+
+    @Test
+    public void testContainsContainedElementStart() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value0");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        Entry entry = (Entry) anotherEntrySet.iterator().next();
+        assertTrue("Entry set should contain the first element",
+                entrySet.contains(entry));
+    }
+
+    @Test
+    public void testContainsContainedElementMiddle() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key49", "value49");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Entry entry = (Entry) anotherEntrySet.iterator().next();
+        assertTrue("Entry set should contain a middle element",
+                entrySet.contains(entry));
+    }
+
+    @Test
+    public void testContainsContainedElementEnd() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key99", "value49");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Entry entry = (Entry) anotherEntrySet.iterator().next();
+        assertTrue("Entry set should contain the last element",
+                entrySet.contains(entry));
+    }
+
+    @Test
+    public void testContainsContainedEntryValueNotContained() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value1");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Entry entry = (Entry) anotherEntrySet.iterator().next();
+        assertFalse("Entry set should contain such entry with key contained and value not contained",
+                entrySet.contains(entry));
+    }
+
+    @Test
+    public void testContainsNotAnEntry() {
+        assertFalse("Entry set should not contain a non-entry object",
+                entrySet.contains("nonEntryObject"));
+    }
+
+    // EntrySet.iterator()
+
+    
+    @Test
+    public void testIteratorNotNull() {
+        assertNotNull("Iterator of an key set should not be null",
+                entrySet.iterator());
+    }
+
+    // EntrySet.toArray()
+
+    
+    @Test
+    public void testToArray() {
+        Object[] array = entrySet.toArray();
+        assertNotNull("toArray() should return a non-null array", array);
+        assertEquals("toArray() should return an array for an empty key set",
+                100, array.length);
+    }
+
+    // EntrySet.toArray(T[])
+
+    
+    @Test (expected = NullPointerException.class)
+    public void testToArrayNullArray() {
+        entrySet.toArray(null);
+    }
+
+    
+    @Test
+    public void testToArrayWithSmallerArray() {
+        Object[] array = new Object[5];
+        Object[] result = entrySet.toArray(array);
+        assertNotNull("toArray(T[]) should return a non-null array", result);
+        assertEquals("toArray(T[]) should return a new array containing all the keys in the key set",
+                100, result.length);
+        assertNotSame("toArray(T[]) should return a new array, not the one passed as argument",
+                array, result);
+    }
+
+    @Test
+    public void testToArrayWithLargerArray() {
+        Object[] array = new Object[200];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = "flag-" + i;
+        }
+        Object[] result = entrySet.toArray(array);
+        assertNotNull("toArray(T[]) should return a non-null array", result);
+        assertEquals("toArray(T[]) should return an array for an empty key set",
+                200, result.length);
+        assertSame("toArray(T[]) should return the same array passed as argument",
+                array, result);
+        assertNull("toArray(T[]) should have a null terminator at position 100", result[100]);
+        assertEquals("The 101st element should not be modified",
+                "flag-101", result[101]);
+    }
+
+    // EntrySet.add(Object)
+    
+    
+    @Test (expected = UnsupportedOperationException.class)
+    public void testAdd() {
+        entrySet.add("baguette");
+    }
+
+    // EntrySet.remove(Object)
+
+    
+    @Test (expected = NullPointerException.class)
+    public void testRemoveNull() {
+        entrySet.remove(null);
+    }
+
+    
+    @Test
+    public void testRemoveNonContained() {
+        assertFalse("remove(Object) should return false for non-contained elements",
+                entrySet.remove("nonContainedElement"));
+        assertEquals("Map should have size 100 after removing non-contained element", 100, map.size());
+        assertFalse("Entry set shouldn't be empty after removing non-contained element",
+                entrySet.isEmpty());
+    }
+
+    @Test
+    public void testRemoveContainedStart() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value0");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Object key = anotherEntrySet.iterator().next();
+        
+        assertTrue("remove(Object) should return true for contained elements",
+                entrySet.remove(key));
+        assertFalse("Entry set should not contain the removed element",
+                entrySet.contains(key));
+        assertEquals("Map should have size 99 after removing an element", 99, map.size());
+    }
+
+    @Test
+    public void testRemoveContainedMiddle() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key50", "value50");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Object key = anotherEntrySet.iterator().next();
+        
+        assertTrue("remove(Object) should return true for contained elements",
+                entrySet.remove(key));
+        assertFalse("Entry set should not contain the removed element",
+                entrySet.contains(key));
+        assertEquals("Map should have size 99 after removing an element", 99, map.size());
+    }
+
+    @Test
+    public void testRemoveContainedEnd() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key99", "value99");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Object key = anotherEntrySet.iterator().next();
+        
+        assertTrue("remove(Object) should return true for contained elements",
+                entrySet.remove(key));
+        assertFalse("Entry set should not contain the removed element",
+                entrySet.contains(key));
+        assertEquals("Map should have size 99 after removing an element", 99, map.size());
+    }
+
+    // EntrySet.containsAll(HCollection)
+
+    
+    @Test (expected = NullPointerException.class)
+    public void testContainsAllNull() {
+        entrySet.containsAll(null);
+    }
+
+    @Test
+    public void testContainsAllSomeElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value0");
+        anotherMap.put("key49", "value49");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertTrue("Entry set should contain all elements of another key set with some elements",
+                entrySet.containsAll(anotherEntrySet));
+    }
+    
+    @Test
+    public void testContainsAllSameElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertTrue("Entry set should contain all elements of the same key set",
+                entrySet.containsAll(anotherEntrySet));
+    }
+
+    
+    @Test
+    public void testContainsAllMoreElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        for (int i = 0; i < 200; i++) {
+            anotherMap.put("key" + i, "value" + i);
+        }
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        assertFalse("Entry set should not contain all elements of another key set with more elements",
+                entrySet.containsAll(anotherEntrySet));
+    }
+
+    @Test
+    public void testContainsAllNoCommonElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key200", "value200");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertFalse("Entry set should not contain all elements of another key set with no common elements",
+                entrySet.containsAll(anotherEntrySet));
+    }
+
+    // EntrySet.addAll(HCollection)
+
+    
+    @Test (expected = UnsupportedOperationException.class)
+    public void testAddAll() {
+        MapAdapter anotherMap = new MapAdapter();
+        entrySet.addAll(anotherMap.entrySet());
+    }
+
+    // EntrySet.retainAll(HCollection)
+
+    
+    @Test (expected = NullPointerException.class)
+    public void testRetainAllNull() {
+        entrySet.retainAll(null);
+    }
+
+    @Test
+    public void testRetainAllSameElements() {
+        MapAdapter anotherMap = new MapAdapter(map);
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Retain all elements that are in the same key set
+        assertFalse("RetainAll should have no effect with same elements",
+                entrySet.retainAll(anotherEntrySet));
+        
+        // Verify that the key set is unchanged
+        assertEquals("Size of key set should remain 100 after retainAll with same elements",
+                100, entrySet.size());
+    }
+
+    @Test
+    public void testRetainAllSomeElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value0");
+        anotherMap.put("key49", "value49");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Retain only the elements that are in the another key set
+        assertTrue("RetainAll should return true for some elements",
+                entrySet.retainAll(anotherEntrySet));
+        
+        // Verify that the size is reduced to 2
+        assertEquals("Size of key set should be 2 after retainAll with some elements",
+                2, entrySet.size());
+    }
+
+    @Test
+    public void testRetainAllMoreElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        for (int i = 0; i < 200; i++) {
+            anotherMap.put("key" + i, "value" + (i % 50)); // Values repeat every 50 keys
+        }
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Retain only the elements that are in the another key set
+        assertFalse("RetainAll should return false for more elements",
+                entrySet.retainAll(anotherEntrySet));
+        
+        // Verify that the size remains unchanged
+        assertEquals("Size of key set should remain 100 after retainAll with more elements",
+                100, entrySet.size());
+    }
+
+    @Test
+    public void testRetainAllNoCommonElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key200", "value200");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Retain only the elements that are in the another key set
+        assertTrue("RetainAll should return true for no common elements",
+                entrySet.retainAll(anotherEntrySet));
+        
+        // Verify that the size is reduced to 0
+        assertEquals("Size of key set should be 0 after retainAll with no common elements",
+                0, entrySet.size());
+    }
+
+    // EntrySet.removeAll(HCollection)
+
+    
+    @Test (expected = NullPointerException.class)
+    public void testRemoveAllNull() {
+        entrySet.removeAll(null);
+    }
+
+    @Test
+    public void testRemoveAllSameElements() {
+        MapAdapter anotherMap = new MapAdapter(map);
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Remove all elements that are in the same key set
+        assertTrue("Set should have changed after removeAll with same elements",
+                entrySet.removeAll(anotherEntrySet));
+        
+        // Verify that the key set is unchanged
+        assertEquals("Size should be 0 after removeAll with same elements",
+                0, entrySet.size());
+    }
+
+    @Test
+    public void testRemoveAllSomeElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key0", "value0");
+        anotherMap.put("key50", "value50");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Remove only the elements that are in the another key set
+        assertTrue("RemoveAll should return true for some elements",
+                entrySet.removeAll(anotherEntrySet));
+        
+        // Verify that the size is reduced to 98
+        assertEquals("Size of key set should be 98 after removeAll with some elements",
+                98, entrySet.size());
+    }
+
+    @Test
+    public void testRemoveAllMoreElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        for (int i = 0; i < 200; i++) {
+            anotherMap.put("key" + i, "value" + i);
+        }
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Remove only the elements that are in the another key set
+        assertTrue("RemoveAll should return true for more elements",
+                entrySet.removeAll(anotherEntrySet));
+        
+        // Verify that the size remains unchanged
+        assertEquals("Size of key set should remain 100 after removeAll with more elements",
+                0, entrySet.size());
+    }
+
+    @Test
+    public void testRemoveAllNoCommonElements() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key200", "value200");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // Remove only the elements that are in the another key set
+        assertFalse("RemoveAll should return false for no common elements",
+                entrySet.removeAll(anotherEntrySet));
+
+        // Verify that the size is reduced to 0
+        assertEquals("Size of key set should be 0 after removeAll with no common elements",
+                100, entrySet.size());
+    }
+
+    // EntrySet.clear()
+
+    
+    @Test
+    public void testClear() {
+        // Clear the key set
+        entrySet.clear();
+        
+        // Verify that the size is still 0
+        assertEquals("Size of key set should be 0 after clear", 0, entrySet.size());
+        assertTrue("Entry set should be after clear", entrySet.isEmpty());
+
+        // Verify that the map is still empty
+        assertEquals("Map should have size 0 after clearing key set", 0, map.size());
+        assertTrue("Map should be after clearing key set", map.isEmpty());
+    }
+
+    // EntrySet.equals(Object)
+
+    
+    @Test
+    public void testEqualsSameSet() {
+        MapAdapter anotherMap = new MapAdapter(map);
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertTrue("Entry set should be equal to another key set with the same entries",
+                entrySet.equals(anotherEntrySet));
+    }
+
+    
+    @Test
+    public void testEqualsDifferentSet() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key", "value");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertFalse("Entry set should not be equal to another key set with different entries",
+                entrySet.equals(anotherEntrySet));
+    }
+    
+    @Test
+    public void testEqualsDifferentSetSameSize() {
+        MapAdapter anotherMap = new MapAdapter();
+        for (int i = 0; i < 100; i++) {
+            anotherMap.put("key" + i, "value" + (i + 1)); // Different values
+        }
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        assertFalse("Entry set should not be equal to another key set with different entries",
+                entrySet.equals(anotherEntrySet));
+    }
+
+    @SuppressWarnings("unlikely-arg-type")
+    @Test
+    public void testEqualsNotASet() {
+        // Test that the equals method returns false when the argument is not an EntrySet
+        String notASet = "This is not a set";
+        assertFalse("Entry set should not be equal to a non-EntrySet object",
+                entrySet.equals(notASet));
+    }
+
+    // EntrySet.hashCode()
+
+    @Test
+    public void testHashCodeDifferentSets() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key", "value");
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+
+        // The hash codes of the two key sets should be different
+        assertNotEquals("Hash codes of different key sets should not be equal",
+                entrySet.hashCode(), anotherEntrySet.hashCode());
+    }
+
+    
+    @Test
+    public void testHashCodeSameSet() {
+        // Create another instance of the same key set
+        EntrySet anotherEntrySet = (EntrySet) map.entrySet();
+        assertEquals("Hash codes of the same key set should be equal",
+                entrySet.hashCode(), anotherEntrySet.hashCode());
+    }
+
+}

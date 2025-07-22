@@ -11,6 +11,16 @@ import java.util.NoSuchElementException;
  * {@code NullPointerException} will be thrown on all methods for which that is
  * expected. All the optional operations are implemented thus no methods of this
  * class will throw {@code UnsupportedOperationException}
+ * 
+ * <p>
+ * Note: This implementation does not check for insertion of the map instance,
+ * subclasses instances or views as keys or values in the map.
+ * Extreme caution is advised: if the key or value is an instance of this class,
+ * any of its subclasses or views, calls to methods that do calculations based
+ * on the contents of the map may lead to infinite recursion and consequently
+ * a {@code StackOverflowError}. Some examples of such a method are
+ * {@link #toString()}, {@link #hashCode()}, {@link #equals(Object)}.
+ * </p>
  *
  * @see HMap
  * @see HSet
@@ -217,7 +227,9 @@ public class MapAdapter implements HMap {
      * @throws NullPointerException if {@code key} or {@code value} is null.
      */
     public Object put(Object key, Object value) {
-        if (key == this) throw new IllegalArgumentException();
+        if (key == null || value == null) {
+            throw new NullPointerException("Key and value must not be null.");
+        }
         return hashTable.put(key, value);
     }
 
@@ -240,7 +252,10 @@ public class MapAdapter implements HMap {
         HSet entrySet = t.entrySet();
         HIterator iter = entrySet.iterator();
         while (iter.hasNext()) {
-            Entry current = (Entry) iter.next();
+            HEntry current = (HEntry) iter.next();
+            if (current.getKey() == null || current.getValue() == null) {
+                throw new NullPointerException("Key and value must not be null.");
+            }
             put(current.getKey(), current.getValue());
         }
     }
@@ -325,10 +340,6 @@ public class MapAdapter implements HMap {
          * Removes all of the elements from this collection (optional
          * operation). This collection will be empty after this method returns
          * unless it throws an exception.
-         *
-         * @throws UnsupportedOperationException if the {@code clear} method is
-         *                                       not supported by this
-         *                                       collection.
          */
         @Override
         public void clear() {
@@ -366,9 +377,7 @@ public class MapAdapter implements HMap {
          * in the specified collection
          *
          * @throws NullPointerException if the specified collection contains one
-         *                              or more null elements and this
-         *                              collection does not support null
-         *                              elements (optional).
+         *                              or more null elements
          * @throws NullPointerException if the specified collection is
          *                              {@code null}.
          * @see #contains(Object)
@@ -393,10 +402,7 @@ public class MapAdapter implements HMap {
          * call
          *
          * @throws NullPointerException          if this collection contains one
-         *                                       or more null elements and the
-         *                                       specified collection does not
-         *                                       support null elements
-         *                                       (optional).
+         *                                       or more null elements
          * @throws NullPointerException          if the specified collection is
          *                                       {@code null}.
          * @see #remove(Object)
@@ -408,7 +414,8 @@ public class MapAdapter implements HMap {
             HIterator iter = c.iterator();
             while (iter.hasNext()) {
                 Object current = iter.next();
-                res |= remove(current);
+                // Remove all occurrences of current
+                while(remove(current)) res |= true;
             }
             return res;
         }
@@ -574,33 +581,37 @@ public class MapAdapter implements HMap {
             if (o == null) throw new NullPointerException();
             if (!(o instanceof HEntry)) return false;
             HEntry entry = (HEntry) o;
-            return hashTable.containsKey(entry.getKey()) &&
-                    hashTable.get(entry.getKey()).equals(entry.getValue());
+            try {
+                return MapAdapter.this.containsKey(entry.getKey()) &&
+                        MapAdapter.this.get(entry.getKey()).equals(entry.getValue());
+            } catch (NullPointerException e) {
+                // Since MapAdapter does not support null keys or values
+                // null values or keys cannot be present in the map
+                return false;
+            }
         }
 
         /**
          * Removes the specified element from this set if it is present
-         * (optional operation).  More formally, removes an element
+         * (optional operation). More formally, removes an element
          * <code>e</code> such that
          * <code>(o==null ? e==null : o.equals(e))</code>, if the set contains
-         * such an element.  Returns {@code true} if the set contained the
+         * such an element. Returns {@code true} if the set contained the
          * specified element (or equivalently, if the set changed as a result of
          * the call). (The set will not contain the specified element once the
          * call returns.)
-         *
+         * 
          * @param o object to be removed from this set, if present.
          * @return true if the set contained the specified element.
-         *
-         * @throws NullPointerException          if the specified element is
-         *                                       null
+         * 
+         * @throws NullPointerException if the specified element is null
          */
         @Override
         public boolean remove(Object o) {
             if (o == null) throw new NullPointerException();
             if (!(o instanceof HEntry)) return false;
             HEntry entry = (HEntry) o;
-            if (contains(entry)) return hashTable.remove(entry) != null;
-            return false;
+            return MapAdapter.this.remove(entry.getKey()) != null;
         }
 
         /**
@@ -630,36 +641,14 @@ public class MapAdapter implements HMap {
             if (!(o instanceof HSet)) return false;
             HSet other = (HSet) o;
 
-            // Must check if the other set has the same size
-            // otherwise one or the other could be a subset 
-            // of the other
-            if (other.size() != size()) return false;
-
-            HIterator iter = iterator();
-            while (iter.hasNext()) {
-                Object current = iter.next();
-                if (!other.contains(current)) return false;
-            }
-            return true;
+            // Must check if the other view has the same size
+            // otherwise one or the other could be a subset
+            return containsAll(other) && other.size() == size();
         }
 
     }
 
     public class KeySet extends AbstractView implements HSet {
-
-        // Attributes //
-
-        private EntrySet entrySet;
-
-        // Constructors //
-
-        /**
-         * Default constructor, instantiates a supporting entry set to provide
-         * class functionality.
-         */
-        public KeySet() {
-            this.entrySet = (EntrySet) entrySet();
-        }
 
         // Methods //
 
@@ -672,8 +661,6 @@ public class MapAdapter implements HMap {
          * @param o element whose presence in this set is to be tested.
          * @return {@code true} if this set contains the specified element.
          *
-         * @throws ClassCastException   if the type of the specified element is
-         *                              incompatible with this set (optional).
          * @throws NullPointerException if the specified element is null and
          *                              this set does not support null elements
          *                              (optional).
@@ -681,7 +668,7 @@ public class MapAdapter implements HMap {
         @Override
         public boolean contains(Object o) {
             if (o == null) throw new NullPointerException();
-            return hashTable.containsKey(o);
+            return MapAdapter.this.containsKey(o);
         }
 
         /**
@@ -697,19 +684,25 @@ public class MapAdapter implements HMap {
          * @param o object to be removed from this set, if present.
          * @return true if the set contained the specified element.
          *
-         * @throws ClassCastException            if the type of the specified
-         *                                       element is incompatible with
-         *                                       this set (optional).
          * @throws NullPointerException          if the specified element is
          *                                       null and this set does not
          *                                       support null elements
          *                                       (optional).
-         * @throws UnsupportedOperationException if the {@code remove} method is
-         *                                       not supported by this set.
          */
         public boolean remove(Object o) {
             if (o == null) throw new NullPointerException();
-            return this.entrySet.remove(o);
+            return MapAdapter.this.remove(o) != null;
+        }
+
+        /**
+         * Returns an iterator over the elements in this set. The elements are
+         * returned in no particular order (unless this set is an instance of
+         * some class that provides a guarantee).
+         *
+         * @return an iterator over the elements in this set.
+         */
+        public HIterator iterator() {
+            return new KeyIterator();
         }
 
         /**
@@ -727,30 +720,10 @@ public class MapAdapter implements HMap {
             if (!(o instanceof HSet)) return false;
             HSet other = (HSet) o;
 
-            // Must check if the other set has the same size
-            // otherwise one or the other could be a subset 
-            // of the other
-            if (other.size() != size()) return false;
-
-            HIterator iter = iterator();
-            while (iter.hasNext()) {
-                Object current = iter.next();
-                if (!other.contains(current)) return false;
-            }
-            return true;
+            // Must check if the other view has the same size
+            // otherwise one or the other could be a subset
+            return containsAll(other) && other.size() == size();
         }
-
-        /**
-         * Returns an iterator over the elements in this set. The elements are
-         * returned in no particular order (unless this set is an instance of
-         * some class that provides a guarantee).
-         *
-         * @return an iterator over the elements in this set.
-         */
-        public HIterator iterator() {
-            return new KeyIterator();
-        }
-
     }
 
     public class ValueCollection extends AbstractView {
@@ -767,9 +740,6 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this collection contains the specified
          * element
          *
-         * @throws ClassCastException   if the type of the specified element is
-         *                              incompatible with this collection
-         *                              (optional).
          * @throws NullPointerException if the specified element is null and
          *                              this collection does not support null
          *                              elements (optional).
@@ -793,22 +763,18 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this collection changed as a result of the
          * call
          *
-         * @throws ClassCastException            if the type of the specified
-         *                                       element is incompatible with
-         *                                       this collection (optional).
          * @throws NullPointerException          if the specified element is
          *                                       null and this collection does
          *                                       not support null elements
          *                                       (optional).
-         * @throws UnsupportedOperationException remove is not supported by this
-         *                                       collection.
          */
         @Override
         public boolean remove(Object o) {
             if (o == null) throw new NullPointerException();
             HIterator iter = iterator();
             while (iter.hasNext()) {
-                if (iter.next().equals(o)) {
+                Object current = iter.next();
+                if (current.equals(o)) {
                     iter.remove();
                     return true;
                 }
@@ -854,14 +820,13 @@ public class MapAdapter implements HMap {
         public boolean equals(Object o) {
             if (!(o instanceof HCollection)) return false;
             HCollection other = (HCollection) o;
-            // Must check if the other collection has the same size
             if (other.size() != size()) return false;
-            HIterator iter = iterator();
+            HCollection clone = new MapAdapter(MapAdapter.this).values();
+            HIterator iter = other.iterator();
             while (iter.hasNext()) {
-                Object current = iter.next();
-                if (!other.contains(current)) return false;
+                clone.remove(iter.next());
             }
-            return true;
+            return clone.isEmpty();
         }
 
         /**
@@ -889,7 +854,6 @@ public class MapAdapter implements HMap {
 
         private Entry current = null;
         private Enumeration keys = hashTable.keys();
-        private Enumeration values = hashTable.elements();
 
         // Methods //
 
@@ -902,7 +866,7 @@ public class MapAdapter implements HMap {
          */
         @Override
         public boolean hasNext() {
-            return keys.hasMoreElements() && values.hasMoreElements();
+            return keys.hasMoreElements();
         }
 
         /**
@@ -914,7 +878,7 @@ public class MapAdapter implements HMap {
          */
         @Override
         public Object next() {
-            current = new MapAdapter.Entry(keys.nextElement(), values.nextElement());
+            current = new MapAdapter.Entry(keys.nextElement());
             return current;
         }
 
@@ -926,9 +890,6 @@ public class MapAdapter implements HMap {
          * iteration is in progress in any way other than by calling this
          * method.
          *
-         * @throws UnsupportedOperationException if the {@code remove} operation
-         *                                       is not supported by this
-         *                                       Iterator.
          * @throws IllegalStateException         if the {@code next} method has
          *                                       not yet been called, or the
          *                                       {@code remove} method has
@@ -939,7 +900,7 @@ public class MapAdapter implements HMap {
         @Override
         public void remove() {
             if (current == null) throw new IllegalStateException();
-            hashTable.remove(current);
+            MapAdapter.this.remove(current.getKey());
             current = null;
         }
 
@@ -990,7 +951,6 @@ public class MapAdapter implements HMap {
         // Attributes //
 
         private final Object key;
-        private Object value;
 
         // Constructors //
 
@@ -1001,20 +961,8 @@ public class MapAdapter implements HMap {
          * @param key   The key to create the entry instance with
          * @param value The value to create the entry instance with
          */
-        private Entry(Object key, Object value) {
+        private Entry(Object key) {
             this.key = key;
-            this.value = value;
-        }
-
-        /**
-         * Creates an entry from another one. The copy of the key and the copy
-         * of the value inside the new entry are shallow.
-         *
-         * @param e The entry to copy
-         */
-        private Entry(Entry e) {
-            this.key = e.getKey();
-            this.value = e.getValue();
         }
 
         // Methods //
@@ -1038,7 +986,7 @@ public class MapAdapter implements HMap {
          */
         @Override
         public Object getValue() {
-            return this.value;
+            return MapAdapter.this.get(this.key);
         }
 
         /**
@@ -1057,7 +1005,7 @@ public class MapAdapter implements HMap {
          */
         @Override
         public Object setValue(Object value) {
-            return hashTable.put(this.key, value);
+            return MapAdapter.this.put(this.key, value);
         }
 
         /**
@@ -1103,9 +1051,7 @@ public class MapAdapter implements HMap {
          */
         @Override
         public boolean equals(Object o) {
-            if (!(o instanceof HEntry)) {
-                return false;
-            }
+            if (!(o instanceof HEntry)) return false;
 
             HEntry e = (HEntry) o;
             return this.getKey().equals(e.getKey()) && this.getValue().equals(e.getValue());

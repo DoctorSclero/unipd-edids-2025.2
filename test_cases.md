@@ -93,30 +93,30 @@ Each test should test different environments. Namely:
 3. `boolean contains(Object o)`
     [x] test null element [empty, few items, many items, dynamic]
     [x] test not contained element [empty, few items, many items, dynamic]
-    [-] test contained element start [few items, many items, dynamic]
-    [-] test contained element middle [few items, many items, dynamic]
-    [-] test contained element end [few items, many items, dynamic]
+    [x] test contained element start [few items, many items, dynamic]
+    [x] test contained element middle [few items, many items, dynamic]
+    [x] test contained element end [few items, many items, dynamic]
 4. `HIterator iterator()`
     [x] test return not null [empty, few items, many items, dynamic]
 5. `Object[] toArray()`
     [x] test [empty, few items, many items, dynamic]
 6. `Object[] toArray(Object a[])`
     [x] test null array [empty, few items, many items, dynamic]
-    [-] test array smaller [few items, many items, dynamic]
+    [x] test array smaller [few items, many items, dynamic]
     [x] test array bigger [empty, few items, many items, dynamic]
 7. `boolean add(Object o)`
     [x] test unsupported operation [empty, few items, many items, dynamic]
 8. `boolean remove(Object o)`
     [x] test null element [empty, few items, many items, dynamic]
     [x] test not contained element [empty, few items, many items, dynamic]
-    [-] test contained element start [few items, many items, dynamic]
-    [-] test contained element middle [few items, many items, dynamic]
-    [-] test contained element end [few items, many items, dynamic]
+    [x] test contained element start [few items, many items, dynamic]
+    [x] test contained element middle [few items, many items, dynamic]
+    [x] test contained element end [few items, many items, dynamic]
 9. `boolean containsAll(HCollection c)`
     [x] test null collection [empty, few items, many items, dynamic]
     [?] test collection with null elements [empty, few items, many items, dynamic]
     [x] test collection with same elements [empty, few items, many items, dynamic]
-    [-] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
     [x] test collection with more elements [few items, many items, dynamic]
     [x] test collection without common elements [few items, many items, dynamic]
 10. `boolean addAll(HCollection c)`
@@ -124,17 +124,17 @@ Each test should test different environments. Namely:
 11. `boolean retainAll(HCollection c)`
     [x] test null collection [empty, few items, many items, dynamic]
     [?] test collection with null elements [empty, few items, many items, dynamic]
-    [-] test collection with same elements [few items, many items, dynamic]
-    [-] test collection with some elements [few items, many items, dynamic]
-    [-] test collection with more elements [few items, many items, dynamic]
-    [-] test collection without common elements [few items, many items, dynamic]
+    [x] test collection with same elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with more elements [few items, many items, dynamic]
+    [x] test collection without common elements [few items, many items, dynamic]
 12. `boolean removeAll(HCollection c)`
     [x] test null collection [empty, few items, many items, dynamic]
     [?] test collection with null elements [empty, few items, many items, dynamic]
-    [-] test collection with same elements [few items, many items, dynamic]
-    [-] test collection with some elements [few items, many items, dynamic]
-    [-] test collection with more elements [few items, many items, dynamic]
-    [-] test collection without common elements [few items, many items, dynamic]
+    [x] test collection with same elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with more elements [few items, many items, dynamic]
+    [x] test collection without common elements [few items, many items, dynamic]
 13. `void clear()`
     [x] test [empty, few items, many items, dynamic]
 14. `boolean equals(Object o)`
@@ -145,69 +145,67 @@ Each test should test different environments. Namely:
     [x] test predictable [empty, few items, many items, dynamic]
     [x] test different set [few items, many items, dynamic]
     [x] test same set [few items, many items, dynamic]
-    [ ] test equals implies same hash code [few items, many items, dynamic]
 
 ## HCollection
 
 1. `int size()`
-    [ ] test [empty, few items, many items, dynamic]
+    [x] test [empty, few items, many items, dynamic]
 2. `boolean isEmpty()`
-    [ ] test [empty, few items, many items, dynamic]
+    [x] test [empty, few items, many items, dynamic]
 3. `boolean contains(Object o)`
-    [ ] test null element [empty, few items, many items, dynamic]
-    [ ] test not contained element [empty, few items, many items, dynamic]
-    [ ] test contained element start [few items, many items, dynamic]
-    [ ] test contained element middle [few items, many items, dynamic]
-    [ ] test contained element end [few items, many items, dynamic]
+    [x] test null element [empty, few items, many items, dynamic]
+    [x] test not contained element [empty, few items, many items, dynamic]
+    [x] test contained element start [few items, many items, dynamic]
+    [x] test contained element middle [few items, many items, dynamic]
+    [x] test contained element end [few items, many items, dynamic]
 4. `HIterator iterator()`
-    [ ] test return not null [empty, few items, many items, dynamic]
-    [ ] [iterator tests] [empty, few items, many items, dynamic]
+    [x] test return not null [empty, few items, many items, dynamic]
 5. `Object[] toArray()`
-    [ ] test [empty, few items, many items, dynamic]
+    [x] test [empty, few items, many items, dynamic]
 6. `Object[] toArray(Object a[])`
-    [ ] test null array [empty, few items, many items, dynamic]
-    [ ] test array smaller [few items, many items, dynamic]
-    [ ] test array bigger [few items, many items, dynamic]
+    [x] test null array [empty, few items, many items, dynamic]
+    [x] test array smaller [few items, many items, dynamic]
+    [x] test array bigger [few items, many items, dynamic]
 7. `boolean add(Object o)`
-    [ ] test unsupported operation [empty, few items, many items, dynamic]
+    [x] test unsupported operation [empty, few items, many items, dynamic]
 8. `boolean remove(Object o)`
-    [ ] test null element [empty, few items, many items, dynamic]
-    [ ] test not contained element [empty, few items, many items, dynamic]
-    [ ] test contained element start [few items, many items, dynamic]
-    [ ] test contained element middle [few items, many items, dynamic]
-    [ ] test contained element end [few items, many items, dynamic]
+    [x] test null element [empty, few items, many items, dynamic]
+    [x] test not contained element [empty, few items, many items, dynamic]
+    [x] test contained element start [few items, many items, dynamic]
+    [x] test contained element middle [few items, many items, dynamic]
+    [x] test contained element end [few items, many items, dynamic]
 9. `boolean containsAll(HCollection c)`
-    [ ] test null collection [empty, few items, many items, dynamic]
-    [ ] test collection with null elements [empty, few items, many items, dynamic]
-    [ ] test collection with same elements [few items, many items, dynamic]
-    [ ] test collection with some elements [few items, many items, dynamic]
-    [ ] test collection with more elements [few items, many items, dynamic]
-    [ ] test collection without common elements [few items, many items, dynamic]
+    [x] test null collection [empty, few items, many items, dynamic]
+    [x] test collection with null elements [empty, few items, many items, dynamic]
+    [x] test collection with same elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with more elements [few items, many items, dynamic]
+    [x] test collection without common elements [few items, many items, dynamic]
 10. `boolean addAll(HCollection c)`
-    [ ] test unsupported operation [empty, few items, many items, dynamic]
+    [x] test unsupported operation [empty, few items, many items, dynamic]
 11. `boolean retainAll(HCollection c)`
-    [ ] test null collection [empty, few items, many items, dynamic]
-    [ ] test collection with null elements [empty, few items, many items, dynamic]
-    [ ] test collection with same elements [few items, many items, dynamic]
-    [ ] test collection with some elements [few items, many items, dynamic]
-    [ ] test collection with more elements [few items, many items, dynamic]
-    [ ] test collection without common elements [few items, many items, dynamic]
+    [x] test null collection [empty, few items, many items, dynamic]
+    [x] test collection with null elements [empty, few items, many items, dynamic]
+    [x] test collection with same elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with more elements [few items, many items, dynamic]
+    [x] test collection without common elements [few items, many items, dynamic]
 12. `boolean removeAll(HCollection c)`
-    [ ] test null collection [empty, few items, many items, dynamic]
-    [ ] test collection with null elements [empty, few items, many items, dynamic]
-    [ ] test collection with same elements [few items, many items, dynamic]
-    [ ] test collection with some elements [few items, many items, dynamic]
-    [ ] test collection with more elements [few items, many items, dynamic]
-    [ ] test collection without common elements [few items, many items, dynamic]
+    [x] test null collection [empty, few items, many items, dynamic]
+    [x] test collection with null elements [empty, few items, many items, dynamic]
+    [x] test collection with same elements [few items, many items, dynamic]
+    [x] test collection with some elements [few items, many items, dynamic]
+    [x] test collection with more elements [few items, many items, dynamic]
+    [x] test collection without common elements [few items, many items, dynamic]
 13. `void clear()`
-    [ ] test [empty, few items, many items, dynamic]
+    [x] test [empty, few items, many items, dynamic]
 14. `boolean equals(Object o)`
-    [ ] test same collection [few items, many items, dynamic]
-    [ ] test different collection [few items, many items, dynamic]
+    [x] test same collection [few items, many items, dynamic]
+    [x] test different collection [few items, many items, dynamic]
+    [x] test not a collection [empty, few items, many items, dynamic]
 15. `int hashCode()`
-    [ ] test different collection [few items, many items, dynamic]
-    [ ] test same collection [few items, many items, dynamic]
-    [ ] test equals implies same hash code [few items, many items, dynamic]
+    [x] test different collection [few items, many items, dynamic]
+    [x] test same collection [few items, many items, dynamic]
 
 ## HIterator
 

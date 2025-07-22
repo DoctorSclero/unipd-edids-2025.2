@@ -585,6 +585,7 @@ public class KeySetEmptyTests {
      * @test.expectedresults The {@link KeySet#equals(Object)} method returns
      * false when the argument is not an KeySet.
      */
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsNotASet() {
         // Test that the equals method returns false when the argument is not an KeySet
