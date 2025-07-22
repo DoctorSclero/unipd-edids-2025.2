@@ -10,12 +10,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * A custom implementation of the {@link HMap} interface that allows null keys and values.
- * This implementation wraps a {@link HashMap} and provides additional functionality
- * through nested classes for entry sets and iterators all for testing purposes.
- * 
- * Note: Many methods throw {@link UnsupportedOperationException} as they are not supported
- * in this implementation.
+ * A custom implementation of the {@link HMap} interface that allows null keys
+ * and values. This implementation wraps a {@link HashMap} and provides
+ * additional functionality through nested classes for entry sets and iterators
+ * all for testing purposes.
+ * <p>
+ * Note: Many methods throw {@link UnsupportedOperationException} as they are
+ * not supported in this implementation.
  */
 public class NullableHMap implements HMap {
     private HashMap<Object, Object> map;
@@ -29,10 +30,11 @@ public class NullableHMap implements HMap {
 
     /**
      * Associates the specified value with the specified key in this map.
-     * 
+     *
      * @param key   the key with which the specified value is to be associated
      * @param value the value to be associated with the specified key
-     * @return the previous value associated with the key, or {@code null} if there was no mapping
+     * @return the previous value associated with the key, or {@code null} if
+     * there was no mapping
      */
     public Object put(Object key, Object value) {
         return map.put(key, value);
@@ -40,7 +42,7 @@ public class NullableHMap implements HMap {
 
     /**
      * Returns a set view of the mappings contained in this map.
-     * 
+     *
      * @return a set view of the mappings contained in this map
      */
     public HSet entrySet() {
@@ -49,8 +51,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public int size() {
@@ -59,8 +62,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public boolean isEmpty() {
@@ -69,9 +73,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param key the key whose presence in this map is to be tested
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public boolean containsKey(Object key) {
@@ -80,9 +85,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param value the value whose presence in this map is to be tested
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public boolean containsValue(Object value) {
@@ -91,9 +97,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param key the key whose associated value is to be returned
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public Object get(Object key) {
@@ -102,9 +109,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param key the key whose mapping is to be removed from the map
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public Object remove(Object key) {
@@ -113,9 +121,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param m the map whose mappings are to be copied to this map
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public void putAll(HMap m) {
@@ -124,8 +133,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public void clear() {
@@ -134,8 +144,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public HSet keySet() {
@@ -144,8 +155,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public HCollection values() {
@@ -154,9 +166,10 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @param o the object to be compared with this map for equality
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public boolean equals(Object o) {
@@ -165,8 +178,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public int hashCode() {
@@ -175,8 +189,9 @@ public class NullableHMap implements HMap {
 
     /**
      * Throws {@link UnsupportedOperationException}.
-     * 
+     *
      * @return nothing, as this method is unsupported
+     *
      * @throws UnsupportedOperationException always
      */
     public String toString() {
@@ -184,8 +199,8 @@ public class NullableHMap implements HMap {
     }
 
     /**
-     * A simple implementation of the {@link HMap.HEntry} interface.
-     * Represents a key-value pair in the map.
+     * A simple implementation of the {@link HMap.HEntry} interface. Represents
+     * a key-value pair in the map.
      */
     public static class SimpleHEntry implements HMap.HEntry {
         private Object key;
@@ -193,7 +208,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Constructs a new entry with the specified key and value.
-         * 
+         *
          * @param key   the key of the entry
          * @param value the value of the entry
          */
@@ -204,7 +219,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Returns the key corresponding to this entry.
-         * 
+         *
          * @return the key corresponding to this entry
          */
         public Object getKey() {
@@ -213,7 +228,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Returns the value corresponding to this entry.
-         * 
+         *
          * @return the value corresponding to this entry
          */
         public Object getValue() {
@@ -222,7 +237,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Compares the specified object with this entry for equality.
-         * 
+         *
          * @param o the object to be compared for equality with this entry
          * @return {@code true} if the specified object is equal to this entry
          */
@@ -238,9 +253,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param value the new value to be stored in this entry
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public Object setValue(Object value) {
@@ -249,8 +265,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public int hashCode() {
@@ -259,8 +276,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public String toString() {
@@ -269,7 +287,8 @@ public class NullableHMap implements HMap {
     }
 
     /**
-     * A simple implementation of the {@link HSet} interface for the entry set view.
+     * A simple implementation of the {@link HSet} interface for the entry set
+     * view.
      */
     private class SimpleHEntrySet implements HSet {
 
@@ -278,7 +297,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Returns an iterator over the elements in this set.
-         * 
+         *
          * @return an iterator over the elements in this set
          */
         public HIterator iterator() {
@@ -287,8 +306,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public int size() {
@@ -297,8 +317,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean isEmpty() {
@@ -307,9 +328,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param o the object to be tested for containment in this set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean contains(Object o) {
@@ -318,8 +340,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public Object[] toArray() {
@@ -328,9 +351,11 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
-         * @param a the array into which the elements of this set are to be stored
+         *
+         * @param a the array into which the elements of this set are to be
+         *          stored
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public Object[] toArray(Object[] a) {
@@ -339,9 +364,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param e the element to be added to this set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean add(Object e) {
@@ -350,9 +376,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param o the element to be removed from this set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean remove(Object o) {
@@ -361,9 +388,11 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
-         * @param c the collection containing elements to be tested for containment in this set
+         *
+         * @param c the collection containing elements to be tested for
+         *          containment in this set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean containsAll(HCollection c) {
@@ -372,9 +401,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param c the collection containing elements to be added to this set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean addAll(HCollection c) {
@@ -383,9 +413,11 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
-         * @param c the collection containing elements to be removed from this set
+         *
+         * @param c the collection containing elements to be removed from this
+         *          set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean removeAll(HCollection c) {
@@ -394,9 +426,11 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
-         * @param c the collection containing elements to be retained in this set
+         *
+         * @param c the collection containing elements to be retained in this
+         *          set
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean retainAll(HCollection c) {
@@ -405,8 +439,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public void clear() {
@@ -415,9 +450,10 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @param o the object to be compared with this set for equality
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public boolean equals(Object o) {
@@ -426,8 +462,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public int hashCode() {
@@ -436,8 +473,9 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @return nothing, as this method is unsupported
+         *
          * @throws UnsupportedOperationException always
          */
         public String toString() {
@@ -446,7 +484,8 @@ public class NullableHMap implements HMap {
     }
 
     /**
-     * A simple implementation of the {@link HIterator} interface for iterating over the entry set.
+     * A simple implementation of the {@link HIterator} interface for iterating
+     * over the entry set.
      */
     protected class SimpleEntrySetHIterator implements HIterator {
         private Iterator<Map.Entry<Object, Object>> i;
@@ -457,7 +496,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Returns {@code true} if the iteration has more elements.
-         * 
+         *
          * @return {@code true} if the iteration has more elements
          */
         public boolean hasNext() {
@@ -466,7 +505,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Returns the next element in the iteration.
-         * 
+         *
          * @return the next element in the iteration
          */
         public Object next() {
@@ -476,7 +515,7 @@ public class NullableHMap implements HMap {
 
         /**
          * Throws {@link UnsupportedOperationException}.
-         * 
+         *
          * @throws UnsupportedOperationException always
          */
         public void remove() {

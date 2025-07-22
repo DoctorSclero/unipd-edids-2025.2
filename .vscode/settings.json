@@ -8,8 +8,8 @@
         80
     ],
     "java.project.referencedLibraries": [
-        "c:\\Users\\pietr\\Documents\\university\\software_engineering\\projects\\unipd-edids-2025.2\\JUnit\\junit-4.13.jar",
-        "c:\\Users\\pietr\\Documents\\university\\software_engineering\\projects\\unipd-edids-2025.2\\JUnit\\hamcrest-core-1.3.jar"
+        "JUnit/junit-4.13.jar",
+        "JUnit/hamcrest-core-1.3.jar"
     ],
     "java.project.explorer.showNonJavaResources": true
 }
