@@ -10,6 +10,23 @@ import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.ValueIterator;
 import myAdapter.MapAdapter.ValueCollection;
 
+/**
+ * Test class for verifying the behavior of ValueIterator when the underlying map is populated.
+ * This class contains tests to ensure that the ValueIterator behaves correctly
+ * when iterating over a map with values. It includes tests for iterating through all values,
+ * removing values, and handling edge cases such as calling remove() without a preceding call to next().
+ * 
+ * @test.design This test class is designed to ensure that the ValueIterator behaves correctly
+ * when the underlying map is populated. It verifies that the iterator can traverse all values,
+ * remove values as expected, and handle invalid operations gracefully.
+ * 
+ * @test.libraries JUnit 4.13, Hamcrest 1.3
+ * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.ValueIterator
+ *
+ * @author [Your Name]
+ * @version 1.0
+ */
 public class ValueIteratorPopulatedTests {
     
     public MapAdapter map;

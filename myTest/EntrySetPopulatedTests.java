@@ -23,6 +23,9 @@ import myAdapter.MapAdapter.EntrySet;
  * entry set instances to ensure it correctly serves as a set view for maps with
  * entries and implements correctly the {@link myAdapter.HSet} interface.
  * @test.libraries JUnit 4.13, Hamcrest 1.3
+ * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.EntrySet
+ * @see myAdapter.MapAdapter.Entry
  */
 public class EntrySetPopulatedTests {
 
@@ -114,6 +117,15 @@ public class EntrySetPopulatedTests {
                 entrySet.contains(entry));
     }
 
+    /**
+     * Tests the contains method of the EntrySet class with contained elements.
+     *
+     * @test.design Verifies that the contains method correctly identifies elements present in the EntrySet.
+     * @test.description This test ensures that the contains method returns true for elements present in the EntrySet. It checks for contained elements at the start, middle, and end of the set.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return true for contained elements.
+     * @test.expectedResults The contains method should return true for elements present in the EntrySet.
+     */
     @Test
     public void testContainsContainedElementStart() {
         MapAdapter anotherMap = new MapAdapter();
@@ -125,6 +137,15 @@ public class EntrySetPopulatedTests {
                 entrySet.contains(entry));
     }
 
+    /**
+     * Tests the contains method of the EntrySet class with a middle contained element.
+     *
+     * @test.design Verifies that the contains method correctly identifies a middle element present in the EntrySet.
+     * @test.description This test checks that the contains method returns true for a middle element in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return true for a middle contained element.
+     * @test.expectedResults The contains method should return true for a middle element present in the EntrySet.
+     */
     @Test
     public void testContainsContainedElementMiddle() {
         MapAdapter anotherMap = new MapAdapter();
@@ -135,6 +156,15 @@ public class EntrySetPopulatedTests {
                 entrySet.contains(entry));
     }
 
+    /**
+     * Tests the contains method of the EntrySet class with an end contained element.
+     *
+     * @test.design Verifies that the contains method correctly identifies an end element present in the EntrySet.
+     * @test.description This test checks that the contains method returns true for an end element in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return true for an end contained element.
+     * @test.expectedResults The contains method should return true for an end element present in the EntrySet.
+     */
     @Test
     public void testContainsContainedElementEnd() {
         MapAdapter anotherMap = new MapAdapter();
@@ -145,6 +175,16 @@ public class EntrySetPopulatedTests {
                 entrySet.contains(entry));
     }
 
+    /**
+     * Tests the contains method of the EntrySet class with an entry that has a contained key but a value not contained in the EntrySet.
+     * 
+     * @test.design Verifies that the contains method correctly identifies entries with contained keys but non-contained values.
+     * @test.description This test checks that the contains method returns false for an entry with a
+     * key that is contained in the EntrySet but a value that is not contained.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return false for entries with contained keys but non-contained values.
+     * @test.expectedResults The contains method should return false for an entry with a contained key and a value not contained in the EntrySet.
+     */
     @Test
     public void testContainsContainedEntryValueNotContained() {
         MapAdapter anotherMap = new MapAdapter();
@@ -155,6 +195,15 @@ public class EntrySetPopulatedTests {
                 entrySet.contains(entry));
     }
 
+    /**
+     * Tests the contains method of the EntrySet class with an entry that is not an instance of Entry.
+     *
+     * @test.design Verifies that the contains method returns false for objects that are not instances of Entry.
+     * @test.description This test checks that the contains method does not mistakenly identify non-Entry objects as contained.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The contains method should return false for non-Entry objects.
+     * @test.expectedResults The contains method should return false for objects that are not instances of Entry.
+     */
     @Test
     public void testContainsNotAnEntry() {
         assertFalse("Entry set should not contain a non-entry object",
@@ -163,7 +212,15 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.iterator()
 
-    
+    /**
+     * Tests the iterator method of the EntrySet class.
+     *
+     * @test.design Verifies that the iterator method returns a non-null iterator for the EntrySet.
+     * @test.description This test ensures that the iterator method returns a valid iterator for the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The iterator method should return a non-null iterator.
+     * @test.expectedResults The iterator method should return a non-null iterator for the EntrySet.
+     */
     @Test
     public void testIteratorNotNull() {
         assertNotNull("Iterator of an key set should not be null",
@@ -172,7 +229,15 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.toArray()
 
-    
+    /**
+     * Tests the toArray method of the EntrySet class.
+     * This test checks that the toArray() method returns an array containing all the entries in the EntrySet.
+     * @test.design Verifies that the toArray method returns an array representation of the EntrySet.
+     * @test.description This test ensures that the toArray method returns an array containing all the entries in the EntrySet, with a default size of 100.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The toArray method should return an array containing all the entries in the EntrySet.
+     * @test.expectedResults The toArray method should return an array containing all the entries in the EntrySet.
+     */
     @Test
     public void testToArray() {
         Object[] array = entrySet.toArray();
@@ -183,13 +248,29 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.toArray(T[])
 
-    
+    /**
+     * Tests the toArray(T[]) method of the EntrySet class with a null array.
+     * This test checks that the toArray(T[]) method throws a NullPointerException when passed a null array.
+     * @test.design Verifies that the toArray(T[]) method handles null arrays correctly.
+     * @test.description This test ensures that the toArray(T[]) method throws a NullPointerException when passed a null array.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions A NullPointerException should be thrown when the toArray(T[]) method is called with a null array.
+     * @test.expectedResults The toArray(T[]) method should throw a NullPointerException when passed a null array.
+     */
     @Test (expected = NullPointerException.class)
     public void testToArrayNullArray() {
         entrySet.toArray(null);
     }
 
-    
+    /**
+     * Tests the toArray(T[]) method of the EntrySet class with a smaller array.
+     * This test checks that the toArray(T[]) method returns a new array containing all the entries in the EntrySet.
+     * @test.design Verifies that the toArray(T[]) method returns a new array containing all entries in the EntrySet.
+     * @test.description This test ensures that the toArray(T[]) method returns a new array with a size equal to the number of entries in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The toArray(T[]) method should return a new array containing all entries in the EntrySet.
+     * @test.expectedResults The toArray(T[]) method should return a new array containing all entries in the EntrySet.
+     */
     @Test
     public void testToArrayWithSmallerArray() {
         Object[] array = new Object[5];
@@ -201,6 +282,17 @@ public class EntrySetPopulatedTests {
                 array, result);
     }
 
+    /**
+     * Tests the toArray(T[]) method of the EntrySet class with a larger array.
+     * This test checks that the toArray(T[]) method returns the same array passed as an argument,
+     * with the first 100 elements filled with entries and the rest set to null.
+     * @test.design Verifies that the toArray(T[]) method fills the provided array correctly.
+     * @test.description This test ensures that the toArray(T[]) method fills the provided array with entries from the EntrySet
+     * and sets any remaining elements to null.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The toArray(T[]) method should fill the provided array with entries and set remaining elements to null.
+     * @test.expectedResults The toArray(T[]) method should return the same array passed as an argument, filled with entries and null terminators.
+     */
     @Test
     public void testToArrayWithLargerArray() {
         Object[] array = new Object[200];
@@ -220,7 +312,17 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.add(Object)
     
-    
+    /**
+     * Tests the add method of the EntrySet class.
+     * This test checks that the add method throws an UnsupportedOperationException
+     * when trying to add an element to the EntrySet.
+     * @test.design Verifies that the add method does not allow adding elements to the EntrySet.
+     * @test.description This test ensures that the add method throws an UnsupportedOperationException
+     * when called on a populated EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The add method should not modify the EntrySet or the underlying map.
+     * @test.expectedResults The add method should throw an UnsupportedOperationException.
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void testAdd() {
         entrySet.add("baguette");
@@ -228,13 +330,29 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.remove(Object)
 
-    
+    /**
+     * Tests the remove method of the EntrySet class with a null argument.
+     * This test checks that the remove method throws a NullPointerException when passed a null argument.
+     * @test.design Verifies that the remove method handles null arguments correctly.
+     * @test.description This test ensures that the remove method throws a NullPointerException when passed a null argument.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions A NullPointerException should be thrown when the remove method is called with a null argument.
+     * @test.expectedResults The remove method should throw a NullPointerException when passed a null argument.
+     */
     @Test (expected = NullPointerException.class)
     public void testRemoveNull() {
         entrySet.remove(null);
     }
 
-    
+    /**
+     * Tests the remove method of the EntrySet class with a non-contained element.
+     * This test checks that the remove method returns false when trying to remove an element not present in the EntrySet.
+     * @test.design Verifies that the remove method correctly identifies non-contained elements.
+     * @test.description This test ensures that the remove method returns false for an element not present in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The remove method should return false for non-contained elements.
+     * @test.expectedResults The remove method should return false for an element not present in the EntrySet.
+     */
     @Test
     public void testRemoveNonContained() {
         assertFalse("remove(Object) should return false for non-contained elements",
@@ -244,6 +362,16 @@ public class EntrySetPopulatedTests {
                 entrySet.isEmpty());
     }
 
+    /**
+     * Tests the remove method of the EntrySet class with a contained element at the start.
+     * This test checks that the remove method returns true and removes the element from the EntrySet.
+     * @test.design Verifies that the remove method correctly identifies and removes contained elements.
+     * @test.description This test ensures that the remove method returns true for an element present in the EntrySet
+     * and that it is removed from both the EntrySet and the underlying map.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The remove method should return true and modify the EntrySet and map accordingly.
+     * @test.expectedResults The remove method should return true for a contained element, and the EntrySet size should decrease by 1.
+     */
     @Test
     public void testRemoveContainedStart() {
         MapAdapter anotherMap = new MapAdapter();
@@ -258,6 +386,16 @@ public class EntrySetPopulatedTests {
         assertEquals("Map should have size 99 after removing an element", 99, map.size());
     }
 
+    /**
+     * Tests the remove method of the EntrySet class with a contained element in the middle.
+     * This test checks that the remove method returns true and removes the element from the EntrySet.
+     * @test.design Verifies that the remove method correctly identifies and removes contained elements.
+     * @test.description This test ensures that the remove method returns true for an element present in the EntrySet
+     * and that it is removed from both the EntrySet and the underlying map.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The remove method should return true and modify the EntrySet and map accordingly.
+     * @test.expectedResults The remove method should return true for a contained element, and the EntrySet size should decrease by 1.
+     */
     @Test
     public void testRemoveContainedMiddle() {
         MapAdapter anotherMap = new MapAdapter();
@@ -272,6 +410,16 @@ public class EntrySetPopulatedTests {
         assertEquals("Map should have size 99 after removing an element", 99, map.size());
     }
 
+    /**
+     * Tests the remove method of the EntrySet class with a contained element at the end.
+     * This test checks that the remove method returns true and removes the element from the EntrySet.
+     * @test.design Verifies that the remove method correctly identifies and removes contained elements.
+     * @test.description This test ensures that the remove method returns true for an element present in the EntrySet
+     * and that it is removed from both the EntrySet and the underlying map.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The remove method should return true and modify the EntrySet and map accordingly.
+     * @test.expectedResults The remove method should return true for a contained element, and the EntrySet size should decrease by 1.
+     */
     @Test
     public void testRemoveContainedEnd() {
         MapAdapter anotherMap = new MapAdapter();
@@ -288,12 +436,35 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.containsAll(HCollection)
 
-    
+    /**
+     * Tests the containsAll method of the EntrySet class with a null
+     * collection.
+     * 
+     * @test.design Verifies that the containsAll method throws a NullPointerException
+     * when passed a null collection.
+     * @test.description This test ensures that the containsAll method handles null collections correctly by throwing
+     * a NullPointerException. The test calls the containsAll method with a null argument and expects an exception.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions A NullPointerException should be thrown when the containsAll method is called with a null collection.
+     * @test.expectedResults The containsAll method should throw a NullPointerException when passed a null collection.
+     */
     @Test (expected = NullPointerException.class)
     public void testContainsAllNull() {
         entrySet.containsAll(null);
     }
 
+    /**
+     * Tests the containsAll method of the EntrySet class with a collection
+     * containing some elements.
+     * 
+     * @test.design Verifies that the containsAll method correctly identifies
+     * whether all elements of another collection are contained in the EntrySet.
+     * @test.description This test checks that the containsAll method returns true
+     * when all elements of another collection are present in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The containsAll method should return true for collections with some elements.
+     * @test.expectedResults The containsAll method should return true for collections with some elements.
+     */
     @Test
     public void testContainsAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -305,6 +476,18 @@ public class EntrySetPopulatedTests {
                 entrySet.containsAll(anotherEntrySet));
     }
     
+    /**
+     * Tests the containsAll method of the EntrySet class with a collection
+     * containing all elements of the same key set.
+     * 
+     * @test.design Verifies that the containsAll method correctly identifies
+     * whether all elements of another collection are contained in the EntrySet.
+     * @test.description This test checks that the containsAll method returns true
+     * when all elements of another collection are present in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The containsAll method should return true for collections with all elements.
+     * @test.expectedResults The containsAll method should return true for collections with all elements.
+     */
     @Test
     public void testContainsAllSameElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -314,7 +497,18 @@ public class EntrySetPopulatedTests {
                 entrySet.containsAll(anotherEntrySet));
     }
 
-    
+    /**
+     * Tests the containsAll method of the EntrySet class with a collection
+     * containing more elements than the EntrySet.
+     * 
+     * @test.design Verifies that the containsAll method correctly identifies
+     * whether all elements of another collection are contained in the EntrySet.
+     * @test.description This test checks that the containsAll method returns false
+     * when another collection contains more elements than the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The containsAll method should return false for collections with more elements.
+     * @test.expectedResults The containsAll method should return false for collections with more elements.
+     */
     @Test
     public void testContainsAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -326,6 +520,18 @@ public class EntrySetPopulatedTests {
                 entrySet.containsAll(anotherEntrySet));
     }
 
+    /**
+     * Tests the containsAll method of the EntrySet class with a collection
+     * containing no common elements.
+     * 
+     * @test.design Verifies that the containsAll method correctly identifies
+     * whether all elements of another collection are contained in the EntrySet.
+     * @test.description This test checks that the containsAll method returns false
+     * when another collection contains no common elements with the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The containsAll method should return false for collections with no common elements.
+     * @test.expectedResults The containsAll method should return false for collections with no common elements.
+     */
     @Test
     public void testContainsAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -338,7 +544,17 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.addAll(HCollection)
 
-    
+    /**
+     * Tests the addAll method of the EntrySet class.
+     * This test checks that the addAll method throws an UnsupportedOperationException
+     * when trying to add elements to the EntrySet.
+     * @test.design Verifies that the addAll method does not allow adding elements to the EntrySet.
+     * @test.description This test ensures that the addAll method throws an UnsupportedOperationException
+     * when called on a populated EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The addAll method should not modify the EntrySet or the underlying map.
+     * @test.expectedResults The addAll method should throw an UnsupportedOperationException.
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void testAddAll() {
         MapAdapter anotherMap = new MapAdapter();
@@ -347,12 +563,32 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.retainAll(HCollection)
 
-    
+    /**
+     * Tests the retainAll method of the EntrySet class with a null collection.
+     * This test checks that the retainAll method throws a NullPointerException when passed a null collection.
+     * @test.design Verifies that the retainAll method handles null collections correctly.
+     * @test.description This test ensures that the retainAll method throws a NullPointerException when passed a null collection.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions A NullPointerException should be thrown when the retainAll method is called with a null collection.
+     * @test.expectedResults The retainAll method should throw a NullPointerException when passed a null collection.
+     */
     @Test (expected = NullPointerException.class)
     public void testRetainAllNull() {
         entrySet.retainAll(null);
     }
 
+    /**
+     * Tests the retainAll method of the EntrySet class with a collection
+     * containing the same elements as the EntrySet.
+     * 
+     * @test.design Verifies that the retainAll method correctly retains all elements
+     * when passed a collection with the same elements.
+     * @test.description This test checks that the retainAll method returns false
+     * when called with a collection containing the same elements as the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The retainAll method should not modify the EntrySet or the underlying map.
+     * @test.expectedResults The retainAll method should return false for collections with the same elements.
+     */
     @Test
     public void testRetainAllSameElements() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -367,6 +603,18 @@ public class EntrySetPopulatedTests {
                 100, entrySet.size());
     }
 
+    /**
+     * Tests the retainAll method of the EntrySet class with a collection
+     * containing some elements.
+     * 
+     * @test.design Verifies that the retainAll method correctly retains some elements
+     * when passed a collection with some elements.
+     * @test.description This test checks that the retainAll method returns true
+     * when called with a collection containing some elements present in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The retainAll method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The retainAll method should return true for collections with some elements.
+     */
     @Test
     public void testRetainAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -383,6 +631,18 @@ public class EntrySetPopulatedTests {
                 2, entrySet.size());
     }
 
+    /**
+     * Tests the retainAll method of the EntrySet class with a collection
+     * containing more elements than the EntrySet.
+     * 
+     * @test.design Verifies that the retainAll method correctly retains elements
+     * when passed a collection with more elements.
+     * @test.description This test checks that the retainAll method returns false
+     * when called with a collection containing more elements than the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The retainAll method should not modify the EntrySet or the underlying map.
+     * @test.expectedResults The retainAll method should return false for collections with more elements.
+     */
     @Test
     public void testRetainAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -400,6 +660,18 @@ public class EntrySetPopulatedTests {
                 100, entrySet.size());
     }
 
+    /**
+     * Tests the retainAll method of the EntrySet class with a collection
+     * containing no common elements.
+     * 
+     * @test.design Verifies that the retainAll method correctly retains elements
+     * when passed a collection with no common elements.
+     * @test.description This test checks that the retainAll method returns true
+     * when called with a collection containing no common elements with the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The retainAll method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The retainAll method should return true for collections with no common elements.
+     */
     @Test
     public void testRetainAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -417,12 +689,32 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.removeAll(HCollection)
 
-    
+    /**
+     * Tests the removeAll method of the EntrySet class with a null collection.
+     * This test checks that the removeAll method throws a NullPointerException when passed a null collection.
+     * @test.design Verifies that the removeAll method handles null collections correctly.
+     * @test.description This test ensures that the removeAll method throws a NullPointerException when passed a null collection.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions A NullPointerException should be thrown when the removeAll method is called with a null collection.
+     * @test.expectedResults The removeAll method should throw a NullPointerException when passed a null collection.
+     */
     @Test (expected = NullPointerException.class)
     public void testRemoveAllNull() {
         entrySet.removeAll(null);
     }
 
+    /**
+     * Tests the removeAll method of the EntrySet class with a collection
+     * containing the same elements as the EntrySet.
+     * 
+     * @test.design Verifies that the removeAll method correctly removes all elements
+     * when passed a collection with the same elements.
+     * @test.description This test checks that the removeAll method returns true
+     * when called with a collection containing the same elements as the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The removeAll method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The removeAll method should return true for collections with the same elements.
+     */
     @Test
     public void testRemoveAllSameElements() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -437,6 +729,18 @@ public class EntrySetPopulatedTests {
                 0, entrySet.size());
     }
 
+    /**
+     * Tests the removeAll method of the EntrySet class with a collection
+     * containing some elements.
+     * 
+     * @test.design Verifies that the removeAll method correctly removes elements
+     * when passed a collection with some elements.
+     * @test.description This test checks that the removeAll method returns true
+     * when called with a collection containing some elements that are in the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The removeAll method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The removeAll method should return true for collections with some elements.
+     */
     @Test
     public void testRemoveAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -453,6 +757,18 @@ public class EntrySetPopulatedTests {
                 98, entrySet.size());
     }
 
+    /**
+     * Tests the removeAll method of the EntrySet class with a collection
+     * containing more elements than the EntrySet.
+     * 
+     * @test.design Verifies that the removeAll method correctly removes elements
+     * when passed a collection with more elements.
+     * @test.description This test checks that the removeAll method returns true
+     * when called with a collection containing more elements than the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The removeAll method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The removeAll method should return true for collections with more elements.
+     */
     @Test
     public void testRemoveAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -470,6 +786,18 @@ public class EntrySetPopulatedTests {
                 0, entrySet.size());
     }
 
+    /**
+     * Tests the removeAll method of the EntrySet class with a collection
+     * containing no common elements.
+     * 
+     * @test.design Verifies that the removeAll method correctly removes elements
+     * when passed a collection with no common elements.
+     * @test.description This test checks that the removeAll method returns false
+     * when called with a collection containing no common elements with the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The removeAll method should not modify the EntrySet or the underlying map.
+     * @test.expectedResults The removeAll method should return false for collections with no common elements.
+     */
     @Test
     public void testRemoveAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -487,7 +815,15 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.clear()
 
-    
+    /**
+     * Tests the clear method of the EntrySet class.
+     * 
+     * @test.design Verifies that the clear method removes all elements from the EntrySet.
+     * @test.description This test checks that the clear method empties the EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The clear method should modify the EntrySet and the underlying map accordingly.
+     * @test.expectedResults The clear method should leave the EntrySet and map empty.
+     */
     @Test
     public void testClear() {
         // Clear the key set
@@ -504,7 +840,15 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.equals(Object)
 
-    
+    /**
+     * Tests the equals method of the EntrySet class with a null argument.
+     * This test checks that the equals method returns false when passed a null argument.
+     * @test.design Verifies that the equals method handles null arguments correctly.
+     * @test.description This test ensures that the equals method returns false when passed a null argument.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The equals method should return false for null arguments.
+     * @test.expectedResults The equals method should return false when passed a null argument.
+     */
     @Test
     public void testEqualsSameSet() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -514,7 +858,15 @@ public class EntrySetPopulatedTests {
                 entrySet.equals(anotherEntrySet));
     }
 
-    
+    /**
+     * Tests the equals method of the EntrySet class with a different set.
+     * This test checks that the equals method returns false when comparing to a different set.
+     * @test.design Verifies that the equals method returns false for different sets.
+     * @test.description This test ensures that the equals method returns false when comparing to a different set with different entries.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The equals method should return false for different sets.
+     * @test.expectedResults The equals method should return false when comparing to a different set.
+     */
     @Test
     public void testEqualsDifferentSet() {
         MapAdapter anotherMap = new MapAdapter();
@@ -525,6 +877,15 @@ public class EntrySetPopulatedTests {
                 entrySet.equals(anotherEntrySet));
     }
     
+    /**
+     * Tests the equals method of the EntrySet class with a different set of the same size.
+     * This test checks that the equals method returns false when comparing to a different set with the same size but different entries.
+     * @test.design Verifies that the equals method returns false for different sets of the same size.
+     * @test.description This test ensures that the equals method returns false when comparing to a different set with the same size but different entries.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The equals method should return false for different sets of the same size.
+     * @test.expectedResults The equals method should return false when comparing to a different set of the same size.
+     */
     @Test
     public void testEqualsDifferentSetSameSize() {
         MapAdapter anotherMap = new MapAdapter();
@@ -537,6 +898,15 @@ public class EntrySetPopulatedTests {
                 entrySet.equals(anotherEntrySet));
     }
 
+    /**
+     * Tests the equals method of the EntrySet class with a non-EntrySet object.
+     * This test checks that the equals method returns false when comparing to an object that is not an EntrySet.
+     * @test.design Verifies that the equals method returns false for non-EntrySet objects.
+     * @test.description This test ensures that the equals method returns false when comparing to an object that is not an EntrySet.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The equals method should return false for non-EntrySet objects.
+     * @test.expectedResults The equals method should return false when comparing to a non-EntrySet object.
+     */
     @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsNotASet() {
@@ -548,6 +918,15 @@ public class EntrySetPopulatedTests {
 
     // EntrySet.hashCode()
 
+    /**
+     * Tests the hashCode method of the EntrySet class.
+     * This test checks that the hashCode method returns a consistent hash code for the same set of entries.
+     * @test.design Verifies that the hashCode method returns a consistent value for the same set of entries.
+     * @test.description This test ensures that the hashCode method returns the same value for the same set of entries.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The hashCode method should return a consistent value for the same set of entries.
+     * @test.expectedResults The hashCode method should return a consistent value for the same set of entries.
+     */
     @Test
     public void testHashCodeDifferentSets() {
         MapAdapter anotherMap = new MapAdapter();
@@ -559,7 +938,15 @@ public class EntrySetPopulatedTests {
                 entrySet.hashCode(), anotherEntrySet.hashCode());
     }
 
-    
+    /**
+     * Tests the hashCode method of the EntrySet class with the same set of entries.
+     * This test checks that the hashCode method returns the same value for the same set of entries.
+     * @test.design Verifies that the hashCode method returns a consistent value for the same set of entries.
+     * @test.description This test ensures that the hashCode method returns the same value for the same set of entries.
+     * @test.preconditions The EntrySet instance must be initialized and populated with entries.
+     * @test.postconditions The hashCode method should return a consistent value for the same set of entries.
+     * @test.expectedResults The hashCode method should return a consistent value for the same set of entries.
+     */
     @Test
     public void testHashCodeSameSet() {
         // Create another instance of the same key set

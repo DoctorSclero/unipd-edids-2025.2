@@ -22,6 +22,7 @@ import myAdapter.MapAdapter.ValueCollection;
  * maps and implements correctly the {@link myAdapter.HSet} interface.
  * @test.libraries JUnit 4.13, Hamcrest 1.3
  * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.ValueCollection
  */
 public class ValueCollectionEmptyTests {
 

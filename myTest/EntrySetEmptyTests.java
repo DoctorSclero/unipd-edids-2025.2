@@ -23,6 +23,8 @@ import myAdapter.MapAdapter.EntrySet;
  * maps and implements correctly the {@link myAdapter.HSet} interface.
  * @test.libraries JUnit 4.13, Hamcrest 1.3
  * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.EntrySet
+ * @see myAdapter.MapAdapter.Entry
  */
 public class EntrySetEmptyTests {
 
@@ -61,7 +63,7 @@ public class EntrySetEmptyTests {
      * view created by the {@link #setUp()} method. Since the linked map is
      * empty, the method should return 0.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unmodified
      * @test.expectedresults The {@link EntrySet#size()} method returns 0
      * for an empty map.
      */
@@ -81,7 +83,7 @@ public class EntrySetEmptyTests {
      * view created by the {@link #setUp()} method. Since the linked map is
      * empty, the method should return true.
      * @test.precondition The map is correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#isEmpty()} method returns true
      * for an empty map.
      */
@@ -98,13 +100,12 @@ public class EntrySetEmptyTests {
      * 
      * @test.design The test aims to verify that the
      * {@link EntrySet#contains(Object)} method throws a NullPointerException
-     * when null is passed as an argument as not supported by the underlying
-     * map implementation.
+     * when null is passed as an argument as not supported by the view.
      * @test.description The {@link EntrySet#contains(Object)} method is called
      * with null as an argument on the entry set. Since the underlying map does
      * not support null keys, it should throw a NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#contains(Object)} method throws
      * NullPointerException when null is passed as an argument.
      */
@@ -122,14 +123,12 @@ public class EntrySetEmptyTests {
      * element is passed as an argument.
      * @test.description To create a non-contained element, a new
      * MapAdapter instance is created, and an entry is added to it. The entry is
-     * then extracted using the entry set view of the new map. The
+     * then extracted using the iterator of the entry set view of the new map. The
      * {@link EntrySet#contains(Object)} method is called with this entry on the
-     * original entry set. Since the original map is empty, the method should
-     * return false.
+     * original entry set. Since the original map is empty thus the new entry
+     * is not contained in it, the method should return false.
      * @test.precondition The map and the entry set are correctly instantiated.
-     * Another MapAdapter instance is created with an entry and the entry is then
-     * extracted from its entry set.
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged.
      * @test.expectedresults The {@link EntrySet#contains(Object)} method returns false
      * when a non-contained element is passed as an argument.
      */
@@ -159,7 +158,7 @@ public class EntrySetEmptyTests {
      * is empty, the method should return a non-null iterator that
      * iterates over no elements.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#iterator()} method returns a
      * non-null iterator for an empty entry set.
      */
@@ -172,15 +171,15 @@ public class EntrySetEmptyTests {
     // EntrySet.toArray()
 
     /**
-     * Tests that the {@link EntrySet#toArray()} method returns a non-null
+     * Tests that the {@link EntrySet#toArray()} method returns an empty
      * array for an empty entry set.
      * 
      * @test.design The test aims to verify that the
-     * {@link EntrySet#toArray()} method returns a non-null array for an empty
+     * {@link EntrySet#toArray()} method returns an empty array for an empty
      * entry set.
      * @test.description The {@link EntrySet#toArray()} method is called on the
      * entry set created by the {@link #setUp()} method. Since the entry set
-     * is empty, the method should return a non-null array with a length of 0.
+     * is empty, the method should return an empty array with a length of 0.
      * @test.precondition The map and the entry set are correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link EntrySet#toArray()} method returns a
@@ -208,7 +207,7 @@ public class EntrySetEmptyTests {
      * method. Since the method does not support null arrays, it should throw
      * a NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#toArray(Object[])} method throws
      * {@link NullPointerException} when null is passed as an argument.
      */
@@ -218,23 +217,25 @@ public class EntrySetEmptyTests {
     }
 
     /**
-     * Tests that the {@link EntrySet#toArray(Object[])} method returns an
-     * empty array when an empty array is passed as an argument.
+     * Tests that the {@link EntrySet#toArray(Object[])} method returns the bigger
+     * array when a bigger array is passed as an argument. The method should 
+     * preserve the elements of the passed array except for the one overwritten
+     * by the null terminator.
      * 
      * @test.design The test aims to verify that the
-     * {@link EntrySet#toArray(Object[])} method returns an empty array when an
-     * bigger empty array is passed as an argument.
-     * @test.description A new empty array of size 5 is created. Then the array
-     * is populated with flags to ensure that the {@link EntrySet#toArray(Object[])}
-     * method does not overwrite the elements of the array. The format for the
-     * flags is {@code "flag-i"} where {@code i} is the index of the element.
-     * The {@link EntrySet#toArray(Object[])} method is then called with this array
-     * as an argument. Since the entry set is empty, the method should return
-     * the bigger passed array without overwriting its elements.
+     * {@link EntrySet#toArray(Object[])} method returns the bigger
+     * array when a bigger array is passed as an argument. The method should
+     * preserve the elements of the passed array except for the one overwritten
+     * by the null terminator.
+     * @test.description The {@link EntrySet#toArray(Object[])} method is called
+     * with a bigger array than the entry set size on the entry set created by the
+     * {@link #setUp()} method. Since the entry set is empty, the method should
+     * return the bigger passed array without overwriting its elements.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link EntrySet#toArray(Object[])} method 
-     * returns an array of 
+     * @test.postcondition The map is unchanged
+     * @test.expectedresults The {@link EntrySet#toArray(Object[])} method returns
+     * the array of size 5 with a null terminator at position 0 and preserves
+     * the elements of the passed array at positions 1 to 4.
      */
     @Test
     public void testToArrayWithBiggerArray() {
@@ -294,10 +295,10 @@ public class EntrySetEmptyTests {
      * when null is passed as an argument.
      * @test.description The {@link EntrySet#remove(Object)} method is called
      * with null as an argument on the entry set created by the {@link #setUp()}
-     * method. Since the method does not support null keys, it should throw a
+     * method. Since the set does not support null keys, it should throw a
      * NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#remove(Object)} method throws
      * NullPointerException when null is passed as an argument.
      */
@@ -326,11 +327,44 @@ public class EntrySetEmptyTests {
      * false when a non-contained element is passed as an argument.
      */
     @Test
-    public void testRemoveNonContained() {
+    public void testRemoveNonContainedNotAnEntry() {
         assertFalse("remove(Object) should return false for non-contained elements",
                 entrySet.remove("nonContainedElement"));
         assertEquals("Map should have size 0 after removing non-contained element", 0, map.size());
         assertTrue("Entry set should be empty after removing non-contained element",
+                entrySet.isEmpty());
+    }
+
+    /**
+     * Tests that the {@link EntrySet#remove(Object)} method returns false
+     * when a non-contained entry is passed as an argument.
+     * 
+     * @test.design The test aims to verify that the
+     * {@link EntrySet#remove(Object)} method returns false when a non-contained
+     * entry is passed as an argument.
+     * @test.description The {@link EntrySet#remove(Object)} method is called
+     * with an entry that is not contained in the entry set on the entry set
+     * created by the {@link #setUp()} method. Since the entry set is empty,
+     * the method should return false, indicating that the entry was not
+     * contained in the entry set. Since the entry set is backed by the map,
+     * the map should remain empty after the operation.
+     * @test.precondition The map and the entry set are correctly instantiated
+     * @test.postcondition The map and entry set are unchanged
+     * @test.expectedresults The {@link EntrySet#remove(Object)} method returns
+     * false when a non-contained entry is passed as an argument.
+     */
+    @Test
+    public void testRemoveNonContainedEntry() {
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put("key", "value");
+
+        EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
+        Entry entry = (Entry)anotherEntrySet.iterator().next();
+
+        assertFalse("remove(Object) should return false for non-contained entries",
+                entrySet.remove(entry));
+        assertEquals("Map should have size 0 after removing non-contained entry", 0, map.size());
+        assertTrue("Entry set should be empty after removing non-contained entry",
                 entrySet.isEmpty());
     }
 

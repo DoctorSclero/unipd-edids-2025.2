@@ -1,6 +1,5 @@
 package myTest;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,13 +8,26 @@ import static org.junit.Assert.*;
 import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.ValueCollection;
 
-
+/**
+ * Test case for ValueCollection when the underlying map is populated.
+ * This class tests the behavior of ValueCollection methods when there are elements in the map.
+ * @test.design This test is designed to ensure that the ValueCollection behaves correctly
+ * when the underlying map is populated, specifically checking size(), isEmpty(), contains(),
+ * iterator(), toArray(), add(), remove(), containsAll(), addAll(), retainAll(),
+ * removeAll(), clear(), equals(), and hashCode() methods.
+ * @test.libraries JUnit 4.13, Hamcrest 1.3
+ * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.ValueCollection
+ */
 public class ValueCollectionPopulatedTests {
 
     public MapAdapter map;
     public ValueCollection values;
 
-    
+    /**
+     * Setup method to initialize the map and values before each test.
+     * This method is called before each test to ensure a fresh state.
+     */
     @Before
     public void setUp() {
         map = new MapAdapter();
@@ -27,6 +39,15 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.size()
 
+    /**
+     * Test to verify that the size of the ValueCollection is correct.
+     * @test.design This test checks that the size method returns the expected number of elements.
+     * @test.description This test ensures that the ValueCollection has the correct number of elements
+     * based on the number of unique keys in the underlying map.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should have the expected number of elements.
+     * @test.expectedBehavior The test should pass if the size is 100, as there are 100 unique keys.
+     */
     @Test
     public void testSize() {
         assertEquals("Size of the key set should be 100", 100, values.size());
@@ -34,6 +55,14 @@ public class ValueCollectionPopulatedTests {
     
     // ValueCollection.isEmpty()
 
+    /**
+     * Test to verify that the ValueCollection is not empty.
+     * @test.design This test checks that the isEmpty method returns false when the collection has elements.
+     * @test.description This test ensures that the ValueCollection is not empty after being populated.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should not be empty.
+     * @test.expectedBehavior The test should pass if isEmpty() returns false.
+     */
     @Test
     public void testIsEmpty() {
         assertFalse("Key set should not be empty", values.isEmpty());
@@ -41,11 +70,29 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.contains(Object)
 
+    /**
+     * Test to verify that the ValueCollection contains specific elements.
+     * @test.design This test checks that the contains method returns true for elements that are present
+     * in the collection and false for those that are not.
+     * @test.description This test ensures that the ValueCollection correctly identifies contained elements.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should contain the expected elements.
+     * @test.expectedBehavior The test should pass if contains() returns true for contained elements
+     * and false for non-contained elements.
+     */
     @Test (expected = NullPointerException.class)
     public void testContainsNull() {
         values.contains(null);
     }
 
+    /**
+     * Test to verify that the ValueCollection does not contain an element that was never added.
+     * @test.design This test checks that the contains method returns false for elements that are not in the collection.
+     * @test.description This test ensures that the ValueCollection does not mistakenly identify non-contained elements as present.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should not contain elements that were never added.
+     * @test.expectedBehavior The test should pass if contains() returns false for non-contained elements.
+     */
     @Test
     public void testContainsNotContainedElement() {
         MapAdapter anotherMap = new MapAdapter();
@@ -58,6 +105,18 @@ public class ValueCollectionPopulatedTests {
                 values.contains(key));
     }
 
+    /**
+     * Test to verify that the ValueCollection contains specific elements at different positions.
+     * This test checks that the ValueCollection can correctly identify contained elements
+     * at the start, middle, and end of the collection.
+     * @test.design This test is designed to ensure that the ValueCollection behaves correctly
+     * when checking for contained elements at various positions.
+     * @test.description This test checks that the ValueCollection has elements to iterate over
+     * and that calling contains() returns true for expected keys.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should have elements to iterate over.
+     * @test.expectedBehavior The test should pass if contains() returns true for expected keys.
+     */
     @Test
     public void testContainsContainedElementStart() {
         MapAdapter anotherMap = new MapAdapter();
@@ -68,6 +127,18 @@ public class ValueCollectionPopulatedTests {
                 values.contains(key));
     }
 
+    /**
+     * Test to verify that the ValueCollection contains specific elements at different positions.
+     * This test checks that the ValueCollection can correctly identify contained elements
+     * at the start, middle, and end of the collection.
+     * @test.design This test is designed to ensure that the ValueCollection behaves correctly
+     * when checking for contained elements at various positions.
+     * @test.description This test checks that the ValueCollection has elements to iterate over
+     * and that calling contains() returns true for expected keys.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should have elements to iterate over.
+     * @test.expectedBehavior The test should pass if contains() returns true for expected keys.
+     */
     @Test
     public void testContainsContainedElementMiddle() {
         MapAdapter anotherMap = new MapAdapter();
@@ -78,6 +149,18 @@ public class ValueCollectionPopulatedTests {
                 values.contains(key));
     }
 
+    /**
+     * Test to verify that the ValueCollection contains specific elements at different positions.
+     * This test checks that the ValueCollection can correctly identify contained elements
+     * at the start, middle, and end of the collection.
+     * @test.design This test is designed to ensure that the ValueCollection behaves correctly
+     * when checking for contained elements at various positions.
+     * @test.description This test checks that the ValueCollection has elements to iterate over
+     * and that calling contains() returns true for expected keys.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should have elements to iterate over.
+     * @test.expectedBehavior The test should pass if contains() returns true for expected keys.
+     */
     @Test
     public void testContainsContainedElementEnd() {
         MapAdapter anotherMap = new MapAdapter();
@@ -90,7 +173,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.iterator()
 
-    
+    /**
+     * Test to verify that the iterator of the ValueCollection is not null.
+     * @test.design This test checks that the iterator method returns a non-null iterator.
+     * @test.description This test ensures that the ValueCollection can be iterated over.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should have a valid iterator.
+     * @test.expectedBehavior The test should pass if the iterator is not null.
+     */
     @Test
     public void testIteratorNotNull() {
         assertNotNull("Iterator of an key set should not be null",
@@ -99,7 +189,15 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.toArray()
 
-    
+    /**
+     * Test to verify that the toArray() method returns an array with the correct number of elements.
+     * @test.design This test checks that the toArray method returns an array containing all elements
+     * in the ValueCollection.
+     * @test.description This test ensures that the ValueCollection can be converted to an array.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be convertible to an array.
+     * @test.expectedBehavior The test should pass if toArray() returns an array with 100 elements.
+     */
     @Test
     public void testToArray() {
         Object[] array = values.toArray();
@@ -110,13 +208,31 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.toArray(T[])
 
-    
+    /**
+     * Test to verify that the toArray(T[]) method returns an array with the correct number of elements.
+     * @test.design This test checks that the toArray(T[]) method returns an array containing all elements
+     * in the ValueCollection.
+     * @test.description This test ensures that the ValueCollection can be converted to an array of a specific type.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be convertible to an array of a specific type.
+     * @test.expectedBehavior The test should pass if toArray(T[]) returns an array with 100 elements.
+     */
     @Test (expected = NullPointerException.class)
     public void testToArrayNullArray() {
         values.toArray(null);
     }
 
-    
+    /**
+     * Test to verify that the toArray(T[]) method returns an array with the correct number of elements
+     * when a smaller array is passed.
+     * @test.design This test checks that the toArray(T[]) method returns a new array containing all elements
+     * in the ValueCollection when a smaller array is passed.
+     * @test.description This test ensures that the ValueCollection can be converted to an array of a specific type
+     * even when a smaller array is provided.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be convertible to an array of a specific type.
+     * @test.expectedBehavior The test should pass if toArray(T[]) returns a new array with 100 elements.
+     */
     @Test
     public void testToArrayWithSmallerArray() {
         Object[] array = new Object[5];
@@ -128,6 +244,15 @@ public class ValueCollectionPopulatedTests {
                 array, result);
     }
 
+    /**
+     * Test to verify that the toArray(T[]) method returns the same array when a larger array is passed.
+     * @test.design This test checks that the toArray(T[]) method returns the same array when a larger array is passed.
+     * @test.description This test ensures that the ValueCollection can be converted to an array of a specific type
+     * and that the original array is not modified.
+     * @test.preconditions The map must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be convertible to an array of a specific type.
+     * @test.expectedBehavior The test should pass if toArray(T[]) returns the same array with null terminators.
+     */
     @Test
     public void testToArrayWithLargerArray() {
         Object[] array = new Object[200];
@@ -147,7 +272,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.add(Object)
     
-    
+    /**
+     * Test to verify that add(Object) throws UnsupportedOperationException.
+     * @test.design This test is designed to ensure that the ValueCollection does not allow adding elements.
+     * @test.description This test checks that calling add(Object) on the ValueCollection results in an UnsupportedOperationException.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if add(Object) throws an UnsupportedOperationException.
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void testAdd() {
         values.add("baguette");
@@ -155,13 +287,31 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.remove(Object)
 
-    
+    /**
+     * Test to verify that remove(Object) throws NullPointerException when null is passed.
+     * @test.design This test checks that the remove(Object) method throws a NullPointerException when null is passed.
+     * @test.description This test ensures that the ValueCollection does not allow removing null elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if remove(Object) throws a NullPointerException.
+     */
     @Test (expected = NullPointerException.class)
     public void testRemoveNull() {
         values.remove(null);
     }
 
-    
+    /**
+     * Test to verify that remove(Object) returns false for non-contained elements.
+     * This test checks that the ValueCollection does not allow removing elements that are not present.
+     * @test.design This test is designed to ensure that the ValueCollection behaves correctly
+     * when attempting to remove non-contained elements.
+     * @test.description This test checks that calling remove(Object) on a non-contained element
+     * returns false and does not modify the collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if remove(Object) returns false for non-contained elements
+     * and the collection size remains unchanged.
+     */
     @Test
     public void testRemoveNonContained() {
         assertFalse("remove(Object) should return false for non-contained elements",
@@ -171,6 +321,17 @@ public class ValueCollectionPopulatedTests {
                 values.isEmpty());
     }
 
+    /**
+     * Test to verify that remove(Object) works correctly when the element is contained.
+     * This test checks that the ValueCollection can remove elements that are present.
+     * @test.design This test is designed to ensure that the ValueCollection can remove elements
+     * from the underlying map.
+     * @test.description This test checks that calling remove(Object) on a contained element
+     * removes it from the collection and that the collection size is reduced accordingly.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be able to remove elements from the map.
+     * @test.expectedBehavior The test should pass if remove(Object) works as expected and the collection size is reduced.
+     */
     @Test
     public void testRemoveContainedStart() {
         Object value = "value0";
@@ -184,6 +345,17 @@ public class ValueCollectionPopulatedTests {
         assertEquals("Map should have size 98 after removing two elements", 98, map.size());
     }
 
+    /**
+     * Test to verify that remove(Object) works correctly when the element is contained in the middle.
+     * This test checks that the ValueCollection can remove elements that are present in the middle of the collection.
+     * @test.design This test is designed to ensure that the ValueCollection can remove elements
+     * from the underlying map.
+     * @test.description This test checks that calling remove(Object) on a contained element
+     * removes it from the collection and that the collection size is reduced accordingly.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be able to remove elements from the map.
+     * @test.expectedBehavior The test should pass if remove(Object) works as expected and the collection size is reduced.
+     */
     @Test
     public void testRemoveContainedMiddle() {
         Object value = "value35";
@@ -197,6 +369,17 @@ public class ValueCollectionPopulatedTests {
         assertEquals("Map should have size 98 after removing two elements", 98, map.size());
     }
 
+    /**
+     * Test to verify that remove(Object) works correctly when the element is contained at the end.
+     * This test checks that the ValueCollection can remove elements that are present at the end of the collection.
+     * @test.design This test is designed to ensure that the ValueCollection can remove elements
+     * from the underlying map.
+     * @test.description This test checks that calling remove(Object) on a contained element
+     * removes it from the collection and that the collection size is reduced accordingly.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be able to remove elements from the map.
+     * @test.expectedBehavior The test should pass if remove(Object) works as expected and the collection size is reduced.
+     */
     @Test
     public void testRemoveContainedEnd() {
         Object value = "value49";
@@ -212,12 +395,27 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.containsAll(HCollection)
 
-    
+    /**
+     * Test to verify that containsAll(HCollection) throws NullPointerException when null is passed.
+     * @test.design This test checks that the containsAll method throws a NullPointerException when null is passed.
+     * @test.description This test ensures that the ValueCollection does not allow checking containment against null.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if containsAll(HCollection) throws a NullPointerException.
+     */
     @Test (expected = NullPointerException.class)
     public void testContainsAllNull() {
         values.containsAll(null);
     }
 
+    /**
+     * Test to verify that containsAll(HCollection) works correctly when some elements are contained.
+     * @test.design This test checks that the containsAll method returns true when some elements are contained.
+     * @test.description This test ensures that the ValueCollection can correctly identify containment of some elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if containsAll(HCollection) works as expected for some elements.
+     */
     @Test
     public void testContainsAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -229,6 +427,14 @@ public class ValueCollectionPopulatedTests {
                 values.containsAll(anotherValueCollection));
     }
     
+    /**
+     * Test to verify that containsAll(HCollection) works correctly when all elements are contained.
+     * @test.design This test checks that the containsAll method returns true when all elements are contained.
+     * @test.description This test ensures that the ValueCollection can correctly identify containment of all elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if containsAll(HCollection) works as expected for all elements.
+     */
     @Test
     public void testContainsAllSameElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -238,7 +444,14 @@ public class ValueCollectionPopulatedTests {
                 values.containsAll(anotherValueCollection));
     }
 
-    
+    /**
+     * Test to verify that containsAll(HCollection) works correctly when more elements are contained.
+     * @test.design This test checks that the containsAll method returns false when more elements are contained.
+     * @test.description This test ensures that the ValueCollection can correctly identify containment when more elements are present.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if containsAll(HCollection) works as expected when more elements are contained.
+     */
     @Test
     public void testContainsAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -250,6 +463,14 @@ public class ValueCollectionPopulatedTests {
                 values.containsAll(anotherValueCollection));
     }
 
+    /**
+     * Test to verify that containsAll(HCollection) works correctly when no common elements are present.
+     * @test.design This test checks that the containsAll method returns false when there are no common elements.
+     * @test.description This test ensures that the ValueCollection can correctly identify containment when there are no common elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if containsAll(HCollection) works as expected when no common elements are present.
+     */
     @Test
     public void testContainsAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -262,7 +483,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.addAll(HCollection)
 
-    
+    /**
+     * Test to verify that addAll(HCollection) throws UnsupportedOperationException.
+     * @test.design This test checks that the addAll method throws an UnsupportedOperationException when called.
+     * @test.description This test ensures that the ValueCollection does not allow adding multiple elements at once.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if addAll(HCollection) throws an UnsupportedOperationException.
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void testAddAll() {
         MapAdapter anotherMap = new MapAdapter();
@@ -271,12 +499,27 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.retainAll(HCollection)
 
-    
+    /**
+     * Test to verify that retainAll(HCollection) throws NullPointerException when null is passed.
+     * @test.design This test checks that the retainAll method throws a NullPointerException when null is passed.
+     * @test.description This test ensures that the ValueCollection does not allow retaining elements against null.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if retainAll(HCollection) throws a NullPointerException.
+     */
     @Test (expected = NullPointerException.class)
     public void testRetainAllNull() {
         values.retainAll(null);
     }
 
+    /**
+     * Test to verify that retainAll(HCollection) works correctly when the same elements are retained.
+     * @test.design This test checks that the retainAll method returns false when the same elements are retained.
+     * @test.description This test ensures that the ValueCollection does not change when retaining the same elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if retainAll(HCollection) returns false for the same elements.
+     */
     @Test
     public void testRetainAllSameElements() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -291,6 +534,14 @@ public class ValueCollectionPopulatedTests {
                 100, values.size());
     }
 
+    /**
+     * Test to verify that retainAll(HCollection) works correctly when some elements are retained.
+     * @test.design This test checks that the retainAll method returns true when some elements are retained.
+     * @test.description This test ensures that the ValueCollection can correctly retain some elements from another collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should retain only the specified elements after this test runs.
+     * @test.expectedBehavior The test should pass if retainAll(HCollection) works as expected for some elements.
+     */
     @Test
     public void testRetainAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -307,6 +558,14 @@ public class ValueCollectionPopulatedTests {
                 2, values.size());
     }
 
+    /**
+     * Test to verify that retainAll(HCollection) works correctly when more elements are retained.
+     * @test.design This test checks that the retainAll method returns false when more elements are retained.
+     * @test.description This test ensures that the ValueCollection does not change when retaining more elements than present.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if retainAll(HCollection) returns false for more elements.
+     */
     @Test
     public void testRetainAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -324,6 +583,14 @@ public class ValueCollectionPopulatedTests {
                 100, values.size());
     }
 
+    /**
+     * Test to verify that retainAll(HCollection) works correctly when no common elements are present.
+     * @test.design This test checks that the retainAll method returns true when there are no common elements.
+     * @test.description This test ensures that the ValueCollection can correctly retain no elements from another collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be empty after this test runs.
+     * @test.expectedBehavior The test should pass if retainAll(HCollection) works as expected when no common elements are present.
+     */
     @Test
     public void testRetainAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -341,12 +608,27 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.removeAll(HCollection)
 
-    
+    /**
+     * Test to verify that removeAll(HCollection) throws NullPointerException when null is passed.
+     * @test.design This test checks that the removeAll method throws a NullPointerException when null is passed.
+     * @test.description This test ensures that the ValueCollection does not allow removing elements against null.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if removeAll(HCollection) throws a NullPointerException.
+     */
     @Test (expected = NullPointerException.class)
     public void testRemoveAllNull() {
         values.removeAll(null);
     }
 
+    /**
+     * Test to verify that removeAll(HCollection) works correctly when the same elements are removed.
+     * @test.design This test checks that the removeAll method returns false when the same elements are removed.
+     * @test.description This test ensures that the ValueCollection does not change when removing the same elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if removeAll(HCollection) returns false for the same elements.
+     */
     @Test
     public void testRemoveAllSameElements() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -361,6 +643,14 @@ public class ValueCollectionPopulatedTests {
                 0, values.size());
     }
 
+    /**
+     * Test to verify that removeAll(HCollection) works correctly when some elements are removed.
+     * @test.design This test checks that the removeAll method returns true when some elements are removed.
+     * @test.description This test ensures that the ValueCollection can correctly remove some elements from another collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should retain only the specified elements after this test runs.
+     * @test.expectedBehavior The test should pass if removeAll(HCollection) works as expected for some elements.
+     */
     @Test
     public void testRemoveAllSomeElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -376,6 +666,14 @@ public class ValueCollectionPopulatedTests {
         assertEquals("Remove all should remove duplicates inside the map", 96, values.size());
     }
 
+    /**
+     * Test to verify that removeAll(HCollection) works correctly when more elements are removed.
+     * @test.design This test checks that the removeAll method returns true when more elements are removed.
+     * @test.description This test ensures that the ValueCollection can correctly remove more elements than present.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should retain only the specified elements after this test runs.
+     * @test.expectedBehavior The test should pass if removeAll(HCollection) works as expected for more elements.
+     */
     @Test
     public void testRemoveAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -393,6 +691,14 @@ public class ValueCollectionPopulatedTests {
                 0, values.size());
     }
 
+    /**
+     * Test to verify that removeAll(HCollection) works correctly when no common elements are present.
+     * @test.design This test checks that the removeAll method returns false when there are no common elements.
+     * @test.description This test ensures that the ValueCollection does not change when removing elements with no common elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if removeAll(HCollection) works as expected when no common elements are present.
+     */
     @Test
     public void testRemoveAllNoCommonElements() {
         MapAdapter anotherMap = new MapAdapter();
@@ -410,7 +716,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.clear()
 
-    
+    /**
+     * Test to verify that clear() empties the ValueCollection.
+     * @test.design This test checks that the clear method empties the ValueCollection.
+     * @test.description This test ensures that calling clear() on the ValueCollection results in an empty collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should be empty after this test runs.
+     * @test.expectedBehavior The test should pass if clear() empties the ValueCollection and the underlying map.
+     */
     @Test
     public void testClear() {
         // Clear the key set
@@ -427,7 +740,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.equals(Object)
 
-    
+    /**
+     * Test to verify that equals(Object) works correctly for the same collection.
+     * @test.design This test checks that the equals method returns true when comparing with the same collection.
+     * @test.description This test ensures that the ValueCollection can correctly identify equality with another instance of the same collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if equals(Object) returns true for the same collection.
+     */
     @Test
     public void testEqualsSameCollection() {
         MapAdapter anotherMap = new MapAdapter(map);
@@ -437,7 +757,14 @@ public class ValueCollectionPopulatedTests {
                 values.equals(anotherValueCollection));
     }
 
-    
+    /**
+     * Test to verify that equals(Object) works correctly for an empty collection.
+     * @test.design This test checks that the equals method returns true when comparing with an empty collection.
+     * @test.description This test ensures that the ValueCollection can correctly identify equality with an empty collection.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if equals(Object) returns true for an empty collection.
+     */
     @Test
     public void testEqualsDifferentCollection() {
         MapAdapter anotherMap = new MapAdapter();
@@ -448,7 +775,14 @@ public class ValueCollectionPopulatedTests {
                 values.equals(anotherValueCollection));
     }
 
-    
+    /**
+     * Test to verify that equals(Object) works correctly for a different collection with the same size.
+     * @test.design This test checks that the equals method returns false when comparing with a different collection of the same size.
+     * @test.description This test ensures that the ValueCollection can correctly identify inequality with another collection of the same size but different elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if equals(Object) returns false for a different collection of the same size.
+     */
     @Test
     public void testEqualsDifferentCollectionSameSize() {
         MapAdapter anotherMap = new MapAdapter();
@@ -461,6 +795,14 @@ public class ValueCollectionPopulatedTests {
                 values.equals(anotherValueCollection));
     }
     
+    /**
+     * Test to verify that equals(Object) works correctly for a collection with the same elements but different order.
+     * @test.design This test checks that the equals method returns true when comparing with a collection of the same elements in a different order.
+     * @test.description This test ensures that the ValueCollection can correctly identify equality with another collection of the same elements but in a different order.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if equals(Object) returns true for a collection with the same elements in a different order.
+     */
     @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsNotACollection() {
@@ -472,6 +814,14 @@ public class ValueCollectionPopulatedTests {
 
     // ValueCollection.hashCode()
 
+    /**
+     * Test to verify that hashCode() returns the same value for the same collection.
+     * @test.design This test checks that the hashCode method returns the same value for the same collection.
+     * @test.description This test ensures that the ValueCollection can correctly compute its hash code based on its elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if hashCode() returns the same value for the same collection.
+     */
     @Test
     public void testHashCodeDifferentCollections() {
         MapAdapter anotherMap = new MapAdapter();
@@ -483,6 +833,14 @@ public class ValueCollectionPopulatedTests {
                 values.hashCode(), anotherValueCollection.hashCode());
     }
     
+    /**
+     * Test to verify that hashCode() returns the same value for the same collection.
+     * @test.design This test checks that the hashCode method returns the same value for the same collection.
+     * @test.description This test ensures that the ValueCollection can correctly compute its hash code based on its elements.
+     * @test.preconditions The ValueCollection must be populated before this test runs.
+     * @test.postconditions The ValueCollection should remain unchanged after this test runs.
+     * @test.expectedBehavior The test should pass if hashCode() returns the same value for the same collection.
+     */
     @Test
     public void testHashCodeSameCollection() {
         // Create another instance of the same key set

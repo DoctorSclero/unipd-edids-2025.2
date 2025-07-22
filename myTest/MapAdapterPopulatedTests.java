@@ -2,7 +2,6 @@ package myTest;
 
 import myAdapter.HMap;
 import myAdapter.MapAdapter;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 

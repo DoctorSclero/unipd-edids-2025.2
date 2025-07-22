@@ -210,12 +210,12 @@ Each test should test different environments. Namely:
 ## HIterator
 
 1. `boolean hasNext()`
-    [ ] test start [few items, many items, dynamic]
-    [ ] test middle [few items, many items, dynamic]
-    [ ] test end [few items, many items, dynamic]
+    [x] test start [few items, many items, dynamic]
+    [x] test middle [few items, many items, dynamic]
+    [x] test end [few items, many items, dynamic]
 2. `Object next()`
-    [ ] test with next element presence [few items, many items, dynamic]
-    [ ] test without next element presence [empty, few items, many items, dynamic]
+    [x] test with next element presence [few items, many items, dynamic]
+    [x] test without next element presence [empty, few items, many items, dynamic]
 3. `void remove()`
-    [ ] test with next call [few items, many items, dynamic]
-    [ ] test without next call [empty, few items, many items, dynamic]
+    [x] test with next call [few items, many items, dynamic]
+    [x] test without next call [empty, few items, many items, dynamic]

@@ -1,6 +1,5 @@
 package myTest;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +8,16 @@ import static org.junit.Assert.*;
 import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.KeySet;
 
-
+/**
+ * Test case for KeySet when the underlying map is populated.
+ * This class tests the behavior of KeySet methods when there are elements in the map.
+ * @test.design This test is designed to ensure that the KeySet behaves correctly
+ * when the underlying map is populated, specifically checking size(), isEmpty(), contains(),
+ * iterator(), toArray(), and remove() methods.
+ * @test.libraries JUnit 4.13, Hamcrest 1.3
+ * @see myAdapter.MapAdapter
+ * @see myAdapter.MapAdapter.KeySet
+ */
 public class KeySetPopulatedTests {
 
     public MapAdapter map;
