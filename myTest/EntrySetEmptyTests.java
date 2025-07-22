@@ -181,7 +181,7 @@ public class EntrySetEmptyTests {
      * entry set created by the {@link #setUp()} method. Since the entry set
      * is empty, the method should return an empty array with a length of 0.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#toArray()} method returns a
      * non-null array for an empty entry set.
      */
@@ -275,7 +275,7 @@ public class EntrySetEmptyTests {
      * throw an UnsupportedOperationException as adding elements to an 
      * entry set is not allowed.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#add(Object)} method throws an
      * UnsupportedOperationException when called on an empty entry set.
      */
@@ -322,7 +322,7 @@ public class EntrySetEmptyTests {
      * contained in the entry set. Since the entry set is backed by the map,
      * the map should remain empty after the operation.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#remove(Object)} method returns
      * false when a non-contained element is passed as an argument.
      */
@@ -382,9 +382,9 @@ public class EntrySetEmptyTests {
      * method. Since the method does not accept null collections, it should
      * throw a NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link EntrySet#containsAll(HCollection)} method throws
-     * NullPointerException when null is passed as an argument.
+     * @test.postcondition The map and the entry set are unchanged
+     * @test.expectedresults The {@link EntrySet#containsAll(HCollection)} method
+     * throws NullPointerException when null is passed as an argument.
      */
     @Test (expected = NullPointerException.class)
     public void testContainsAllNull() {
@@ -393,19 +393,20 @@ public class EntrySetEmptyTests {
 
     /**
      * Tests that the {@link EntrySet#containsAll(HCollection)} method
-     * returns true when an empty collection is passed as an argument.
+     * returns true when called on an array with the same elements
+     * as the entry set.
      * 
      * @test.design The test aims to verify that the
-     * {@link EntrySet#containsAll(HCollection)} method returns true when an
-     * empty collection is passed as an argument.
+     * {@link EntrySet#containsAll(HCollection)} method returns true
+     * when called on an array with the same elements as the entry set.
      * @test.description The {@link EntrySet#containsAll(HCollection)} method is
-     * called with an empty collection on the entry set created by the
+     * called with another MapAdapter's entry set on the entry set created by the
      * {@link #setUp()} method. Since the entry set is empty, it should contain
-     * all elements of the empty collection, and the method should return true.
+     * all elements of the other entry set, and the method should return true.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#containsAll(HCollection)} method
-     * returns true when an empty collection is passed as an argument.
+     * returns true when called on an array with the same elements as the entry set.
      */
     @Test
     public void testContainsAllSameElements() {
@@ -423,7 +424,6 @@ public class EntrySetEmptyTests {
      * @test.design The test aims to verify that the
      * {@link EntrySet#containsAll(HCollection)} method returns false when a
      * collection with more elements is passed as an argument.
-     * 
      * @test.description The {@link EntrySet#containsAll(HCollection)} method is
      * called with a collection (for this test another MapAdapter's EntrySet
      * containing two entries: "key1"->"value1" and "key2"->"value2") 
@@ -432,7 +432,7 @@ public class EntrySetEmptyTests {
      * it should not contain all elements of the collection, and the method
      * should return false.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#containsAll(HCollection)} method
      * returns false when a collection with more elements is passed as an argument.
      */
@@ -461,7 +461,7 @@ public class EntrySetEmptyTests {
      * the {@link #setUp()} method. Since the method is not supported by the
      * entry set view it should throw an UnsupportedOperationException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#addAll(HCollection)} method
      * throws an UnsupportedOperationException when called on an empty entry set.
      */
@@ -485,7 +485,7 @@ public class EntrySetEmptyTests {
      * {@link #setUp()} method. Since the method does not accept null arguments,
      * it should throw a NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#retainAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
      */
@@ -508,7 +508,7 @@ public class EntrySetEmptyTests {
      * {@link #setUp()} method. Since the method does not accept null arguments,
      * it should throw a NullPointerException.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#removeAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
      */
@@ -531,7 +531,7 @@ public class EntrySetEmptyTests {
      * is backed by the underlying map, clearing the entry set should also
      * clear the map.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#clear()} method clears the
      * entry set and leaves the underlying map empty.
      */
@@ -544,7 +544,7 @@ public class EntrySetEmptyTests {
         assertEquals("Size of entry set should be 0 after clear", 0, entrySet.size());
         assertTrue("Entry set should be empty after clear", entrySet.isEmpty());
         
-        // Verify that the map is still empty
+        // Verify that the map is unchanged
         assertEquals("Map should have size 0 after clearing entry set", 0, map.size());
         assertTrue("Map should be empty after clearing entry set", map.isEmpty());
     }
@@ -564,7 +564,7 @@ public class EntrySetEmptyTests {
      * one. Since it contains the same entries (none), the method should return
      * true.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#equals(Object)} method returns
      * true when an entry set with the same entries is passed as an argument.
      */
@@ -590,7 +590,7 @@ public class EntrySetEmptyTests {
      * created by the {@link #setUp()} method and the new one. Since it
      * contains different entries, the method should return false.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#equals(Object)} method returns
      * false when an entry set with different entries is passed as an argument.
      */
@@ -616,7 +616,7 @@ public class EntrySetEmptyTests {
      * {@link #setUp()} method. Since the argument is not an EntrySet,
      * the method should return false.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#equals(Object)} method returns
      * false when the argument is not an EntrySet.
      */
@@ -642,7 +642,7 @@ public class EntrySetEmptyTests {
      * on the entry set created by the {@link #setUp()} method. Since the
      * entry set is empty, the method should return 0.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#hashCode()} method returns 0
      * for an empty entry set.
      */
@@ -667,7 +667,7 @@ public class EntrySetEmptyTests {
      * Since the entry sets are different, the method should return
      * different hash codes.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#hashCode()} method returns
      * different hash codes for different entry sets.
      */
@@ -695,7 +695,7 @@ public class EntrySetEmptyTests {
      * Since both instances are views of the same empty map,
      * the method should return the same hash code.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#hashCode()} method returns
      * the same hash code for the same entry set.
      */
@@ -719,7 +719,7 @@ public class EntrySetEmptyTests {
      * return true. The {@link EntrySet#hashCode()} method is then called on
      * both entry sets, and their hash codes should be equal.
      * @test.precondition The map and the entry set are correctly instantiated
-     * @test.postcondition The map is still empty
+     * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#equals(Object)} method
      * implies that the hash codes of the entry sets are equal.
      */

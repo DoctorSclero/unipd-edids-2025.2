@@ -11,6 +11,6 @@ Every test method should be documented using JavaDoc format. The documentation s
 - Use these custom tags in the JavaDoc:
   - `@test.design`: design section.
   - `@test.description`: description section.
-  - `@test.preconditions`: preconditions section.
-  - `@test.postconditions`: postconditions section.
-  - `@test.expectedResults`: expected results section.
+  - `@test.precondition`: preconditions section.
+  - `@test.postcondition`: postconditions section.
+  - `@test.expectedresults`: expected results section.
