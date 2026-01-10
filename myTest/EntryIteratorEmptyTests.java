@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import myAdapter.MapAdapter;
-import myAdapter.MapAdapter.Entry;
 import myAdapter.MapAdapter.EntryIterator;
 import myAdapter.MapAdapter.EntrySet;
 

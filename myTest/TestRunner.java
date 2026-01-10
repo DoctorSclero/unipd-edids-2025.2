@@ -21,6 +21,20 @@ public class TestRunner {
 
         // Run all test classes
         Result result = junit.run(
+                EntryIteratorEmptyTests.class,
+                EntryIteratorPopulatedTests.class,
+                EntrySetEmptyTests.class,
+                EntrySetPopulatedTests.class,
+                KeyIteratorEmptyTests.class,
+                KeyIteratorPopulatedTests.class,
+                KeySetEmptyTests.class,
+                KeySetPopulatedTests.class,
+                MapAdapterEmptyTests.class,
+                MapAdapterPopulatedTests.class,
+                ValueCollectionEmptyTests.class,
+                ValueCollectionPopulatedTests.class,
+                ValueIteratorEmptyTests.class,
+                ValueIteratorPopulatedTests.class
         );
 
         long endTime = System.currentTimeMillis();
