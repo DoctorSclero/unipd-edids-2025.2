@@ -10,16 +10,16 @@ import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.ValueCollection;
 
 /**
- * This test case tests the ValueCollection class instances linked to an empty map.
- * Every method of the ValueCollection class is tested to ensure the class
+ * This test case tests the ValueCollection class instances linked to an empty
+ * map. Every method of the ValueCollection class is tested to ensure the class
  * implementation serves correctly as a view for empty maps. For each method
  * tests are created to ensure correct behavior in normal and edge cases,
- * including correct throwing of exceptions and correct return values and
- * side effects on the underlying map.
+ * including correct throwing of exceptions and correct return values and side
+ * effects on the underlying map.
  *
  * @test.design This test case aims to verify the correct behavior of empty
  * values instances to ensure it correctly serves as a collection view for empty
- * maps and implements correctly the {@link myAdapter.HSet} interface.
+ * maps and implements correctly the {@link myAdapter.HCollection} interface.
  * @test.libraries JUnit 4.13, Hamcrest 1.3
  * @see myAdapter.MapAdapter
  * @see myAdapter.MapAdapter.ValueCollection
@@ -30,8 +30,8 @@ public class ValueCollectionEmptyTests {
     public ValueCollection values;
 
     /**
-     * Sets up the test environment by initializing an empty MapAdapter
-     * through the MapAdapter's default constructor and creating an ValueCollection
+     * Sets up the test environment by initializing an empty MapAdapter through
+     * the MapAdapter's default constructor and creating an ValueCollection
      * instance obtaining its value collection view.
      */
     @Before
@@ -41,8 +41,8 @@ public class ValueCollectionEmptyTests {
     }
 
     /**
-     * Cleans up the test environment by setting the map and values
-     * references to null, allowing for garbage collection.
+     * Cleans up the test environment by setting the map and values references
+     * to null, allowing for garbage collection.
      */
     @After
     public void tearDown() {
@@ -53,13 +53,14 @@ public class ValueCollectionEmptyTests {
     // ValueCollection.size()
 
     /**
-     * Tests that the {@link ValueCollection#size()} method returns 0 for an empty map.
-     * 
+     * Tests that the {@link ValueCollection#size()} method returns 0 for an
+     * empty map.
+     *
      * @test.design The test aims to verify that the
      * {@link ValueCollection#size()} method returns 0 for an empty map.
-     * @test.description The {@link ValueCollection#size()} method is called on the set
-     * view created by the {@link #setUp()} method. Since the linked map is
-     * empty, the method should return 0.
+     * @test.description The {@link ValueCollection#size()} method is called on
+     * the collection view created by the {@link #setUp()} method. Since the linked map
+     * is empty, the method should return 0.
      * @test.precondition The map is correctly instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link ValueCollection#size()} method returns 0
@@ -69,21 +70,22 @@ public class ValueCollectionEmptyTests {
     public void testSize() {
         assertEquals("Size of an empty value collection should be 0", 0, values.size());
     }
-    
+
     // ValueCollection.isEmpty()
 
     /**
-     * Tests that the {@link ValueCollection#isEmpty()} method returns true for an empty map.
-     * 
+     * Tests that the {@link ValueCollection#isEmpty()} method returns true for
+     * an empty map.
+     *
      * @test.design The test aims to verify that the
      * {@link ValueCollection#isEmpty()} method returns true for an empty map.
-     * @test.description The {@link ValueCollection#isEmpty()} method is called on the set
-     * view created by the {@link #setUp()} method. Since the linked map is
-     * empty, the method should return true.
+     * @test.description The {@link ValueCollection#isEmpty()} method is called
+     * on the collection view created by the {@link #setUp()} method. Since the linked
+     * map is empty, the method should return true.
      * @test.precondition The map is correctly instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#isEmpty()} method returns true
-     * for an empty map.
+     * @test.expectedresults The {@link ValueCollection#isEmpty()} method
+     * returns true for an empty map.
      */
     @Test
     public void testIsEmpty() {
@@ -95,43 +97,45 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#contains(Object)} method throws a
      * NullPointerException when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#contains(Object)} method throws a NullPointerException
-     * when null is passed as an argument as not supported by the underlying
-     * map implementation.
-     * @test.description The {@link ValueCollection#contains(Object)} method is called
-     * with null as an argument on the value collection. Since the underlying map does
-     * not support null keys, it should throw a NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#contains(Object)} method throws a
+     * NullPointerException when null is passed as an argument as not supported
+     * by the underlying map implementation.
+     * @test.description The {@link ValueCollection#contains(Object)} method is
+     * called with null as an argument on the value collection. Since the
+     * underlying map does not support null keys, it should throw a
+     * NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#contains(Object)} method throws
-     * NullPointerException when null is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#contains(Object)} method
+     * throws NullPointerException when null is passed as an argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testContainsNull() {
         values.contains(null);
     }
 
     /**
-     * Tests that the {@link ValueCollection#contains(Object)} method returns false
-     * when a non-contained element is passed as an argument.
-     * 
+     * Tests that the {@link ValueCollection#contains(Object)} method returns
+     * false when a non-contained element is passed as an argument.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#contains(Object)} method returns false when a non-contained
-     * element is passed as an argument.
-     * @test.description To create a non-contained element, a new
-     * MapAdapter instance is created, and an key is added to it. The key is
-     * then extracted using the value collection view of the new map. The
-     * {@link ValueCollection#contains(Object)} method is called with this key on the
-     * original value collection. Since the original map is empty, the method should
-     * return false.
-     * @test.precondition The map and the value collection are correctly instantiated.
-     * Another MapAdapter instance is created with an key and the key is then
-     * extracted from its value collection.
+     * {@link ValueCollection#contains(Object)} method returns false when a
+     * non-contained element is passed as an argument.
+     * @test.description To create a non-contained element, a new MapAdapter
+     * instance is created, and an entry is added to it. The value is then extracted
+     * using the value collection view of the new map. The
+     * {@link ValueCollection#contains(Object)} method is called with this value
+     * on the original value collection. Since the original map is empty, the
+     * method should return false.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated. Another MapAdapter instance is created with an entry and the
+     * value is then extracted from its value collection.
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#contains(Object)} method returns false
-     * when a non-contained element is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#contains(Object)} method
+     * returns false when a non-contained element is passed as an argument.
      */
     @Test
     public void testContainsNotContainedElement() {
@@ -139,29 +143,30 @@ public class ValueCollectionEmptyTests {
         anotherMap.put("key", "value");
 
         ValueCollection anotherValueCollection = (ValueCollection) anotherMap.values();
-        Object key = anotherValueCollection.iterator().next();
+        Object value = anotherValueCollection.iterator().next();
 
         assertFalse("Value collection should not contain non-contained element",
-                values.contains(key));
+                values.contains(value));
     }
 
     // ValueCollection.iterator()
 
     /**
-     * Tests that the {@link ValueCollection#iterator()} method returns a non-null
-     * iterator for an empty value collection.
-     * 
-     * @test.design The test aims to verify that the
-     * {@link ValueCollection#iterator()} method returns a non-null iterator for an
-     * empty value collection.
-     * @test.description The {@link ValueCollection#iterator()} method is called on the
-     * value collection created by the {@link #setUp()} method. Since the value collection
-     * is empty, the method should return a non-null iterator that
-     * iterates over no elements.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#iterator()} method returns a
+     * Tests that the {@link ValueCollection#iterator()} method returns a
      * non-null iterator for an empty value collection.
+     *
+     * @test.design The test aims to verify that the
+     * {@link ValueCollection#iterator()} method returns a non-null iterator for
+     * an empty value collection.
+     * @test.description The {@link ValueCollection#iterator()} method is called
+     * on the value collection created by the {@link #setUp()} method. Since the
+     * value collection is empty, the method should return a non-null iterator
+     * that iterates over no elements.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#iterator()} method
+     * returns a non-null iterator for an empty value collection.
      */
     @Test
     public void testIteratorNotNull() {
@@ -172,19 +177,21 @@ public class ValueCollectionEmptyTests {
     // ValueCollection.toArray()
 
     /**
-     * Tests that the {@link ValueCollection#toArray()} method returns a non-null
-     * array for an empty value collection.
-     * 
-     * @test.design The test aims to verify that the
-     * {@link ValueCollection#toArray()} method returns a non-null array for an empty
-     * value collection.
-     * @test.description The {@link ValueCollection#toArray()} method is called on the
-     * value collection created by the {@link #setUp()} method. Since the value collection
-     * is empty, the method should return a non-null array with a length of 0.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#toArray()} method returns a
+     * Tests that the {@link ValueCollection#toArray()} method returns a
      * non-null array for an empty value collection.
+     *
+     * @test.design The test aims to verify that the
+     * {@link ValueCollection#toArray()} method returns a non-null array for an
+     * empty value collection.
+     * @test.description The {@link ValueCollection#toArray()} method is called
+     * on the value collection created by the {@link #setUp()} method. Since the
+     * value collection is empty, the method should return a non-null array with
+     * a length of 0.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#toArray()} method
+     * returns a non-null array for an empty value collection.
      */
     @Test
     public void testToArray() {
@@ -199,42 +206,47 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#toArray(Object[])} method throws a
      * {@link NullPointerException} when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#toArray(Object[])} method throws a NullPointerException
-     * when null is passed as an argument.
-     * @test.description The {@link ValueCollection#toArray(Object[])} method is called
-     * with null as an argument on the value collection created by the {@link #setUp()}
-     * method. Since the method does not support null arrays, it should throw
-     * a NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#toArray(Object[])} method throws a
+     * NullPointerException when null is passed as an argument.
+     * @test.description The {@link ValueCollection#toArray(Object[])} method is
+     * called with null as an argument on the value collection created by the
+     * {@link #setUp()} method. Since the method does not support null arrays,
+     * it should throw a NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#toArray(Object[])} method throws
-     * {@link NullPointerException} when null is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#toArray(Object[])}
+     * method throws {@link NullPointerException} when null is passed as an
+     * argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testToArrayNullArray() {
         values.toArray(null);
     }
 
     /**
-     * Tests that the {@link ValueCollection#toArray(Object[])} method returns an
-     * empty array when an empty array is passed as an argument.
-     * 
+     * Tests that the {@link ValueCollection#toArray(Object[])} method returns
+     * an empty array when an empty array is passed as an argument.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#toArray(Object[])} method returns an empty array when an
-     * bigger empty array is passed as an argument.
+     * {@link ValueCollection#toArray(Object[])} method returns an empty array
+     * when an bigger empty array is passed as an argument.
      * @test.description A new empty array of size 5 is created. Then the array
-     * is populated with flags to ensure that the {@link ValueCollection#toArray(Object[])}
-     * method does not overwrite the elements of the array. The format for the
-     * flags is {@code "flag-i"} where {@code i} is the index of the element.
-     * The {@link ValueCollection#toArray(Object[])} method is then called with this array
-     * as an argument. Since the value collection is empty, the method should return
-     * the bigger passed array without overwriting its elements.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * is populated with flags to ensure that the
+     * {@link ValueCollection#toArray(Object[])} method does not overwrite the
+     * elements of the array. The format for the flags is {@code "flag-i"} where
+     * {@code i} is the index of the element. The
+     * {@link ValueCollection#toArray(Object[])} method is then called with this
+     * array as an argument. Since the value collection is empty, the method
+     * should return the bigger passed array without overwriting its elements.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#toArray(Object[])} method 
-     * returns an array of 
+     * @test.expectedresults The {@link ValueCollection#toArray(Object[])}
+     * method returns the same array passed as argument with the first element
+     * set to null as a terminator and the remaining elements unchanged.
      */
     @Test
     public void testToArrayWithBiggerArray() {
@@ -260,25 +272,27 @@ public class ValueCollectionEmptyTests {
     }
 
     // ValueCollection.add(Object)
-    
+
     /**
      * Tests that the {@link ValueCollection#add(Object)} method throws an
      * UnsupportedOperationException when called on an empty value collection.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#add(Object)} method throws an UnsupportedOperationException
-     * when called on an empty value collection.
-     * @test.description The {@link ValueCollection#add(Object)} method is called with
-     * a string as an argument on the value collection created by the {@link #setUp()}
-     * method. Since the value collection is a view of an empty map, the method should
-     * throw an UnsupportedOperationException as adding elements to a
-     * value collection is not allowed.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#add(Object)} method throws an
+     * {@link ValueCollection#add(Object)} method throws an
      * UnsupportedOperationException when called on an empty value collection.
+     * @test.description The {@link ValueCollection#add(Object)} method is
+     * called with a string as an argument on the value collection created by
+     * the {@link #setUp()} method. Since the value collection is a view of an
+     * empty map, the method should throw an UnsupportedOperationException as
+     * adding elements to a value collection is not allowed.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#add(Object)} method
+     * throws an UnsupportedOperationException when called on an empty value
+     * collection.
      */
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void testAdd() {
         values.add("baguette");
     }
@@ -288,42 +302,45 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#remove(Object)} method throws a
      * NullPointerException when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#remove(Object)} method throws a NullPointerException
-     * when null is passed as an argument.
-     * @test.description The {@link ValueCollection#remove(Object)} method is called
-     * with null as an argument on the value collection created by the {@link #setUp()}
-     * method. Since the method does not support null keys, it should throw a
-     * NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#remove(Object)} method throws
+     * {@link ValueCollection#remove(Object)} method throws a
      * NullPointerException when null is passed as an argument.
+     * @test.description The {@link ValueCollection#remove(Object)} method is
+     * called with null as an argument on the value collection created by the
+     * {@link #setUp()} method. Since the method does not support null values, it
+     * should throw a NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#remove(Object)} method
+     * throws NullPointerException when null is passed as an argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testRemoveNull() {
         values.remove(null);
     }
 
     /**
-     * Tests that the {@link ValueCollection#remove(Object)} method returns false
-     * when a non-contained element is passed as an argument.
-     * 
-     * @test.design The test aims to verify that the
-     * {@link ValueCollection#remove(Object)} method returns false
-     * when a non-contained element is passed as an argument since it has
-     * no effect on the value collection.
-     * @test.description The {@link ValueCollection#remove(Object)} method is called
-     * with a string that is not contained in the value collection on the value collection
-     * created by the {@link #setUp()} method. Since the value collection is empty,
-     * the method should return false, indicating that the element was not
-     * contained in the value collection. Since the value collection is backed by the map,
-     * the map should remain empty after the operation.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#remove(Object)} method returns
+     * Tests that the {@link ValueCollection#remove(Object)} method returns
      * false when a non-contained element is passed as an argument.
+     *
+     * @test.design The test aims to verify that the
+     * {@link ValueCollection#remove(Object)} method returns false when a
+     * non-contained element is passed as an argument since it has no effect on
+     * the value collection.
+     * @test.description The {@link ValueCollection#remove(Object)} method is
+     * called with a string that is not contained in the value collection on the
+     * value collection created by the {@link #setUp()} method. Since the value
+     * collection is empty, the method should return false, indicating that the
+     * element was not contained in the value collection. Since the value
+     * collection is backed by the map, the map should remain empty after the
+     * operation.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#remove(Object)} method
+     * returns false when a non-contained element is passed as an argument.
      */
     @Test
     public void testRemoveNonContained() {
@@ -339,20 +356,22 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#containsAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#containsAll(HCollection)} method throws a NullPointerException
-     * when null is passed as an argument.
-     * @test.description The {@link ValueCollection#containsAll(HCollection)} method is called
-     * with null as an argument on the value collection created by the {@link #setUp()}
-     * method. Since the method does not accept null collections, it should
-     * throw a NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#containsAll(HCollection)} method throws a
+     * NullPointerException when null is passed as an argument.
+     * @test.description The {@link ValueCollection#containsAll(HCollection)}
+     * method is called with null as an argument on the value collection created
+     * by the {@link #setUp()} method. Since the method does not accept null
+     * collections, it should throw a NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#containsAll(HCollection)} method throws
+     * @test.expectedresults The
+     * {@link ValueCollection#containsAll(HCollection)} method throws
      * NullPointerException when null is passed as an argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testContainsAllNull() {
         values.containsAll(null);
     }
@@ -360,18 +379,21 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#containsAll(HCollection)} method
      * returns true when an empty collection is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#containsAll(HCollection)} method returns true when an
-     * empty collection is passed as an argument.
-     * @test.description The {@link ValueCollection#containsAll(HCollection)} method is
-     * called with an empty collection on the value collection created by the
-     * {@link #setUp()} method. Since the value collection is empty, it should contain
-     * all elements of the empty collection, and the method should return true.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#containsAll(HCollection)} method returns true when
+     * an empty collection is passed as an argument.
+     * @test.description The {@link ValueCollection#containsAll(HCollection)}
+     * method is called with an empty collection on the value collection created
+     * by the {@link #setUp()} method. Since the value collection is empty, it
+     * should contain all elements of the empty collection, and the method
+     * should return true.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#containsAll(HCollection)} method
-     * returns true when an empty collection is passed as an argument.
+     * @test.expectedresults The
+     * {@link ValueCollection#containsAll(HCollection)} method returns true when
+     * an empty collection is passed as an argument.
      */
     @Test
     public void testContainsAllSameElements() {
@@ -384,23 +406,25 @@ public class ValueCollectionEmptyTests {
 
     /**
      * Tests that the {@link ValueCollection#containsAll(HCollection)} method
-     * returns false when a collection with more elements is passed as an argument.
-     * 
+     * returns false when a collection with more elements is passed as an
+     * argument.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#containsAll(HCollection)} method returns false when a
-     * collection with more elements is passed as an argument.
-     * 
-     * @test.description The {@link ValueCollection#containsAll(HCollection)} method is
-     * called with a collection (for this test another MapAdapter's ValueCollection
-     * containing two entries: "key1"->"value1" and "key2"->"value2") 
-     * that contains more elements than the value collection
-     * created by the {@link #setUp()} method. Since the value collection is empty,
-     * it should not contain all elements of the collection, and the method
-     * should return false.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#containsAll(HCollection)} method returns false
+     * when a collection with more elements is passed as an argument.
+     * @test.description The {@link ValueCollection#containsAll(HCollection)}
+     * method is called with a collection (for this test another MapAdapter's
+     * ValueCollection containing two entries: "key1"->"value1" and
+     * "key2"->"value2") that contains more elements than the value collection
+     * created by the {@link #setUp()} method. Since the value collection is
+     * empty, it should not contain all elements of the collection, and the
+     * method should return false.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#containsAll(HCollection)} method
-     * returns false when a collection with more elements is passed as an argument.
+     * @test.expectedresults The
+     * {@link ValueCollection#containsAll(HCollection)} method returns false
+     * when a collection with more elements is passed as an argument.
      */
     @Test
     public void testContainsAllMoreElements() {
@@ -415,23 +439,25 @@ public class ValueCollectionEmptyTests {
     // ValueCollection.addAll(HCollection)
 
     /**
-     * Tests that the {@link ValueCollection#addAll(HCollection)} method throws an
-     * UnsupportedOperationException when called on an HCollection.
-     * 
+     * Tests that the {@link ValueCollection#addAll(HCollection)} method throws
+     * an UnsupportedOperationException when called on an HCollection.
+     *
      * @test.design The test aims to verify that the
      * {@link ValueCollection#addAll(HCollection)} method throws an
-     * UnsupportedOperationException when called on an
-     * HCollection.
-     * @test.description The {@link ValueCollection#addAll(HCollection)} method is
-     * called with another MapAdapter's value collection on the value collection created by
-     * the {@link #setUp()} method. Since the method is not supported by the
-     * value collection view it should throw an UnsupportedOperationException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * UnsupportedOperationException when called on an HCollection.
+     * @test.description The {@link ValueCollection#addAll(HCollection)} method
+     * is called with another MapAdapter's value collection on the value
+     * collection created by the {@link #setUp()} method. Since the method is
+     * not supported by the value collection view it should throw an
+     * UnsupportedOperationException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#addAll(HCollection)} method
-     * throws an UnsupportedOperationException when called on an empty value collection.
+     * @test.expectedresults The {@link ValueCollection#addAll(HCollection)}
+     * method throws an UnsupportedOperationException when called on an empty
+     * value collection.
      */
-    @Test (expected = UnsupportedOperationException.class)
+    @Test(expected = UnsupportedOperationException.class)
     public void testAddAll() {
         MapAdapter anotherMap = new MapAdapter();
         values.addAll(anotherMap.values());
@@ -442,20 +468,21 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#retainAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#retainAll(HCollection)} method throws a NullPointerException
-     * when null is passed as an argument.
-     * @test.description The {@link ValueCollection#retainAll(HCollection)} method is
-     * called with null as an argument on the value collection created by the
-     * {@link #setUp()} method. Since the method does not accept null arguments,
-     * it should throw a NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#retainAll(HCollection)} method throws a
+     * NullPointerException when null is passed as an argument.
+     * @test.description The {@link ValueCollection#retainAll(HCollection)}
+     * method is called with null as an argument on the value collection created
+     * by the {@link #setUp()} method. Since the method does not accept null
+     * arguments, it should throw a NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#retainAll(HCollection)} method
-     * throws a NullPointerException when null is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#retainAll(HCollection)}
+     * method throws a NullPointerException when null is passed as an argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testRetainAllNull() {
         values.retainAll(null);
     }
@@ -465,20 +492,21 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#removeAll(HCollection)} method
      * throws a NullPointerException when null is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#removeAll(HCollection)} method throws a NullPointerException
-     * when null is passed as an argument.
-     * @test.description The {@link ValueCollection#removeAll(HCollection)} method is
-     * called with null as an argument on the value collection created by the
-     * {@link #setUp()} method. Since the method does not accept null arguments,
-     * it should throw a NullPointerException.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#removeAll(HCollection)} method throws a
+     * NullPointerException when null is passed as an argument.
+     * @test.description The {@link ValueCollection#removeAll(HCollection)}
+     * method is called with null as an argument on the value collection created
+     * by the {@link #setUp()} method. Since the method does not accept null
+     * arguments, it should throw a NullPointerException.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#removeAll(HCollection)} method
-     * throws a NullPointerException when null is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#removeAll(HCollection)}
+     * method throws a NullPointerException when null is passed as an argument.
      */
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testRemoveAllNull() {
         values.removeAll(null);
     }
@@ -486,26 +514,27 @@ public class ValueCollectionEmptyTests {
     // ValueCollection.clear()
 
     /**
-     * Tests that the {@link ValueCollection#clear()} method clears the value collection
-     * and leaves the underlying map empty.
-     * 
+     * Tests that the {@link ValueCollection#clear()} method clears the value
+     * collection and leaves the underlying map empty.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#clear()} method clears the value collection and leaves the
-     * underlying map empty.
-     * @test.description The {@link ValueCollection#clear()} method is called on the
-     * value collection created by the {@link #setUp()} method. Since the value collection
-     * is backed by the underlying map, clearing the value collection should also
-     * clear the map.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#clear()} method clears the value collection and
+     * leaves the underlying map empty.
+     * @test.description The {@link ValueCollection#clear()} method is called on
+     * the value collection created by the {@link #setUp()} method. Since the
+     * value collection is backed by the underlying map, clearing the value
+     * collection should also clear the map.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#clear()} method clears the
-     * value collection and leaves the underlying map empty.
+     * @test.expectedresults The {@link ValueCollection#clear()} method clears
+     * the value collection and leaves the underlying map empty.
      */
     @Test
     public void testClear() {
         // Clear the value collection
         values.clear();
-        
+
         // Verify that the size is still 0
         assertEquals("Size of value collection should be 0 after clear", 0, values.size());
         assertTrue("Value collection should be empty after clear", values.isEmpty());
@@ -520,19 +549,21 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#equals(Object)} method returns true
      * when an value collection with the same entries is passed as an argument.
-     * 
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#equals(Object)} method returns true when an value collection
-     * with the same entries is passed as an argument.
+     * {@link ValueCollection#equals(Object)} method returns true when an value
+     * collection with the same entries is passed as an argument.
      * @test.description A new empty MapAdapter instance is created, and its
-     * value collection is obtained. The {@link ValueCollection#equals(Object)} method is
-     * called on the value collection created by the {@link #setUp()} method the new
-     * one. Since it contains the same entries (none), the method should return
-     * true.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * value collection is obtained. The {@link ValueCollection#equals(Object)}
+     * method is called on the value collection created by the {@link #setUp()}
+     * method the new one. Since it contains the same entries (none), the method
+     * should return true.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#equals(Object)} method returns
-     * true when an value collection with the same entries is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#equals(Object)} method
+     * returns true when an value collection with the same entries is passed as
+     * an argument.
      */
     @Test
     public void testEqualsSameSet() {
@@ -544,21 +575,24 @@ public class ValueCollectionEmptyTests {
     }
 
     /**
-     * Tests that the {@link ValueCollection#equals(Object)} method returns false
-     * when an value collection with different entries is passed as an argument.
-     * 
+     * Tests that the {@link ValueCollection#equals(Object)} method returns
+     * false when an value collection with different entries is passed as an
+     * argument.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#equals(Object)} method returns false when an value collection
-     * with different entries is passed as an argument.
-     * @test.description A new MapAdapter instance is created with an key
+     * {@link ValueCollection#equals(Object)} method returns false when an value
+     * collection with different entries is passed as an argument.
+     * @test.description A new MapAdapter instance is created with an entry
      * ("key", "value"). Its value collection is obtained, and the
-     * {@link ValueCollection#equals(Object)} method is called on the value collection
-     * created by the {@link #setUp()} method and the new one. Since it
-     * contains different entries, the method should return false.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#equals(Object)} method is called on the value
+     * collection created by the {@link #setUp()} method and the new one. Since
+     * it contains different entries, the method should return false.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#equals(Object)} method returns
-     * false when an value collection with different entries is passed as an argument.
+     * @test.expectedresults The {@link ValueCollection#equals(Object)} method
+     * returns false when an value collection with different entries is passed
+     * as an argument.
      */
     @Test
     public void testEqualsDifferentSet() {
@@ -571,26 +605,27 @@ public class ValueCollectionEmptyTests {
     }
 
     /**
-     * Tests that the {@link ValueCollection#equals(Object)} method returns false
-     * when the argument is not an ValueCollection.
-     * 
-     * @test.design The test aims to verify that the
-     * {@link ValueCollection#equals(Object)} method returns false when the argument
-     * is not an ValueCollection.
-     * @test.description The {@link ValueCollection#equals(Object)} method is called
-     * with a String as an argument on the value collection created by the
-     * {@link #setUp()} method. Since the argument is not an ValueCollection,
-     * the method should return false.
-     * @test.precondition The map and the value collection are correctly instantiated
-     * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#equals(Object)} method returns
+     * Tests that the {@link ValueCollection#equals(Object)} method returns
      * false when the argument is not an ValueCollection.
+     *
+     * @test.design The test aims to verify that the
+     * {@link ValueCollection#equals(Object)} method returns false when the
+     * argument is not an ValueCollection.
+     * @test.description The {@link ValueCollection#equals(Object)} method is
+     * called with a String as an argument on the value collection created by
+     * the {@link #setUp()} method. Since the argument is not an
+     * ValueCollection, the method should return false.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link ValueCollection#equals(Object)} method
+     * returns false when the argument is not an ValueCollection.
      */
     @SuppressWarnings("unlikely-arg-type")
     @Test
-    public void testEqualsNotASet() {
+    public void testEqualsNotACollection() {
         // Test that the equals method returns false when the argument is not an ValueCollection
-        String notACollection = "This is not a set";
+        String notACollection = "This is not a collection";
         assertFalse("Value collection should not be equal to a non-ValueCollection object",
                 values.equals(notACollection));
     }
@@ -598,19 +633,20 @@ public class ValueCollectionEmptyTests {
     // ValueCollection.hashCode()
 
     /**
-     * Tests that the {@link ValueCollection#hashCode()} method returns 0
-     * for an empty value collection.
-     * 
+     * Tests that the {@link ValueCollection#hashCode()} method returns 0 for an
+     * empty value collection.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#hashCode()} method returns 0 for an empty value collection
-     * since it has no entries.
+     * {@link ValueCollection#hashCode()} method returns 0 for an empty value
+     * collection since it has no entries.
      * @test.description The {@link ValueCollection#hashCode()} method is called
      * on the value collection created by the {@link #setUp()} method. Since the
      * value collection is empty, the method should return 0.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#hashCode()} method returns 0
-     * for an empty value collection.
+     * @test.expectedresults The {@link ValueCollection#hashCode()} method
+     * returns 0 for an empty value collection.
      */
     @Test
     public void testHashCode() {
@@ -622,20 +658,21 @@ public class ValueCollectionEmptyTests {
     /**
      * Tests that the {@link ValueCollection#hashCode()} method returns
      * different hash codes for different value collections.
-     * 
+     *
      * @test.design The test aims to verify that the
      * {@link ValueCollection#hashCode()} method returns different hash codes
-     * for different value collections, even if they are both empty.
-     * @test.description A new MapAdapter instance is created with an key
+     * for different value collections when one is empty and the other contains elements.
+     * @test.description A new MapAdapter instance is created with an entry
      * ("key", "value"). Its value collection is obtained, and the
-     * {@link ValueCollection#hashCode()} method is called on the
-     * value collection created by the {@link #setUp()} method and the new one.
-     * Since the value collections are different, the method should return
-     * different hash codes.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * {@link ValueCollection#hashCode()} method is called on the value
+     * collection created by the {@link #setUp()} method and the new one. Since
+     * the value collections are different (one empty, one with elements), the 
+     * method should return different hash codes.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#hashCode()} method returns
-     * different hash codes for different value collections.
+     * @test.expectedresults The {@link ValueCollection#hashCode()} method
+     * returns different hash codes for different value collections.
      */
     @Test
     public void testHashCodeDifferentSets() {
@@ -649,21 +686,22 @@ public class ValueCollectionEmptyTests {
     }
 
     /**
-     * Tests that the {@link ValueCollection#hashCode()} method returns
-     * the same hash code for the same value collection.
-     * 
+     * Tests that the {@link ValueCollection#hashCode()} method returns the same
+     * hash code for the same value collection.
+     *
      * @test.design The test aims to verify that the
-     * {@link ValueCollection#hashCode()} method returns the same hash code
-     * for the same value collection.
+     * {@link ValueCollection#hashCode()} method returns the same hash code for
+     * the same value collection.
      * @test.description The {@link ValueCollection#hashCode()} method is called
-     * on the value collection created by the {@link #setUp()} method and another
-     * instance of the same value collection.
-     * Since both instances are views of the same empty map,
-     * the method should return the same hash code.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * on the value collection created by the {@link #setUp()} method and
+     * another instance of the same value collection. Since both instances are
+     * views of the same empty map, the method should return the same hash
+     * code.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
-     * @test.expectedresults The {@link ValueCollection#hashCode()} method returns
-     * the same hash code for the same value collection.
+     * @test.expectedresults The {@link ValueCollection#hashCode()} method
+     * returns the same hash code for the same value collection.
      */
     @Test
     public void testHashCodeSameSet() {
@@ -674,17 +712,19 @@ public class ValueCollectionEmptyTests {
     }
 
     /**
-     * Tests that the {@link ValueCollection#equals(Object)} method
-     * implies that the hash codes of the value collections are equal.
-     * 
-     * @test.design The test aims to verify that if two value collections
-     * are equal, their hash codes should also be equal.
+     * Tests that the {@link ValueCollection#equals(Object)} method implies that
+     * the hash codes of the value collections are equal.
+     *
+     * @test.design The test aims to verify that if two value collections are
+     * equal, their hash codes should also be equal.
      * @test.description The {@link ValueCollection#equals(Object)} method is
-     * called on the value collection created by the {@link #setUp()} method with itself
-     * as an argument. Since it is the same value collection, the method should
-     * return true. The {@link ValueCollection#hashCode()} method is then called on
-     * both value collections, and their hash codes should be equal.
-     * @test.precondition The map and the value collection are correctly instantiated
+     * called on the value collection created by the {@link #setUp()} method
+     * with itself as an argument. Since it is the same value collection, the
+     * method should return true. The {@link ValueCollection#hashCode()} method
+     * is then called on both value collections, and their hash codes should be
+     * equal.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated
      * @test.postcondition The map is still empty
      * @test.expectedresults The {@link ValueCollection#equals(Object)} method
      * implies that the hash codes of the value collections are equal.
