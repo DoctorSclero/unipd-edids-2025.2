@@ -5,8 +5,8 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
 /**
- * TestRunner is a utility class that executes JUnit tests for the ListAdapter,
- * Iterator, and ListIterator classes.
+ * TestRunner is a utility class that executes JUnit tests for the MapAdapter,
+ * HMap, HCollection, HSet and HIterator classes.
  *
  * @test.libraries JUnit 4.13.2 Hamcrest 1.3
  */
