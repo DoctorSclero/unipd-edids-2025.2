@@ -611,7 +611,14 @@ public class MapAdapter implements HMap {
             if (o == null) throw new NullPointerException();
             if (!(o instanceof HEntry)) return false;
             HEntry entry = (HEntry) o;
-            return MapAdapter.this.remove(entry.getKey()) != null;
+            Object key = entry.getKey();
+            if (key == null) return false;
+            if (!MapAdapter.this.containsKey(key)) return false;
+            
+            Object value = MapAdapter.this.get(key);
+            if (!value.equals(entry.getValue())) return false;
+
+            return MapAdapter.this.remove(key) != null;
         }
 
         /**

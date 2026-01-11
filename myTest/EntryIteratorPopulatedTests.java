@@ -291,32 +291,54 @@ public class EntryIteratorPopulatedTests {
     }
 
     /**
-     * Tests the equals method of the Entry class with the same key but
-     * different values. It checks that two entries with the same key but
-     * different values are not equal.
-     *
+     * Tests the equals method of the Entry class with the same key but different values.
+     * It checks that two entries with the same key but different values are not equal.
      * @test.design This test is designed to ensure that the Entry class's
      * equals() method works correctly when comparing entries with the same key
      * but different values.
      * @test.description This test uses the EntryIterator created in the
-     * {@link #setUp()} method to test the equals() method of the Entry class by
-     * comparing two entries with the same key but different values. It asserts
-     * that the entries are not equal.
-     * @test.precondition The map must be populated with entries before this
-     * test runs.
-     * @test.postcondition The map should remain unchanged after the test
-     * runs.
-     * @test.expectedresults The test should pass if the equals() method returns
-     * false
+     * {@link #setUp()} method and another map to test the equals() method of the Entry class
+     * by comparing two entries with the same key but different values.
+     * It asserts that the entries are not equal.
+     * @test.preconditions The map must be populated with entries before
+     * this test runs.
+     * @test.postconditions The map should remain unchanged after the test runs.
+     * @test.expectedresults The test should pass if the equals() method returns false
      */
     @Test
     public void testEntrySameKeyDifferentValue() {
         Entry entry1 = (Entry) iter.next();
-        Entry entry2 = (Entry) iter.next();
-
-        // Modify entry2 to have the same key but a different value
-        entry2.setValue("differentValue");
-
+        
+        // Create another map with the same key but a different value
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put(entry1.getKey(), "differentValue");
+        Entry entry2 = (Entry) anotherMap.entrySet().iterator().next();
+        
         assertFalse("Entries with the same key but different values should not be equal", entry1.equals(entry2));
+    }
+
+    /**
+     * Tests the hashCode method of the Entry class.
+     * It checks that two equal entries have the same hash code.
+     * 
+     * @test.design This test is designed to ensure that the Entry class's
+     * hashCode() method works correctly and complies with the contract that
+     * equal objects must have equal hash codes.
+     * @test.description This test obtains an entry from the map, creates another
+     * map with an identical entry, and asserts that their hash codes are equal.
+     * @test.preconditions The map must be populated.
+     * @test.postconditions The map remains unchanged.
+     * @test.expectedresults Equal entries have the same hash code.
+     */
+    @Test
+    public void testEntryHashCode() {
+        Entry entry1 = (Entry) iter.next();
+        
+        // Create another map with the same key and value to get an equal entry
+        MapAdapter anotherMap = new MapAdapter();
+        anotherMap.put(entry1.getKey(), entry1.getValue());
+        Entry entry2 = (Entry) anotherMap.entrySet().iterator().next();
+        
+        assertEquals("Equal entries must have the same hash code", entry1.hashCode(), entry2.hashCode());
     }
 }

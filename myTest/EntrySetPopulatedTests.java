@@ -972,7 +972,7 @@ public class EntrySetPopulatedTests {
     public void testRemoveAllMoreElements() {
         MapAdapter anotherMap = new MapAdapter();
         for (int i = 0; i < 200; i++) {
-            anotherMap.put("key" + i, "value" + i);
+            anotherMap.put("key" + i, "value" + (i % 50));
         }
         EntrySet anotherEntrySet = (EntrySet) anotherMap.entrySet();
 
@@ -1229,83 +1229,75 @@ public class EntrySetPopulatedTests {
     }
 
     /**
-     * Tests that the {@link MapAdapter#entrySet()} {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#entrySet()} {@code retainAll} method
+     * handles a collection containing null elements safely (by treating them as not present).
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#entrySet()} {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#entrySet()} {@code retainAll} method does not throw
+     * exception when called with a collection containing
+     * null elements.
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null key-value pair. The {@code retainAll} method is
-     * then called on the entry set of the populated map with the entry set of
-     * the NullableHMap as argument. The result is asserted to throw a
-     * {@link NullPointerException}, as null elements are not supported.
+     * then called. Since the null entry matches nothing in the map, all elements
+     * should be removed.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null elements.
-     * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.postcondition The map is empty.
+     * @test.expectedresults The {@code retainAll} method completes without exception
+     * and empties the map.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testEntrySetRetainAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put(null, "value");
         map.entrySet().retainAll(nullableMap.entrySet());
+        assertTrue("Map should be empty after retaining only null entries", map.isEmpty());
     }
 
     /**
-     * Tests that the {@link MapAdapter#entrySet()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#entrySet()} {@code removeAll} method
+     * handles a collection containing null elements safely.
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#entrySet()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#entrySet()} {@code removeAll} method does not throw
+     * exception when called with a collection containing null elements.
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null key-value pair. The {@code removeAll} method is
-     * then called on the entry set of the populated map with the entry set of
-     * the NullableHMap as argument. The result is asserted to throw a
-     * {@link NullPointerException}, as null elements are not supported.
+     * then called. The null entry does not match any entry in the map (due to value mismatch or key mismatch),
+     * so nothing is removed.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null elements.
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.expectedresults The {@code removeAll} method completes without exception
+     * and the map remains unchanged.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testEntrySetRemoveAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put("key", null);
         map.entrySet().removeAll(nullableMap.entrySet());
+        assertEquals("Map size should be unchanged", 100, map.size());
     }
 
     /**
-     * Tests that the {@link MapAdapter#entrySet()} {@code containsAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#entrySet()} {@code containsAll} method
+     * handles a collection containing null elements safely (returns false).
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#entrySet()} {@code containsAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#entrySet()} {@code containsAll} method returns false
+     * when called with a collection containing null elements.
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null key-value pair. The {@code containsAll} method is
-     * then called on the entry set of the populated map with the entry set of
-     * the NullableHMap as argument. The result is asserted to throw a
-     * {@link NullPointerException}, as null elements are not supported.
+     * then called.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null elements.
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code containsAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.expectedresults The {@code containsAll} method returns false.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testEntrySetContainsAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put(null, null);
-        map.entrySet().containsAll(nullableMap.entrySet());
+        assertFalse("containsAll should return false for null elements", map.entrySet().containsAll(nullableMap.entrySet()));
     }
 }

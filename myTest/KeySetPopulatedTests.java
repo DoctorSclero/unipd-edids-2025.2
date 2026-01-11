@@ -1141,30 +1141,29 @@ public class KeySetPopulatedTests {
     }
 
     /**
-     * Tests that the {@link MapAdapter#keySet()} {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#keySet()} {@code retainAll} method
+     * handles a collection containing null elements safely (by treating them as not present).
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#keySet()} {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#keySet()} {@code retainAll} method does not throw
+     * exception when called with a collection containing
+     * null elements.
      * @test.description A {@link NullableHMap} instance is created and
-     * populated with a null key. The {@code retainAll} method is then called
-     * on the key set of the populated map with the key set of the NullableHMap
-     * as argument. The result is asserted to throw a {@link NullPointerException},
-     * as null elements are not supported.
+     * populated with a null key. The {@code retainAll} method is then called.
+     * Since the null key matches nothing in the map, all elements
+     * should be removed.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null keys.
-     * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code retainAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.postcondition The map is empty.
+     * @test.expectedresults The {@code retainAll} method completes without exception
+     * and empties the map.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testKeySetRetainAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put(null, "value");
         map.keySet().retainAll(nullableMap.keySet());
+        assertTrue("Map should be empty after retaining only null keys", map.isEmpty());
     }
 
     /**

@@ -4,8 +4,6 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import myAdapter.MapAdapter.KeySet;
-
 /**
  * TestRunner is a utility class that executes JUnit tests for the ListAdapter,
  * Iterator, and ListIterator classes.
