@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import myAdapter.HMap;
 import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.Entry;
 import myAdapter.MapAdapter.EntrySet;
@@ -247,18 +248,19 @@ public class EntrySetPopulatedTests {
      * Tests the contains method of the EntrySet class with an entry that is not
      * an instance of Entry.
      *
-     * @test.design Verifies that the contains method returns false for objects
-     * that are not instances of Entry.
-     * @test.description This test checks that the contains method does not
-     * mistakenly identify non-Entry objects as contained.
+     * @test.design Verifies that the contains method throws {@link ClassCastException}
+     * when called on a non {@link HMap.HEntry} object.
+     * @test.description The contains method is called on the entryset generated
+     * in the {@link #setUp()} phase with a String as parameter. Since a
+     * non {@link HMap.HEntry} parameter was provided the method is asserted
+     * to throw {@link ClassCastException}.
      * @test.precondition The EntrySet instance must be initialized and
      * populated with entries.
-     * @test.postcondition The contains method should return false for
-     * non-Entry objects.
-     * @test.expectedresults The contains method should return false for objects
-     * that are not instances of Entry.
+     * @test.postcondition The EntrySet is unchanged
+     * @test.expectedresults The contains method should throw {@link ClassCastException}
+     * for objects that are not instances of {@link HMap.HEntry}.
      */
-    @Test
+    @Test (expected = ClassCastException.class)
     public void testContainsNotAnEntry() {
         assertFalse("Entry set should not contain a non-entry object",
                 entrySet.contains("nonEntryObject"));
@@ -462,8 +464,12 @@ public class EntrySetPopulatedTests {
      */
     @Test
     public void testRemoveNonContained() {
+        MapAdapter temp = new MapAdapter();
+        temp.put("nonContainedKey", "nonContainedValue");
+        HMap.HEntry e = (HMap.HEntry) temp.entrySet().iterator().next();
+
         assertFalse("remove(Object) should return false for non-contained elements",
-                entrySet.remove("nonContainedElement"));
+                entrySet.remove(e));
         assertEquals("Map should have size 100 after removing non-contained element", 100, map.size());
         assertFalse("Entry set shouldn't be empty after removing non-contained element",
                 entrySet.isEmpty());
@@ -1280,24 +1286,34 @@ public class EntrySetPopulatedTests {
     }
 
     /**
-     * Tests that the {@link MapAdapter#entrySet()} {@code containsAll} method
-     * handles a collection containing null elements safely (returns false).
+     * Tests that containsAll launches NullPointerException when called on a
+     * entrySet using entries with null keys or values
      *
      * @test.design The test aims to verify that the
      * {@link MapAdapter#entrySet()} {@code containsAll} method returns false
      * when called with a collection containing null elements.
-     * @test.description A {@link NullableHMap} instance is created and
-     * populated with a null key-value pair. The {@code containsAll} method is
-     * then called.
+     * @test.description Three {@link NullableHMap} instances are created and
+     * populated with all the permutations of null key or value 
+     * (null=null,null=value,key=null). The {@code containsAll} method is
+     * then called on each {@link NullableHMap} to assert the correct throwing of
+     * NullPointerException.
      * @test.precondition The map is correctly instantiated and populated with
-     * 100 items. A NullableHMap is created with null elements.
+     * 100 items. Three NullableHMap are created and populated with all the
+     * permutations of null key or value (null=null,null=value,key=null)
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code containsAll} method returns false.
+     * @test.expectedresults The {@code containsAll} method throws
+     * NullPointerException
      */
-    @Test
+    @Test (expected = NullPointerException.class)
     public void testEntrySetContainsAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put(null, null);
-        assertFalse("containsAll should return false for null elements", map.entrySet().containsAll(nullableMap.entrySet()));
+        map.entrySet().containsAll(nullableMap.entrySet());
+        nullableMap = new NullableHMap();
+        nullableMap.put(null, "value");
+        map.entrySet().containsAll(nullableMap.entrySet());
+        nullableMap = new NullableHMap();
+        nullableMap.put("key", null);
+        map.entrySet().containsAll(nullableMap.entrySet());
     }
 }

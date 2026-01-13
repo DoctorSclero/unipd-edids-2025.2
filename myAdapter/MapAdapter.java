@@ -244,7 +244,8 @@ public class MapAdapter implements HMap {
      * @param t Mappings to be stored in this map.
      * @throws NullPointerException          the specified map is {@code null},
      *                                       or the specified map contains
-     *                                       {@code null} keys or values.
+     *                                       entries with {@code null} keys or 
+     *                                       values.
      */
     public void putAll(HMap t) {
         if (t == null) throw new NullPointerException();
@@ -401,8 +402,6 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this collection changed as a result of the
          * call
          *
-         * @throws NullPointerException          if this collection contains one
-         *                                       or more null elements
          * @throws NullPointerException          if the specified collection is
          *                                       {@code null}.
          * @see #remove(Object)
@@ -414,8 +413,10 @@ public class MapAdapter implements HMap {
             HIterator iter = c.iterator();
             while (iter.hasNext()) {
                 Object current = iter.next();
-                // Remove all occurrences of current
-                while(remove(current)) res |= true;
+                try {
+                    // Remove all occurrences of current
+                    while(remove(current)) res |= true;
+                } catch (Exception e) { }
             }
             return res;
         }
@@ -444,7 +445,9 @@ public class MapAdapter implements HMap {
             HIterator iter = iterator();
             while (iter.hasNext()) {
                 Object current = iter.next();
-                if (!c.contains(current)) res |= remove(current);
+                try {
+                    if (!c.contains(current)) res |= remove(current);
+                } catch (NullPointerException npe) { }
             }
             return res;
         }
@@ -575,12 +578,16 @@ public class MapAdapter implements HMap {
          * @return {@code true} if this set contains the specified element.
          *
          * @throws NullPointerException if the specified element is null
+         * @throws ClassCastException if o is not instance of HMap.HEntry
          */
         @Override
         public boolean contains(Object o) {
             if (o == null) throw new NullPointerException();
-            if (!(o instanceof HEntry)) return false;
+            if (!(o instanceof HEntry)) throw new ClassCastException();
             HEntry entry = (HEntry) o;
+
+            if (entry.getKey()==null || entry.getValue()==null) throw new NullPointerException();
+
             try {
                 return MapAdapter.this.containsKey(entry.getKey()) &&
                         MapAdapter.this.get(entry.getKey()).equals(entry.getValue());
@@ -605,17 +612,20 @@ public class MapAdapter implements HMap {
          * @return true if the set contained the specified element.
          * 
          * @throws NullPointerException if the specified element is null
+         * @throws ClassCastException if the specified element is not a HEntry instance
          */
         @Override
         public boolean remove(Object o) {
             if (o == null) throw new NullPointerException();
-            if (!(o instanceof HEntry)) return false;
+            if (!(o instanceof HEntry)) throw new ClassCastException();
             HEntry entry = (HEntry) o;
-            Object key = entry.getKey();
-            if (key == null) return false;
-            if (!MapAdapter.this.containsKey(key)) return false;
             
+            if (entry.getKey() == null || entry.getValue() == null) throw new NullPointerException();
+
+            Object key = entry.getKey();
             Object value = MapAdapter.this.get(key);
+
+            if (!MapAdapter.this.containsKey(key)) return false;
             if (!value.equals(entry.getValue())) return false;
 
             return MapAdapter.this.remove(key) != null;
@@ -826,6 +836,8 @@ public class MapAdapter implements HMap {
          */
         public boolean equals(Object o) {
             if (!(o instanceof HCollection)) return false;
+            if (o instanceof HSet) return false;
+
             HCollection other = (HCollection) o;
             if (other.size() != size()) return false;
             HCollection clone = new MapAdapter(MapAdapter.this).values();
@@ -1062,6 +1074,15 @@ public class MapAdapter implements HMap {
 
             HEntry e = (HEntry) o;
             return this.getKey().equals(e.getKey()) && this.getValue().equals(e.getValue());
+        }
+
+        /**
+         * Creates a string representation of the Map.Entry
+         * following the {@code key=value} representation
+         */
+        @Override
+        public String toString() {
+            return this.getKey().toString() + "=" + this.getValue().toString();
         }
     }
 }

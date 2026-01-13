@@ -1138,13 +1138,12 @@ public class ValueCollectionPopulatedTests {
     }
 
     /**
-     * Tests that the {@link MapAdapter#values()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#values()} {@code removeAll} returns false
+     * when called with a collection containing null elements.
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#values()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#values()} {@code removeAll} returns false
+     * when called with a collection containing null elements.
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null value. The {@code removeAll} method is then called
      * on the values collection of the populated map with the values collection
@@ -1157,11 +1156,11 @@ public class ValueCollectionPopulatedTests {
      * {@link NullPointerException} when called with a collection containing
      * null elements.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testValuesRemoveAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put("key", null);
-        map.values().removeAll(nullableMap.values());
+        assertFalse(map.values().removeAll(nullableMap.values()));
     }
 
     /**

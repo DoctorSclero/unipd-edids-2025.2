@@ -1186,7 +1186,7 @@ public class KeySetPopulatedTests {
      * {@link NullPointerException} when called with a collection containing
      * null elements.
      */
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testKeySetRemoveAllWithNullElements() {
         NullableHMap nullableMap = new NullableHMap();
         nullableMap.put(null, "value");

@@ -6,9 +6,11 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import myAdapter.HMap;
 import myAdapter.MapAdapter;
 import myAdapter.MapAdapter.Entry;
 import myAdapter.MapAdapter.EntrySet;
+import myAdapter.MapAdapter.ValueCollection;
 
 /**
  * This test case tests the EntrySet class instances linked to an empty map.
@@ -300,25 +302,23 @@ public class EntrySetEmptyTests {
     }
 
     /**
-     * Tests that the {@link EntrySet#remove(Object)} method returns false when
-     * a non-contained element is passed as an argument.
+     * Tests that the {@link EntrySet#remove(Object)} method throws
+     * ClassCastException when called on a non HMap.HEntry object.
      *
      * @test.design The test aims to verify that the
-     * {@link EntrySet#remove(Object)} method returns false when a non-contained
-     * element is passed as an argument since it has no effect on the entry
-     * set.
+     * {@link EntrySet#remove(Object)} fails with ClassCastException when the
+     * passed element is not an entry.
      * @test.description The {@link EntrySet#remove(Object)} method is called
-     * with a string that is not contained in the entry set on the entry set
-     * created by the {@link #setUp()} method. Since the entry set is empty, the
-     * method should return false, indicating that the element was not contained
-     * in the entry set. Since the entry set is backed by the map, the map
-     * should remain empty after the operation.
+     * with a string on the entry set created by the {@link #setUp()} method.
+     * Since the {@link EntrySet} is designed to contain only {@link HMap.HEntry}
+     * the {@link EntrySet#remove(Object)} should result in a 
+     * {@link ClassCastException} which is asserted to have been thrown.
      * @test.precondition The map and the entry set are correctly instantiated
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@link EntrySet#remove(Object)} method returns
-     * false when a non-contained element is passed as an argument.
+     * @test.expectedresults The {@link EntrySet#remove(Object)} method throws
+     * {@link ClassCastException} when called on a non-{@link HMap.HEntry} object.
      */
-    @Test
+    @Test(expected = ClassCastException.class)
     public void testRemoveNonContainedNotAnEntry() {
         assertFalse("remove(Object) should return false for non-contained elements", entrySet.remove("nonContainedElement"));
         assertEquals("Map should have size 0 after removing non-contained element", 0, map.size());
@@ -596,9 +596,9 @@ public class EntrySetEmptyTests {
      * {@link EntrySet#equals(Object)} method returns false when the argument is
      * not an EntrySet.
      * @test.description The {@link EntrySet#equals(Object)} method is called
-     * with a String as an argument on the entry set created by the
-     * {@link #setUp()} method. Since the argument is not an EntrySet, the
-     * method should return false.
+     * with a String and a ValueCollection as an argument on the entry set
+     * created by the {@link #setUp()} method. Since the argument is not an
+     * EntrySet, the method should return false.
      * @test.precondition The map and the entry set are correctly instantiated
      * @test.postcondition The map is unchanged
      * @test.expectedresults The {@link EntrySet#equals(Object)} method returns
@@ -609,7 +609,9 @@ public class EntrySetEmptyTests {
     public void testEqualsNotASet() {
         // Test that the equals method returns false when the argument is not an EntrySet
         String notASet = "This is not a set";
-        assertFalse("Entry set should not be equal to a non-EntrySet object", entrySet.equals(notASet));
+        ValueCollection vc = (ValueCollection) this.map.values();
+        assertFalse("Entry set should not be equal to a String object", entrySet.equals(notASet));
+        assertFalse("Entry set should not be equal to a ValueCollection object", entrySet.equals(vc));
     }
 
     // EntrySet.hashCode()
