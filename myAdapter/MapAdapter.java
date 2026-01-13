@@ -311,6 +311,31 @@ public class MapAdapter implements HMap {
         return new ValueCollection();
     }
 
+    /**
+     * Returns a string representation of this map. The string representation
+     * consists of a list of key-value mappings in the order returned by the map's
+     * entrySet view's iterator, enclosed in braces ({@code "{}"}). Each key-value
+     * mapping is rendered as the key followed by an equals sign ({@code "="})
+     * using the {@code toString} method of the entry.
+     * 
+     * @return The string representation of this map.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        HIterator iter = entrySet().iterator();
+        while (iter.hasNext()) {
+            HEntry entry = (HEntry) iter.next();
+            sb.append(entry.toString());
+            if (iter.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        sb.append("}");
+        return sb.toString();
+    }
+
     // Inner classes //
 
     public abstract class AbstractView implements HCollection {
