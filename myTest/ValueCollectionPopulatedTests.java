@@ -1147,14 +1147,13 @@ public class ValueCollectionPopulatedTests {
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null value. The {@code removeAll} method is then called
      * on the values collection of the populated map with the values collection
-     * of the NullableHMap as argument. The result is asserted to throw a
-     * {@link NullPointerException}, as null elements are not supported.
+     * of the NullableHMap as argument. The result is asserted to be false,
+     * as null elements are ignored or treated as not present.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null values.
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.expectedresults The {@code removeAll} method returns false
+     * when called with a collection containing null elements.
      */
     @Test
     public void testValuesRemoveAllWithNullElements() {

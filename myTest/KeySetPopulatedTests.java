@@ -1167,24 +1167,21 @@ public class KeySetPopulatedTests {
     }
 
     /**
-     * Tests that the {@link MapAdapter#keySet()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing null elements.
+     * Tests that the {@link MapAdapter#keySet()} {@code removeAll} method handles
+     * a collection containing null elements safely (by treating them as not present).
      *
      * @test.design The test aims to verify that the
-     * {@link MapAdapter#keySet()} {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements, as null elements are not supported by the MapAdapter.
+     * {@link MapAdapter#keySet()} {@code removeAll} method does not throw
+     * exception when called with a collection containing null elements.
      * @test.description A {@link NullableHMap} instance is created and
      * populated with a null key. The {@code removeAll} method is then called
      * on the key set of the populated map with the key set of the NullableHMap
-     * as argument. The result is asserted to throw a {@link NullPointerException},
-     * as null elements are not supported.
+     * as argument. The operation should complete without throwing exceptions.
      * @test.precondition The map is correctly instantiated and populated with
      * 100 items. A NullableHMap is created with null keys.
      * @test.postcondition The map is unchanged
-     * @test.expectedresults The {@code removeAll} method throws
-     * {@link NullPointerException} when called with a collection containing
-     * null elements.
+     * @test.expectedresults The {@code removeAll} method completes without
+     * exception when called with a collection containing null elements.
      */
     @Test
     public void testKeySetRemoveAllWithNullElements() {
