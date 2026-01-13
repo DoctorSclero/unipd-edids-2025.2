@@ -853,4 +853,26 @@ public class MapAdapterEmptyTests {
         assertNotNull("Values collection should not be null for an empty map: ", map.values());
     }
 
+    // MapAdapter.toString()
+
+    /**
+     * Tests that the {@link MapAdapter#toString()} method returns "{}" for an
+     * empty map.
+     *
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#toString()} method returns "{}" for an empty map.
+     * @test.description The {@link MapAdapter#toString()} method is called on
+     * the empty map created by the {@link #setUp()} method. The result is
+     * asserted to be "{}", as an empty map should be represented by empty
+     * braces.
+     * @test.precondition The map is correctly instantiated
+     * @test.postcondition The map is still empty
+     * @test.expectedresults The {@link MapAdapter#toString()} method returns
+     * "{}" for an empty map.
+     */
+    @Test
+    public void testToString() {
+        assertEquals("String representation of empty map should be '{}': ", "{}", map.toString());
+    }
+
 }

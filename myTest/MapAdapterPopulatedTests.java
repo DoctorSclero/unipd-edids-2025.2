@@ -1426,5 +1426,33 @@ public class MapAdapterPopulatedTests {
         map.putAll(nullableMap);
     }
 
+    // MapAdapter.toString()
+
+    /**
+     * Tests that the {@link MapAdapter#toString()} method returns a string
+     * representation of the map.
+     *
+     * @test.design The test aims to verify that the
+     * {@link MapAdapter#toString()} method returns a string representation of
+     * the map starting with '{' and ending with '}'.
+     * @test.description The {@link MapAdapter#toString()} method is called on
+     * the populated map created by the {@link #setUp()} method. The result is
+     * asserted to start with '{' and end with '}'. Also, it checks for the presence
+     * of a known mapping.
+     * @test.precondition The map is correctly instantiated and populated.
+     * @test.postcondition The map is unchanged.
+     * @test.expectedresults The {@link MapAdapter#toString()} method returns a
+     * string representation of the map.
+     */
+    @Test
+    public void testToString() {
+        String str = map.toString();
+        assertNotNull(str);
+        assertTrue("String representation should start with '{'", str.startsWith("{"));
+        assertTrue("String representation should end with '}'", str.endsWith("}"));
+        assertTrue("String representation should contain mappings", str.length() > 2);
+        assertTrue("String representation should contain 'key0=value0'", str.contains("key0=value0"));
+    }
+
 
 }
