@@ -300,9 +300,9 @@ public class EntryIteratorPopulatedTests {
      * {@link #setUp()} method and another map to test the equals() method of the Entry class
      * by comparing two entries with the same key but different values.
      * It asserts that the entries are not equal.
-     * @test.preconditions The map must be populated with entries before
+     * @test.precondition The map must be populated with entries before
      * this test runs.
-     * @test.postconditions The map should remain unchanged after the test runs.
+     * @test.postcondition The map should remain unchanged after the test runs.
      * @test.expectedresults The test should pass if the equals() method returns false
      */
     @Test
@@ -326,8 +326,8 @@ public class EntryIteratorPopulatedTests {
      * equal objects must have equal hash codes.
      * @test.description This test obtains an entry from the map, creates another
      * map with an identical entry, and asserts that their hash codes are equal.
-     * @test.preconditions The map must be populated.
-     * @test.postconditions The map remains unchanged.
+     * @test.precondition The map must be populated.
+     * @test.postcondition The map remains unchanged.
      * @test.expectedresults Equal entries have the same hash code.
      */
     @Test

@@ -444,7 +444,7 @@ public class MapAdapterPopulatedTests {
      * {@link MapAdapter#equals(Object)} method returns false when compared to a
      * map with a subset of mappings.
      * @test.description A new map is created with 50 key-value pairs, in the
-     * format "keyX", "valueX" with 0 <= x < 50. The 
+     * format "keyX", "valueX" with {@code 0 <= x < 50}. The 
      * {@link MapAdapter#equals(Object)} method is then called on the populated
      * map with the new map as the argument. Since the new map is a subset of
      * the populated map, the result is asserted to be false, as the two maps
@@ -472,7 +472,7 @@ public class MapAdapterPopulatedTests {
      * {@link MapAdapter#equals(Object)} method returns false when compared to a
      * map with a superset of mappings.
      * @test.description A new map is created with 150 key-value pairs, in the
-     * format "keyX", "valueX" with 0 <= X <= 150. The 
+     * format "keyX", "valueX" with {@code 0 <= X <= 150}. The 
      * {@link MapAdapter#equals(Object)} method is then called on the populated 
      * map with the new map as the argument. The result is asserted to be false,
      * as the two maps have different mappings.
