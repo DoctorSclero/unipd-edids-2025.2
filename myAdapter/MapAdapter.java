@@ -57,7 +57,7 @@ public class MapAdapter implements HMap {
     /**
      * Creates a new instance of the hash table given another HMap object. The
      * content of the passed map is shallowly copied inside the underlying
-     * structure, changes in the past HMap's values and keys will then cord
+     * structure, changes in the passed HMap's values and keys will then not
      * result in changes to the new created copied instance.
      *
      * @param map The map to copy the data from.

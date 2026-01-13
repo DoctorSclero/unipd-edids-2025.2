@@ -630,6 +630,30 @@ public class ValueCollectionEmptyTests {
                 values.equals(notACollection));
     }
 
+    /**
+     * Tests that the {@link ValueCollection#equals(Object)} method returns
+     * false when the argument is an {@link myAdapter.HSet}.
+     *
+     * @test.design The test aims to verify that the
+     * {@link ValueCollection#equals(Object)} method returns false when the
+     * argument is an HSet, as collections and sets are not compatible for
+     * equality.
+     * @test.description The {@link ValueCollection#equals(Object)} method is
+     * called with an {@link myAdapter.MapAdapter.KeySet} as an argument on the
+     * value collection created by the {@link #setUp()} method. Since the
+     * argument is a set, the method should return false.
+     * @test.precondition The map and the value collection are correctly
+     * instantiated.
+     * @test.postcondition The map is still empty.
+     * @test.expectedresults The {@link ValueCollection#equals(Object)} method
+     * returns false when the argument is an HSet.
+     */
+    @Test
+    public void testEqualsSet() {
+        assertFalse("Value collection should not be equal to a Set object",
+                values.equals(map.keySet()));
+    }
+
     // ValueCollection.hashCode()
 
     /**

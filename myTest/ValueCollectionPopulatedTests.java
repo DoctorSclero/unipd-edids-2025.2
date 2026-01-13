@@ -1060,6 +1060,27 @@ public class ValueCollectionPopulatedTests {
                 values.equals(notACollection));
     }
 
+    /**
+     * Test to verify that equals(Object) returns false when a Set is passed.
+     *
+     * @test.design This test checks that the equals method returns false when
+     * comparing with an HSet instance.
+     * @test.description This test ensures that the ValueCollection correctly
+     * identifies inequality with an HSet, following the general contract that
+     * collections are only equal to other collections of the same type.
+     * @test.precondition The ValueCollection must be populated before this
+     * test runs.
+     * @test.postcondition The ValueCollection should remain unchanged after
+     * this test runs.
+     * @test.expectedresults The test should pass if equals(Object) returns
+     * false when a Set is provided as argument.
+     */
+    @Test
+    public void testEqualsSet() {
+        assertFalse("Value collection should not be equal to a Set object",
+                values.equals(map.keySet()));
+    }
+
     // ValueCollection.hashCode()
 
     /**
